@@ -1,0 +1,55 @@
+  <form #rsfForm="ngForm" *ngIf="rsfFormFields">
+
+      <div class="p-fluid formgrid grid card">
+        <div class="field pt-3 col-12 md-2 w-2">
+          <strong>Order Number</strong><br/>
+          <input type="text" pInputText id="orderNumber" name="orderNumber" 
+            [(ngModel)]="rsfFormFields[0].fieldOptions" required [disabled]="isDisabled"/>
+        </div>
+        <div class="field pt-3 col-12 md-2 w-2">
+          <strong>Revision Number</strong><br/>
+          <input type="text" pInputText id="revisionNumber" name="revisionNumber"
+            [(ngModel)]="rsfFormFields[1].fieldOptions" required [disabled]="isDisabled"/>
+        </div>
+        <div class="field pt-3 col-12 md-2 w-2">
+          <strong>Supplier</strong><br/>
+          <input type="text" pInputText id="supplier" name="supplier"
+            [(ngModel)]="rsfFormFields[3].fieldOptions" required [disabled]="isDisabled"/>
+        </div>
+        <div class="field pt-3 col-12 md-2 w-2">
+          <strong>MR NO</strong><br/>
+          <input type="text" pInputText id="mrNo" name="mrNo"
+            [(ngModel)]="rsfFormFields[4].fieldOptions" required [disabled]="isDisabled"/>
+        </div>
+        <div class="field pt-3 col-12 md-2 w-2">
+          <strong>Delivery Date</strong><br/>
+          <p-calendar [readonlyInput]="true" [showIcon]="true" id="delvDate" name="delvDate"
+            [(ngModel)]="rsfFormFields[5].fieldOptions" required [disabled]="isDisabled">
+          </p-calendar>
+        </div>
+        <div class="field pt-3 col-12 md-2 w-2">
+          <strong>Submission Date</strong><br/>
+          <p-calendar [readonlyInput]="true" [showIcon]="true" id="date" name="date"
+            [(ngModel)]="rsfFormFields[2].fieldOptions" [disabled]="true" required>
+          </p-calendar>
+        </div>
+        <div class="field pt-3 col-12 md-2 w-2">
+          <strong>Weight</strong><br/>
+          <input type="text" pInputText id="weight" name="weight" [(ngModel)]="rsfFormFields[6].fieldOptions" [disabled]="true" />
+        </div>
+      </div>
+
+      <div class="col-12" style="padding: 0rem;">
+        <p-card *ngIf="!isDisabled" styleClass="mt-2" header="Select List Of Support Items">
+          <app-rsf-support-list (selectedTags)="onSupportAdded($event)" [isDisabled]="isDisabled"></app-rsf-support-list>
+        </p-card>
+        <p-card *ngIf="isDisabled && rsfFormFields" styleClass="mt-2" header="List Of Selected Support Items">
+          <app-rsf-supports-table [rsfHeader]="rsfFormFields"></app-rsf-supports-table>
+        </p-card>
+      </div>
+
+      <div class="col-12 md-2 w-1">
+        <p-button *ngIf="!isDisabled" (click)="addRsfForm()" icon="pi pi-check" label="Submit"></p-button>
+      </div>
+
+  </form>

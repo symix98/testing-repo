@@ -1,0 +1,50 @@
+<div class='card' style="margin-bottom: 0rem;">
+    <p-toolbar>
+        <div class='p-toolbar-group-left'>
+            <label class='mr-2'><b>Select the Reference Table : </b></label>
+            <p-dropdown [options]='referenceTablesList' [(ngModel)]='selectedRefTableName' (onChange)='onRefTableSelected($event)'
+                style='width: 20rem;' placeholder='Select a Reference Table' optionLabel='name' [showClear]='true' [disabled]='false'>
+            </p-dropdown>
+        </div>
+    </p-toolbar>
+    <div class='mb-5'></div>
+    <div *ngIf='selectedRefTableName'>
+        <h6>The Selected Reference Table is {{ selectedRefTableName.name }}.</h6>
+        <div *ngIf="selectedRefTableName.name == 'Files Type'">
+            <app-files-type></app-files-type>
+        </div>
+        <div *ngIf="selectedRefTableName.name == 'Documet Type'">
+            <app-documents-type></app-documents-type>
+        </div>
+        <div *ngIf="selectedRefTableName.name == 'Document Sub Type'">
+            <app-documents-sub-type></app-documents-sub-type>
+        </div>
+        <div *ngIf="selectedRefTableName.name == 'Discipline'">
+            <app-disciplines></app-disciplines>
+        </div>
+        <div *ngIf="selectedRefTableName.name == 'Status'">
+            <app-status></app-status>
+        </div>
+        <div *ngIf="selectedRefTableName.name == 'Organizer'">
+            <app-organizer></app-organizer>
+        </div>
+        <div *ngIf="selectedRefTableName.name == 'Recipient'">
+            <app-recipient></app-recipient>
+        </div>
+        <div *ngIf="selectedRefTableName.name == 'Acceptance Code'">
+            <app-accept-code></app-accept-code>
+        </div>
+        <div *ngIf="selectedRefTableName.name == 'Categories'">
+            <app-categories></app-categories>
+        </div>
+        <div *ngIf="selectedRefTableName.name == 'Location'">
+            <app-location></app-location>
+        </div>
+        <div *ngIf="selectedRefTableName.name == 'Area'">
+            <app-area></app-area>
+        </div>
+        <div *ngIf="selectedRefTableName.name == 'Sub Area'">
+            <app-sub-area></app-sub-area>
+        </div>
+    </div>
+</div>

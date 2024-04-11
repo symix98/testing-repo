@@ -1,0 +1,128 @@
+<div class="card">
+    <!-- Begin User Info related section -->
+    <form #projectInfoForm="ngForm">
+        <h2 style="width: 100%; text-align: center; padding-top: 1%">
+            <strong>User Info</strong>
+        </h2>
+
+        <div style="text-align: center">
+            <ng-container *ngIf="logos[0]; else viewClientLogo">
+                <div class="image-container">
+                    <img [src]="'data:' + logos[0].type + ';base64,' + logos[0].blob" style="border-radius: 50%; width: 15%" />
+                    <div class="middle">
+                        <div class="edit-text" (click)="removeFile()">Remove</div>
+                    </div>
+                </div>
+            </ng-container>
+            <ng-template #viewClientLogo>
+                <ng-container>
+                    <div class="logo-image-container">
+                        <img class="logo-image" [src]="profileLogo" style="border-radius: 50%; width: 15%" />
+                    </div>
+                </ng-container>
+            </ng-template>
+        </div>
+
+        <div class="flex justify-content-center">
+            <button pButton type="button" label="Upload Profile " class="p-mt-2" icon="pi pi-save" style="margin-right: 5px"
+                iconPos="default" [disabled]="this.logos[0]" (click)="profileFileInput.click()"></button>
+            <div>
+                <button class="mr-2 p-button-outlined" label="Save" iconPos="left"
+                pButton pRipple type="button" icon="pi pi-check" (click)="save()"></button>
+            </div>
+        </div>
+
+        <div class="md:col-6"></div>
+
+        <div class="grid p-fluid row">
+            <div class="grid p-fluid label">
+                <h5 style="width: 20%">User Name</h5>
+                <div class="col-12 md:col-9">
+                    <div class="p-inputgroup">
+                        <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
+                        <input type="text" disabled pInputText value="{{ name }}" />
+                    </div>
+                </div>
+            </div>
+            <div class="grid p-fluid label">
+                <h5 style="width: 20%">Email</h5>
+                <div class="col-12 md:col-9">
+                    <div class="p-inputgroup">
+                        <span class="p-inputgroup-addon"><i class="pi pi-inbox"></i></span>
+                        <input type="text" disabled pInputText value="{{ email }}" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid p-fluid row" style="justify-content: center">
+            <div class="grid p-fluid label">
+                <h5 style="width: 20%">Role</h5>
+                <div class="col-12 md:col-9">
+                    <div class="p-inputgroup">
+                        <span class="p-inputgroup-addon"><i class="pi pi-exclamation-circle"></i></span>
+                        <input type="text" disabled pInputText value="{{ role }}" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div [formGroup]="inputForm">
+            <input formControlName="profileFileInput" #profileFileInput style="display: none"
+            type="file" (change)="addFile($event, 'Profile')" accept="image/*" />
+        </div>
+    </form>
+    <!-- End User Info related section -->
+</div>
+
+<div class="card">
+    <!-- Begin Signature related section -->
+    <div *ngIf="!loading" class="p-d-flex p-flex-column p-mt-4">
+        <div *ngIf="attachmentExists" class="p-mt-4">
+            <button pButton type="button" label="View Signature" (click)="processRetrievedSignature()"></button>
+        </div>
+
+        <div *ngIf="showSignature" class="p-mt-2" style="text-align: center">
+            <div style="text-align: right">
+                <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-outlined p-button-rounded" (click)="editSignature()"></button>
+            </div>
+            <img class="signature-image" src="{{ signatureImg }}" style="width: 100% !important" />
+        </div>
+
+        <div *ngIf="!attachmentExists || editUserSignature" class="p-mt-4">
+            <div>
+                <b>{{ editUserSignature ? "Edit" : "Add" }} Signature</b>
+            </div>
+            <div class="p-mt-2">
+                <p-radioButton name="signatureType" value="pad" [(ngModel)]="signatureUpload" label="Signature Pad" (onClick)="chooseSignatureUpload()">
+                </p-radioButton>
+                <p-radioButton name="signatureType" value="upload" class="p-ml-2" [(ngModel)]="signatureUpload" label="Upload Signature" (onClick)="chooseSignatureUpload()">
+                </p-radioButton>
+            </div>
+        </div>
+
+        <div *ngIf="showSignatureBrowseSection" class="p-mt-2">
+            <p-fileUpload (onSelect)="onSelectSignatureImg($event)" [auto]="true" chooseLabel="Upload Signature" accept="image/*" (onRemove)="onRemoveSignImg()">
+            </p-fileUpload>
+            <div style="text-align: right">
+                <button pButton type="button" label="Save Signature" icon="pi pi-save" class="p-mt-2"
+                (click)="saveSignatureImage()" [disabled]="!signatureImgToUpload"></button>
+            </div>
+        </div>
+
+        <div *ngIf="showSignaturePad" class="p-mt-4">
+            <app-signing-pad (signatureEmitted)="processSignature($event)">
+            </app-signing-pad>
+        </div>
+    </div>
+    <!-- End Signature related section -->
+
+    <!--Begin Confirmation Dialog-->
+    <p-confirmDialog #cd key="saveUploadedSignature" [baseZIndex]="10000">
+        <ng-template pTemplate="footer">
+            <button type="button" pButton icon="pi pi-check" label="Confirm" (click)="cd.accept()"></button>
+            <button type="button" pButton icon="pi pi-times" label="Cancel" class="p-button-outlined" (click)="cd.reject()"></button>
+        </ng-template>
+    </p-confirmDialog>
+    <!--End Confirmation Dialog-->
+</div>

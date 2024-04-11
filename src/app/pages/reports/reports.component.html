@@ -1,0 +1,14 @@
+<div class="grid">
+    <div class="col-12" *ngIf="tabs.length > 0">
+        <p-tabView>
+            <p-tabPanel *ngFor="let tab of tabs" [header]="tab">
+                <ng-template ngFor let-report [ngForOf]="reports | reportCategory:tab">
+                    <div class="report" [routerLink]="['report', report.id]">
+                        {{report.description}}
+                    </div>
+                    <hr />
+                </ng-template>
+            </p-tabPanel>
+        </p-tabView>
+    </div>
+</div>

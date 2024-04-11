@@ -1,0 +1,86 @@
+<p-toolbar>
+    <div class="toolbar-group-left">
+        <h4>
+            Project Settings <i class="pi pi-cog"></i>
+        </h4>
+    </div>
+</p-toolbar>
+
+
+<div class="card" *ngIf="!loading">
+    <p-tabView [scrollable]="true" [(activeIndex)]="tabsIndex" (onChange)="tabsChanged($event)">
+        <p-tabPanel *ngFor="let setting of settings; let i = index" [header]="setting.tab">
+            <form *ngIf="i == tabsIndex" [formGroup]="projectSettingsForm">
+                <div class="card p-fluid">
+                    <div *ngFor="let detail of setting.settings">
+
+                        <div *ngIf="detail.valueType == settingsValueType.stringType">
+                            <div class="p-field p-grid p-md-6">
+                                <label>{{detail.description}}</label>
+                                <div class="p-col">
+                                    <div class="p-inputgroup">
+                                        <input type="text" pInputText id="detail.property"
+                                            [formControlName]="detail.property">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="field grid md:col-6" *ngIf="detail.valueType == settingsValueType.numberType">
+                            <label>{{detail.description}}</label>
+                            <div class="p-col">
+                                <div class="p-inputgroup">
+                                    <input type="number" min="0" pInputText id="detail.property"
+                                        [formControlName]="detail.property">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="field grid md:col-6" *ngIf="detail.valueType == settingsValueType.booleanType">
+                            <label>{{detail.description}}</label>
+                            <div class="p-col">
+                                <p-inputSwitch id="value" [trueValue]="true" [falseValue]="false"
+                                    (onChange)="handleBooleanChange($event,detail)" [formControlName]="detail.property">
+                                </p-inputSwitch>
+                            </div>
+                        </div>
+
+                        <!-- <div class="p-field p-grid p-md-6" *ngIf="detail.valueType == settingsValueType.stringType && detail.isMultiple">
+                            <label>{{detail.description}}</label>
+
+                            <div class="p-col">
+                                <p-autoComplete seperator=","
+                                    [formControlName]="detail.property" field="value" 
+                                    dataKey="value" [multiple]="detail.isMultiple">
+
+                                </p-autoComplete>
+                             
+                                <small id="username-help"
+                                    *ngIf="this.projectSettingsForm.get(detail.property).invalid && this.projectSettingsForm.get(detail.property).touched"
+                                    class="p-invalid">{{detail.description}} is required</small>
+                            </div>
+
+                        </div> -->
+
+                    </div>
+                    <p-toolbar>
+                        <div class="toolbar-group-left">
+
+                        </div>
+                        <div class="toolbar-group-right">
+                            <p-button class="mr-2" label="Edit" iconPos="left" icon="pi pi-pencil" (click)="edit()"
+                                [disabled]="editing">
+                            </p-button>
+                            <button class="mr-2 " label="Apply" iconPos="left"
+                                [disabled]="this.projectSettingsForm.invalid && this.projectSettingsForm.touched || !editing"
+                                (click)="save(setting.settings)" pButton pRipple type="button"
+                                icon="pi pi-check"></button>
+                        </div>
+
+                    </p-toolbar>
+                </div>
+            </form>
+        </p-tabPanel>
+    </p-tabView>
+</div>

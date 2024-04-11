@@ -1,0 +1,198 @@
+.timeline {
+    cursor: pointer;
+}
+
+h3 {
+    /*  color: $textColor; */
+     font-size: 14px;
+     margin: 0;
+     font-weight: 700;
+ }
+
+ span {
+    margin:0;
+    
+}
+li {
+
+    border: solid 1px #e0e0e0;
+    border-radius: 3px;
+    list-style: none;
+   /*  padding: 22px 0px; */
+   padding: 10px 0px; 
+    position: relative;
+ 
+    .to-do-icon-iwp {
+        background-color:  #009688;;
+    }
+    .to-do-icon-constraint {
+        background-color:  #4CAF50;
+    }
+
+    .description li{
+        list-style: circle;
+       
+        padding: 10px 0px; 
+        position: relative;
+        border:none;
+    }
+
+    .activity-link {
+        width: 1px;
+        height: 100%;
+        position: absolute;
+        left: 20px;
+        top: 0;
+        background-color: #e0e0e0;
+        display: inline-block;
+    }
+
+    .timeline-icon {
+        display: inline-block;
+        vertical-align: middle;
+        position: absolute;
+        top: 20px;
+        left: 10px;
+        width: 25px;
+        height: 25px;
+        line-height: 25px;
+        text-align: center;
+        border-radius: 3px;
+
+        i {
+            font-size: 14px;
+            color: #ffffff;
+            line-height: inherit;
+        }
+    }
+
+    .timeline-content {
+        background-color: #ffffff;
+    
+        padding: 10px;
+        margin-left: 35px;
+        margin-top: -4px;
+        position: relative;
+        border-radius: 3px;
+
+        h3 {
+           /*  color: $textColor; */
+            font-size: 14px;
+            margin: 0;
+            font-weight: 700;
+        }
+
+        p {
+            margin: 8px 0;
+            /* color: $textSecondaryColor; */
+        }
+
+        img {
+            margin: 8px 4px;
+        }
+
+        .timeline-footer {
+            margin: 0 -16px -16px -16px;
+            background-color: #eeeeee;
+            border-top: 1px solid #e0e0e0;
+            padding: 4px 16px;
+
+            i {
+                color: #757575;
+            }
+
+            span {
+                color: #757575;
+                
+            }
+        }
+
+      
+    }
+}
+
+.no-padding-button {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.splitter {
+    width: 12px;
+    display: inline-block;
+}
+
+h5 {
+    padding-bottom: 6px !important;
+    margin: 0px !important;
+}
+
+:host ::ng-deep .constraint.p-card {
+    border-radius: 0.5rem;
+
+    .p-card-body {
+        padding: 1rem 1rem 0 1rem !important;
+        margin:10px;
+    }
+
+    .p-card-content {
+        padding: 1rem 0 0.2rem 0 !important;
+    }
+}
+
+.pb-0 {
+    padding-bottom: 0px;
+}
+
+.pb-1 {
+    padding-bottom: 4px;
+}
+
+.pt-0 {
+    padding-top: 0px;
+}
+
+.icon-grid {
+    position: relative;
+}
+
+.staff-icon {
+    position: absolute;
+    right: 8px;
+    top: 3px;
+}
+.to-do-icon-iwp {
+    color:  #009688;
+    padding:5px;
+}
+.to-do-icon-constraint {
+    color:  #4CAF50;
+   padding:5px;
+}
+
+
+:host ::ng-deep .timeline {
+    border-radius: 0.5rem;
+    .p-card-body {
+        padding: 0.1rem 0.1rem 0 0.1rem !important;
+        margin-bottom:2px!important;
+    }
+    .p-card .p-card-content {
+        /* padding: 1rem 0; */
+        padding: 0.5rem!important;
+        padding-top:0.1rem!important;
+        padding-left: 0!important;
+    
+    }
+
+    .addBorder{
+        border-left:5px solid #5072A7;
+    }
+    .unreadMessage{
+        color:#5072A7;
+    }
+    .linkStyle{
+        font-size: 1.5rem!important;
+        margin-left: 0.3rem!important;
+    }
+}
+

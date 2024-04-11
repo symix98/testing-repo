@@ -1,0 +1,67 @@
+.file-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  // gap: 3rem;
+}
+
+.propertiesSide1,
+.propertiesSide2,
+.propertiesSide3 {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.propertiesSide2 {
+  margin-top: 2rem;
+}
+
+img {
+  max-width: 100px;
+  max-height: 100px;
+}
+
+button {
+  width: 162px;
+  align-self: flex-start;
+}
+
+#path {
+  width: 20vw;
+  background-color: #F0F3FF;
+  border-color: #F0F3FF;
+  color: #000000;
+}
+
+h4 {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #000000;
+}
+
+h5 {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #000000;
+}
+
+h6 {
+  font-size: .9rem;
+  font-weight: bold;
+  color: #b4b4b8;
+}
+
+small {
+  font-size: .8rem;
+  font-weight: bold;
+  color: #b4b4b8;
+}
+
+span {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #000000;
+}

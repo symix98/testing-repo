@@ -1,0 +1,828 @@
+<p-tabView [(activeIndex)]="activeIndex"	>
+  <p-tabPanel header="Properties">
+    <div class="container-fluid" *ngIf="document">
+      <p-card id="left-card">
+        <p-toolbar>
+          <div id="imgDetails">
+            <img
+              [src]="imageSrc"
+              alt="File Type Image"
+              width="60"
+              height="60"
+            />
+            <h5 style="color: #2196f3">
+              {{ document.documentsNumber }}
+            </h5>
+            <small>{{ document.ssize }}</small>
+          </div>
+
+          <div id="buttons">
+            <button
+              pButton
+              type="button"
+              icon="pi pi-cloud-download"
+              label="Download Metadata"
+              id="downloadButton"
+              (click)="downloadFile()"
+            ></button>
+            <button
+              pButton
+              type="button"
+              label="Edit"
+              icon="pi pi-pencil"
+              (click)="turnOnEditMode()"
+            ></button>
+            <button
+              pButton
+              type="button"
+              label="Update"
+              icon="pi pi-pencil"
+              (click)="update()"
+            ></button>
+          </div>
+        </p-toolbar>
+        <form #docForm="ngForm" class="data-form" style="margin-top: 1rem">
+          <div class="grid p-fluid">
+
+            <div class="field col-12 md:col-3">
+              <p for="phase">Phase</p>
+              <input
+                [disabled]="!editMode"
+                pInputText
+                name="dat8"
+                [(ngModel)]="document.phase"
+              />
+            </div>
+            <!-- <div class="field col-12 md:col-3">
+              <p for="version">Version</p>
+              <input
+                [disabled]="!editMode"
+                pInputText
+                name="dat3"
+                [(ngModel)]="document.version"
+              />
+            </div> -->
+
+            <!-- <div class="field col-12 md:col-3">
+              <p for="lastModifiedDate">Last Modified Date</p>
+              <p-calendar
+                [disabled]="!editMode"
+                id="lastModifiedDate"
+                name="lastModifiedDate"
+                [showIcon]="true"
+                [(ngModel)]="document.lastModifiedDate"
+                dateFormat="dd/mm/yy"
+              ></p-calendar>
+            </div> -->
+
+            <!-- <div class="field col-12 md:col-3">
+              <p for="fileName">File Name</p>
+              <input
+                [disabled]="!editMode"
+                pInputText
+                name="dat21"
+                [(ngModel)]="document.fileName"
+              />
+            </div> -->
+
+            <div class="field col-12 md:col-3">
+              <p for="title">Title</p>
+              <input
+                [disabled]="!editMode"
+                pInputText
+                name="dat31"
+                [(ngModel)]="document.title"
+              />
+            </div>
+
+            <div class="field col-12 md:col-3">
+              <p for="documentsTypeId">Documents Type</p>
+              <!-- <input [disabled]="!editMode" pInputText name="dat" [(ngModel)]="document.documentsType?.name"/> -->
+              <p-dropdown
+                [disabled]="!editMode"
+                id="documentsType"
+                name="documentsType"
+                [(ngModel)]="document.documentsType"
+                [options]="documentTypeRefs"
+                optionLabel="name"
+                placeholder="Select Documents Type"
+              ></p-dropdown>
+            </div>
+
+            <div class="field col-12 md:col-3">
+              <p for="documentsSubTypeId">Documents Sub Type</p>
+              <!-- <input [disabled]="!editMode" pInputText name="dat" [(ngModel)]="document.documentsSubType?.name"/> -->
+              <p-dropdown
+                [disabled]="!editMode"
+                id="documentsSubType"
+                name="documentsSubType"
+                [(ngModel)]="document.documentsSubType"
+                [options]="documentSubTypeRefs"
+                optionLabel="name"
+                placeholder="Select Documents Sub Type"
+              ></p-dropdown>
+            </div>
+
+            <div class="field col-12 md:col-3">
+              <p for="filesType">Type</p>
+              <p-dropdown
+                [disabled]="!editMode"
+                id="filesType"
+                name="filesType"
+                [(ngModel)]="document.filesType"
+                [options]="filesTypeRefs"
+                optionLabel="name"
+                placeholder="Select Type"
+              ></p-dropdown>
+            </div>
+
+            <div class="field col-12 md:col-3">
+              <p for="documentsFor">Document For</p>
+              <input
+                [disabled]="!editMode"
+                pInputText
+                name="dat32"
+                [(ngModel)]="document.documentsFor"
+              />
+            </div>
+
+            <div class="field col-12 md:col-3">
+              <p for="additionalReference">Additional Reference</p>
+              <input
+                [disabled]="!editMode"
+                pInputText
+                name="dat27"
+                [(ngModel)]="document.additionalReference"
+              />
+            </div>
+
+            <div class="field col-12 md:col-3">
+              <p for="repliedDate">Replied Date</p>
+              <p-calendar
+                [disabled]="!editMode"
+                id="revisionDate"
+                name="revisionDate"
+                [showIcon]="true"
+                [(ngModel)]="document.repliedDate"
+                dateFormat="dd/mm/yy"
+              ></p-calendar>
+            </div>
+
+            <div class="field col-12 md:col-3">
+              <p for="accptanceCodeId">Acceptance Code</p>
+              <p-dropdown
+                [disabled]="!editMode"
+                id="accptanceCode"
+                name="accptanceCode"
+                [(ngModel)]="document.accptanceCode"
+                [options]="acceptanceCodeRefs"
+                optionLabel="name"
+                placeholder="Select Accptance Code"
+              ></p-dropdown>
+            </div>
+          </div>
+          <div class="grid p-fluid">
+            <div class="field col-12 md:col-3">
+              <p for="initiatedBy">Initiated By</p>
+              <input
+                [disabled]="!editMode"
+                pInputText
+                name="dat5"
+                [(ngModel)]="document.initiatedBy"
+              />
+            </div>
+
+            <div class="field col-12 md:col-3">
+              <p for="receiveDate">Receive Date</p>
+              <p-calendar
+                [disabled]="!editMode"
+                id="receiveDate"
+                name="receiveDate"
+                [showIcon]="true"
+                [(ngModel)]="document.receiveDate"
+                dateFormat="dd/mm/yy"
+              ></p-calendar>
+            </div>
+
+            <div class="field col-12 md:col-3">
+              <p for="organizerId">Organizer</p>
+              <!-- <input [disabled]="!editMode" pInputText name="dat" [(ngModel)]="document.orgnizer?.name"/> -->
+              <p-dropdown
+                [disabled]="!editMode"
+                id="orgnizer"
+                name="orgnizer"
+                [(ngModel)]="document.orgnizer"
+                [options]="organizerIdRefs"
+                optionLabel="name"
+                placeholder="Select Organizer"
+              ></p-dropdown>
+            </div>
+
+            <div class="field col-12 md:col-3">
+              <p for="categoriesId">Categories</p>
+              <p-dropdown
+                [disabled]="!editMode"
+                id="categories"
+                name="categories"
+                [(ngModel)]="document.categories"
+                [options]="categoriesIdRefs"
+                optionLabel="name"
+                placeholder="Select Category"
+              ></p-dropdown>
+            </div>
+          </div>
+          <div class="grid p-fluid">
+            <div class="field col-12 md:col-3">
+              <p for="modelReference">Model Reference</p>
+              <input
+                [disabled]="!editMode"
+                pInputText
+                name="dat26"
+                [(ngModel)]="document.modelReference"
+              />
+            </div>
+
+            
+
+            <div class="field col-12 md:col-3">
+              <p for="relatedItems">Related Items</p>
+              <input
+                [disabled]="!editMode"
+                pInputText
+                name="dat28"
+                [(ngModel)]="document.relatedItems"
+              />
+            </div>
+
+            <div class="field col-12 md:col-3">
+              <p for="discipline">Discipline</p>
+              <p-dropdown
+                [disabled]="!editMode"
+                id="discipline"
+                name="discipline"
+                [(ngModel)]="document.discipline"
+                [options]="disciplineIdRefs"
+                optionLabel="name"
+                placeholder="Select Discipline ID"
+              ></p-dropdown>
+            </div>
+          </div>
+
+          <div class="grid p-fluid">
+            <!-- <div class="field col-12 md:col-3">
+              <p for="path">Path</p>
+              <input
+                [disabled]="!editMode"
+                pInputText
+                name="dat37"
+                [(ngModel)]="document.path"
+              />
+            </div> -->
+
+            <!-- <div class="field col-12 md:col-3">
+              <p for="workflow">Workflow</p>
+              <input
+                [disabled]="!editMode"
+                pInputText
+                name="dat38"
+                [(ngModel)]="document.workflow"
+              />
+            </div>
+
+            <div class="field col-12 md:col-3">
+              <p for="currentStep">currentStep</p>
+              <input
+                [disabled]="!editMode"
+                pInputText
+                name="dat39"
+                [(ngModel)]="document.currentStep"
+              />
+            </div> -->
+
+            
+          </div>
+
+          <div class="grid p-fluid">
+            <div class="field col-12 md:col-3">
+              <p for="csiSpecCode">CSI Spec Code</p>
+              <input
+                [disabled]="!editMode"
+                pInputText
+                name="dat44"
+                [(ngModel)]="document.csiSpecCode"
+              />
+            </div>
+
+            <div class="field col-12 md:col-3">
+              <p for="current">Current</p>
+              <input
+                [disabled]="!editMode"
+                pInputText
+                name="dat45"
+                [(ngModel)]="document.current"
+              />
+            </div>
+
+            <div class="field col-12 md:col-3">
+              <p for="facilityCode">Facility Code</p>
+              <input
+                [disabled]="!editMode"
+                pInputText
+                name="dat46"
+                [(ngModel)]="document.facilityCode"
+              />
+            </div>
+
+            
+          </div>
+          <div class="grid p-fluid">
+            <div class="field col-12 md:col-3">
+              <p for="jobNumber">Job Number</p>
+              <input
+                [disabled]="!editMode"
+                pInputText
+                name="dat48"
+                [(ngModel)]="document.jobNumber"
+              />
+            </div>
+
+            <div class="field col-12 md:col-3">
+              <p for="milestone">Milestone</p>
+              <input
+                [disabled]="!editMode"
+                pInputText
+                name="dat49"
+                [(ngModel)]="document.milestone"
+              />
+            </div>
+
+            <div class="field col-12 md:col-3">
+              <p for="remarks">Remarks</p>
+              <input
+                [disabled]="!editMode"
+                pInputText
+                name="remarks"
+                [(ngModel)]="document.remarks"
+              />
+            </div>
+
+            
+          </div>
+          <div class="grid p-fluid">
+            <div class="field col-12 md:col-3">
+              <p for="numberOfMarkups">Number Of Markups</p>
+              <p-inputNumber
+                [disabled]="!editMode"
+                name="dat50"
+                [(ngModel)]="document.numberOfMarkups"
+              ></p-inputNumber>
+            </div>
+
+            <div class="field col-12 md:col-3">
+              <p for="activityId">Activity ID</p>
+              <input
+                [disabled]="!editMode"
+                pInputText
+                name="activityId"
+                [(ngModel)]="document.activityID"
+              />
+            </div>
+
+            <div class="field col-12 md:col-3">
+              <p for="purchaseOrder">Purchase Order</p>
+              <input
+                [disabled]="!editMode"
+                pInputText
+                name="dat52"
+                [(ngModel)]="document.purchaseOrder"
+              />
+            </div>
+
+            <div class="field col-12 md:col-3">
+              <p for="reviewStatus">Status</p>
+              <p-dropdown
+                [disabled]="!editMode"
+                id="status"
+                name="status"
+                [(ngModel)]="document.status"
+                [options]="statusesRefs"
+                optionLabel="name"
+                placeholder="Select Status ID"
+              ></p-dropdown>
+            </div>
+          </div>
+
+          <div class="grid p-fluid">
+            <!-- <div class="field col-12 md:col-3">
+              <p for="fileType">File Type</p>
+              <input
+                [disabled]="!editMode"
+                pInputText
+                name="dat34"
+                [(ngModel)]="document.fileType"
+              />
+            </div> -->
+
+            <div class="field col-12 md:col-3">
+              <p for="classes">Classes</p>
+              <input
+                [disabled]="!editMode"
+                pInputText
+                name="34"
+                [(ngModel)]="document.classes"
+              />
+            </div>
+
+            <div class="field col-12 md:col-3">
+              <p for="forecastSubmToClient">Forecast Submit To Client</p>
+              <p-calendar
+                [disabled]="!editMode"
+                id="forecastSubmToClient"
+                name="forecastSubmToClient"
+                [showIcon]="true"
+                [(ngModel)]="document.forecastSubmToClient"
+                dateFormat="dd/mm/yy"
+              ></p-calendar>
+            </div>
+
+            <div class="field col-12 md:col-3">
+              <p for="replyRequired">Reply Required</p>
+              <input
+                [disabled]="!editMode"
+                pInputText
+                name="replyRequired"
+                [(ngModel)]="document.replyRequired"
+              />
+            </div>
+
+            <div class="field col-12 md:col-3">
+              <p for="subSystem">Sub System</p>
+              <p-dropdown
+                [disabled]="!editMode"
+                id="subSystem"
+                name="subSystem"
+                [(ngModel)]="document.subSystem"
+                [options]="subSystemIdRefs"
+                optionLabel="name"
+                placeholder="Select Sub System"
+              ></p-dropdown>
+            </div>
+          </div>
+
+          <div class="grid p-fluid">
+            <div class="field col-12 md:col-3">
+              <p for="replyRequiredByDate">Reply Required By Date</p>
+              <p-calendar
+                [disabled]="!editMode"
+                id="replyRequiredByDate"
+                name="replyRequiredByDate"
+                [showIcon]="true"
+                [(ngModel)]="document.replyRequiredBy"
+                dateFormat="dd/mm/yy"
+              ></p-calendar>
+            </div>
+
+            <div class="field col-12 md:col-3">
+              <p for="disciplineId">Discipline</p>
+              <input
+                [disabled]="!editMode"
+                pInputText
+                name="dat10"
+                [(ngModel)]="document.disciplines"
+              />
+            </div>
+
+            <div class="field col-12 md:col-3">
+              <p for="tqStatus">TQ Status</p>
+              <input
+                [disabled]="!editMode"
+                pInputText
+                name="dat11"
+                [(ngModel)]="document.tqStatus"
+              />
+            </div>
+
+            <div class="field col-12 md:col-3">
+              <p for="recipientId">Recipient</p>
+              <!-- <input [disabled]="!editMode" pInputText name="dat" [(ngModel)]="document.recipient?.name"/> -->
+              <p-dropdown
+                [disabled]="!editMode"
+                id="recipient"
+                name="recipient"
+                [(ngModel)]="document.recipient"
+                [options]="recipientIdRefs"
+                optionLabel="name"
+                placeholder="Select Recipient"
+              ></p-dropdown>
+            </div>
+          </div>
+
+          <div class="grid p-fluid">
+            <!-- <div class="field col-12 md:col-3">
+              <p for="dateModified">Date Modified</p>
+              <p-calendar
+                [disabled]="!editMode"
+                id="dateModified"
+                name="dateModified"
+                [showIcon]="true"
+                [(ngModel)]="document.dateModified"
+                dateFormat="dd/mm/yy"
+              ></p-calendar>
+            </div> -->
+
+          </div>
+
+          <div class="grid p-fluid">
+            <div class="field col-12 md:col-3">
+              <p for="printSize">Print Size</p>
+              <input
+                [disabled]="!editMode"
+                pInputText
+                name="dat22"
+                [(ngModel)]="document.printSize"
+              />
+            </div>
+
+            <div class="field col-12 md:col-3">
+              <p for="sstatus">Status</p>
+              <input
+                [disabled]="!editMode"
+                pInputText
+                name="dat41"
+                [(ngModel)]="document.sstatus"
+              />
+            </div>
+
+            <div class="field col-12 md:col-3">
+              <p for="reviewStatus">Review Status</p>
+              <input
+                [disabled]="!editMode"
+                pInputText
+                name="dat42"
+                [(ngModel)]="document.reviewStatus"
+              />
+            </div>
+
+            <div class="field col-12 md:col-3">
+              <p for="accessLevel">Access Level</p>
+              <input
+                [disabled]="!editMode"
+                pInputText
+                name="dat43"
+                [(ngModel)]="document.accessLevel"
+              />
+            </div>
+          </div>
+
+          <div class="grid p-fluid">
+            <div class="field col-12 md:col-3">
+              <p for="reviewSource">Review Source</p>
+              <input
+                [disabled]="!editMode"
+                pInputText
+                name="dat29"
+                [(ngModel)]="document.reviewSource"
+              />
+            </div>
+
+            <div class="field col-12 md:col-3">
+              <p for="plannedSubmissionDate">Planned Submission Date</p>
+              <p-calendar
+                [disabled]="!editMode"
+                id="plannedSubmissionDate"
+                name="plannedSubmissionDate"
+                [showIcon]="true"
+                [(ngModel)]="document.plannedSubmissionDate"
+                dateFormat="dd/mm/yy"
+              ></p-calendar>
+            </div>
+
+            
+
+            
+          </div>
+
+          <div class="grid p-fluid" *ngIf="!oldRevision">
+            <div class="field col-12 md:col-3">
+              <p for="projectField1">Project Field1</p>
+              <input
+              value="history"
+                [disabled]="!editMode"
+                pInputText
+                name="dat14"
+                [(ngModel)]="document.projectField1"
+              />
+              <!-- <i *ngIf="oldRevision" class="mr-4 p-text-secondary" pBadge style="font-size: 1rem" [value]="'history'" severity="danger"></i> -->
+
+            </div>
+
+            <div class="field col-12 md:col-3">
+              <p for="projectField2">Project Field2</p>
+              <input
+                [disabled]="!editMode"
+                pInputText
+                name="dat15"
+                [(ngModel)]="document.projectField2"
+              />
+            </div>
+
+            <div class="field col-12 md:col-3">
+              <p for="projectField3">Project Field3</p>
+              <input
+                [disabled]="!editMode"
+                pInputText
+                name="dat16"
+                [(ngModel)]="document.projectField3"
+              />
+            </div>
+
+            <div class="field col-12 md:col-3">
+              <p for="projectField4">Project Field4</p>
+              <input
+                [disabled]="!editMode"
+                pInputText
+                name="dat17"
+                [(ngModel)]="document.projectField4"
+              />
+            </div>
+          </div>
+
+          <div class="grid p-fluid">
+            <!-- <div class="field col-12 md:col-3">
+              <p for="projectField5">Project Field5</p>
+              <input
+                [disabled]="!editMode"
+                pInputText
+                name="dat18"
+                [(ngModel)]="document.projectField5"
+              />
+            </div>
+
+            <div class="field col-12 md:col-3">
+              <p for="projectField6">Project Field6</p>
+              <input
+                [disabled]="!editMode"
+                pInputText
+                name="dat19"
+                [(ngModel)]="document.projectField6"
+              />
+            </div>
+
+            <div class="field col-12 md:col-3">
+              <p for="projectField7">Project Field7</p>
+              <input
+                [disabled]="!editMode"
+                pInputText
+                name="dat20"
+                [(ngModel)]="document.projectField7"
+              />
+            </div> -->
+
+            <div class="field col-12 md:col-3">
+              <p for="plannedSubmissionDate">Planned Submission Date</p>
+              <p-calendar
+                [disabled]="!editMode"
+                id="plannedSubmissionDate"
+                name="plannedSubmissionDate"
+                [showIcon]="true"
+                [(ngModel)]="document.plannedSubmissionDate"
+                dateFormat="dd/mm/yy"
+              ></p-calendar>
+            </div>
+
+            <!-- <div class="field col-12 md:col-3">
+              <p for="isTransmitted" style="color: #ffffff">Is Transmitted</p>
+              <p-checkbox
+                [binary]="true"
+                [disabled]="!editMode"
+                inputId="isTransmitted_{{ document.id }}"
+                name="isTransmitted_{{ document.id }}"
+                label="Transmitted Document?"
+                [(ngModel)]="document.isTransmitted"
+              ></p-checkbox>
+            </div> -->
+
+            <!-- <div class="field col-12 md:col-3">
+              <p for="lock" style="color: #ffffff">Lock</p>
+              <p-checkbox
+                [binary]="true"
+                [disabled]="!editMode"
+                inputId="lock_{{ document.id }}"
+                name="lock_{{ document.id }}"
+                label="Lock Document?"
+                [(ngModel)]="document.lock"
+              ></p-checkbox>
+            </div> -->
+
+            <div class="field col-12 md:col-3">
+              <p for="confidential" style="color: #ffffff">Is Confidential</p>
+              <p-checkbox
+                [binary]="true"
+                [disabled]="!editMode"
+                inputId="confidential_{{ document.id }}"
+                name="confidential_{{ document.id }}"
+                label="Confidential Document?"
+                [(ngModel)]="document.confidential"
+              ></p-checkbox>
+            </div>
+
+          </div>
+
+        </form>
+      </p-card>
+
+      <p-card id="right-card">
+        <h5 style="text-align: center;">History</h5>
+
+        <p-listbox [options]="historyDocuments" [(ngModel)]="selectedHistory" [metaKeySelection]="false" >
+          <ng-template let-doc pTemplate="item">
+              <div class="country-item">
+
+                <div class="p-fluid grid">
+                  <div class="col-12">
+                    <label for="">Name: </label> <b>{{ doc.documentsNumber || "Unavailable" }}</b>
+                  </div>
+                  <div class="col-6">
+                    <label style="text-align: center" for="revision"
+                    ><span
+                      style="color: #b4b4b8;font-weight: bold"
+                      >Revision:</span
+                    >
+                    <span style="color: #2196f3;">
+                      {{ doc.revision || "Unavailable" }}</span
+                    ></label>
+                  </div>
+                  <div class="col-6">
+                      <label id="revisionDateLabel" style="text-align: center"
+                        ><span
+                          style="color: #b4b4b8;"
+                          >Revision Date:</span
+                        >
+                        <span style="color: #2196f3;">
+                          {{ doc.revisionDate | date }}</span
+                        ></label
+                      >
+                </div>
+                </div>
+                <!-- <div class="grid grid-nogutter justify-content-between">
+                  <div class="grid grid-nogutter justify-content-start">
+                    <label style="text-align: center" for="revision"
+                    ><span
+                      style="color: #b4b4b8;font-weight: bold"
+                      >Revision:</span
+                    >
+                    <span style="color: #2196f3;">
+                      {{ doc.revision || "Unavailable" }}</span
+                    ></label>
+                  </div>
+                  <div class="grid grid-nogutter justify-content-end">
+                  <label id="revisionDateLabel" style="text-align: center"
+                    ><span
+                      style="color: #b4b4b8;"
+                      >Revision Date:</span
+                    >
+                    <span style="color: #2196f3;">
+                      {{ doc.revisionDate | date }}</span
+                    ></label
+                  >
+                </div>
+                </div> -->
+              </div>
+          </ng-template>
+      </p-listbox>
+      </p-card>
+    </div>
+  </p-tabPanel>
+  <p-tabPanel header="Sent">
+    <p-table
+      [value]="transmittalDocuments"
+      [tableStyle]="{ 'max-width': '50rem' }"
+    >
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Transmittal Number</th>
+          <th>Project Name</th>
+          <th>Subject</th>
+          <th>Status</th>
+          <th>Sender</th>
+          <th>Date</th>
+          <th>Comments</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-document>
+        <tr>
+          <td>{{ document.transmittalNo }}</td>
+          <td>{{ document.projectName }}</td>
+          <td>{{ document.subject }}</td>
+          <td>{{ document.status }}</td>
+          <td>{{ document.ceatedBy }}</td>
+          <td>{{ document.creationDate }}</td>
+          <td>{{ document.comments }}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-tabPanel>
+  <p-tabPanel header="Relations">
+    <app-doc-relations *ngIf="document?.documentsNumber && activeIndex == 2" [data]="document"></app-doc-relations>
+  </p-tabPanel>
+</p-tabView>

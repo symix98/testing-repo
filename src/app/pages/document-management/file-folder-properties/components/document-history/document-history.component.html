@@ -1,0 +1,37 @@
+<p-card id="right-card">
+    <h5 style="text-align: center;">History</h5>
+
+    <p-listbox [options]="historyDocuments" [(ngModel)]="selectedHistory" [metaKeySelection]="false" >
+      <ng-template let-doc pTemplate="item">
+          <div class="country-item">
+
+            <div class="p-fluid grid">
+              <div class="col-12">
+                <label for="">Name: </label> <b>{{ doc.documentsNumber || "Unavailable" }}</b>
+              </div>
+              <div class="col-6">
+                <label style="text-align: center" for="revision"
+                ><span
+                  style="color: #b4b4b8;font-weight: bold"
+                  >Revision:</span
+                >
+                <span style="color: #2196f3;">
+                  {{ doc.revision || "Unavailable" }}</span
+                ></label>
+              </div>
+              <div class="col-6">
+                  <label id="revisionDateLabel" style="text-align: center"
+                    ><span
+                      style="color: #b4b4b8;"
+                      >Revision Date:</span
+                    >
+                    <span style="color: #2196f3;">
+                      {{ doc.revisionDate | date }}</span
+                    ></label
+                  >
+            </div>
+            </div>
+          </div>
+      </ng-template>
+  </p-listbox>
+  </p-card>

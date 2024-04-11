@@ -1,0 +1,20 @@
+    <p-tabView>
+        <p-tabPanel header="General">
+            <app-doc-general-properties-tab [data]="properties"></app-doc-general-properties-tab>
+        </p-tabPanel>
+        <p-tabPanel header="Properties">
+            <app-doc-proprties-tab [data]="properties"></app-doc-proprties-tab>
+        </p-tabPanel>
+        <p-tabPanel header="Custom Properties">
+            <app-folder-properties [data]="properties" [folderId]="folderId"></app-folder-properties>
+        </p-tabPanel>
+        <p-tabPanel header="Flow">
+            <app-flow-viewer [data]="properties"></app-flow-viewer>
+        </p-tabPanel>
+        <p-tabPanel header="Security">
+            <app-folder-security [data]="properties"></app-folder-security>
+        </p-tabPanel>
+        <p-tabPanel header="History">
+            <app-document-history [data]="properties"></app-document-history>
+        </p-tabPanel>
+    </p-tabView>

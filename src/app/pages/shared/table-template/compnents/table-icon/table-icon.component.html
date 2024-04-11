@@ -1,0 +1,10 @@
+<div class="container">
+    
+    <img src="./../../../../../../assets/images/icons/pdf.png" width="35px" *ngIf="data?.fileType == 'PDF'" />
+    <img src="./../../../../../../assets/images/icons/dwg.png" width="35px" *ngIf="data?.fileType == 'DWG'" />
+    <img src="./../../../../../../assets/images/icons/excel.png" width="35px" *ngIf="data?.fileType == 'EXCEL'" />
+    <img src="./../../../../../../assets/images/icons/folder.png" width="35px" *ngIf="data?.fileType == 'FOLDER'" />
+    <img src="./../../../../../../assets/images/icons/otherdoc.png" width="35px" *ngIf="data?.fileType == 'OTHER'" />
+    <i pTooltip="No File Attached" class="pi pi-exclamation-triangle" style="color: red; font-size: 1rem;" *ngIf="!data?.fileName && data?.fileType != 'FOLDER'"></i>
+    <span class="text-overlay">{{ data?.documentsNumber }}</span>
+</div>

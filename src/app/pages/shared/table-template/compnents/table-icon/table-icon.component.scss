@@ -1,0 +1,10 @@
+.container {
+    position: relative;
+    display: inline-block; /* Ensures that container only takes as much width as necessary */
+}
+
+.text-overlay {
+    position: relative;
+    top: -9px;
+    padding: 10px; /* Adjust padding as needed */
+}

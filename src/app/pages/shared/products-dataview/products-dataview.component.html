@@ -1,0 +1,114 @@
+<p-dataView #dv [value]="data" [paginator]="dataViewParam?.paginator" [rows]="dataViewParam?.rowPerPageDefault"
+    layout="grid" [lazy]="true" [loading]="loading" (onLazyLoad)="loadData($event)" [totalRecords]="totalItems"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" 
+    [sortOrder]="dataViewParam.sortOrder">
+
+    <ng-template pTemplate="header">
+        <div class="flex flex-column md:flex-row md:justify-content-between">
+            <span *ngIf="dataViewParam.filterBox" class="p-input-icon-left mb-2 md:mb-0">
+                <i class="pi pi-search"></i>
+                <input type="search"  pInputText [placeholder]="dataViewParam.filterBox.label" (input)="searchByName($event.target.value)">
+                <p-dropdown [options]="dataViewParam.filterBox.field" [(ngModel)]="selectedFilter" (onChange)="changedField($event)"></p-dropdown>
+            </span>
+            <p-dataViewLayoutOptions></p-dataViewLayoutOptions>
+        </div>
+    </ng-template>
+
+
+    <ng-template let-product pTemplate="listItem">
+        <div class="col-12">
+            <div class="product-list-item">
+                <img [src]="'data:' + product[dataViewParam.productsCard.imageContentType] + ';base64,' + product[dataViewParam.productsCard.image]"
+                    onerror="this.attributes.src.value='../../../../assets/images/product.jpg';" height="150"
+                    width="250" style="object-fit: contain;" [alt]="product[dataViewParam.productsCard.title]"
+                    class="product-image" />
+                <div class="product-list-detail">
+
+                    <div class="product-name">{{product[dataViewParam.productsCard.title]}}</div>
+                    <div class="product-description">{{product[dataViewParam.productsCard.desc]}}</div>
+                    
+                    <p-rating *ngIf="product[dataViewParam.productsCard?.rating]"
+                        [ngModel]="product[dataViewParam.productsCard?.rating]" [readonly]="true"
+                        [cancel]="false"></p-rating>
+                    <i class="pi pi-tag product-category-icon"></i><span
+                        class="product-category">{{product[dataViewParam.productsCard.class]}}</span>
+
+                    <div *ngIf="dataViewParam.productsCard.info" class="mt-2">
+                        <div class="product-supplier">{{product[dataViewParam.productsCard.info.object][dataViewParam.productsCard.info.supplier]}}</div>
+
+                        <b *ngIf="dataViewParam.productsCard.info?.name" class=""> Contact:
+                            {{product[dataViewParam.productsCard.info.object][dataViewParam.productsCard.info.name]}}</b>
+                        <b *ngIf="dataViewParam.productsCard.info?.email?.toLowerCase()" class=""> | Email:
+                            <a [href]="'mailto:' + product[dataViewParam.productsCard.info.object][dataViewParam.productsCard.info.email.toLowerCase()] + 
+                            '?subject=' + 'Inquiry - ' + product[dataViewParam.productsCard.title] + 
+                            '&body=' + 'Inquiry For ' + product[dataViewParam.productsCard.title]  ">
+                                {{product[dataViewParam.productsCard.info.object][dataViewParam.productsCard.info.email.toLowerCase()]}}</a></b>
+                        <b *ngIf="dataViewParam.productsCard.info?.number" class=""> | Number:
+                            {{product[dataViewParam.productsCard.info.object][dataViewParam.productsCard.info.number]}}</b>
+                    </div>
+
+                </div>
+                <div class="product-list-action">
+                    <!-- <span *ngIf="product[dataViewParam.productsCard?.cost]" class="product-price">${{product[dataViewParam.productsCard?.cost]}}</span> -->
+                    <!-- <p-button icon="pi pi-info-circle" label="Inquiry"
+                        (click)="dataViewParam.onRowSelected(product)"></p-button> -->
+                    <!-- <span [class]="'product-badge status-' + product.inventoryStatus.toLowerCase()">{{product.inventoryStatus}}</span> -->
+                </div>
+            </div>
+        </div>
+    </ng-template>
+
+    <ng-template let-product pTemplate="gridItem">
+        <div class="col-12 md:col-4">
+
+            <div class="product-grid-item card">
+                <div class="product-grid-item-top">
+                    <div>
+                        <i class="pi pi-tag product-category-icon"></i>
+                        <span class="product-category">{{product[dataViewParam.productsCard.class]}}</span>
+                    </div>
+                    <!-- <span [class]="'product-badge status-' + product.inventoryStatus?.toLowerCase()">{{product.inventoryStatus}}</span> -->
+                </div>
+                <div class="product-grid-item-content">
+                    <p-image [src]="'data:' + product[dataViewParam.productsCard.imageContentType] + ';base64,' + product[dataViewParam.productsCard.image]"
+                        onerror="this.attributes.src.value='../../../../assets/images/product.jpg';" height="200"
+                        width="400" [alt]="product[dataViewParam.productsCard.title]"
+                        class="product-image" [preview]="true" [imageStyle]="{'object-fit': 'contain'}"> </p-image>
+
+
+                    <div class="product-name">{{product[dataViewParam.productsCard.title]}}</div>
+                    <div class="product-description">{{product[dataViewParam.productsCard.desc]}}</div>
+                    <div *ngIf="dataViewParam.productsCard.info" class="mt-2">
+                        <div class="product-supplier">{{product[dataViewParam.productsCard.info.object][dataViewParam.productsCard.info.supplier]}}</div>
+
+                        <div *ngIf="dataViewParam.productsCard.info?.name" class="">
+                            {{product[dataViewParam.productsCard.info.object][dataViewParam.productsCard.info.name]}}
+                        </div>
+                        <div *ngIf="dataViewParam.productsCard.info?.email" class="">
+                            <a [href]="'mailto:' + product[dataViewParam.productsCard.info.object][dataViewParam.productsCard.info.email] + 
+                            '?subject=' +  product[dataViewParam.productsCard.title] + 
+                                '&body=' + 'Inquiry For ' + product[dataViewParam.productsCard.title]  ">
+                                {{product[dataViewParam.productsCard.info.object][dataViewParam.productsCard.info.email]}}</a>
+                        </div>
+                        <div *ngIf="dataViewParam.productsCard.info?.number" class="">
+                            {{product[dataViewParam.productsCard.info.object][dataViewParam.productsCard.info.number]}}
+                        </div>
+
+                    </div>
+                    <p-rating *ngIf="product[dataViewParam.productsCard?.rating]"
+                        [ngModel]="product[dataViewParam.productsCard?.rating]" [readonly]="true"
+                        [cancel]="false"></p-rating>
+                </div>
+
+
+
+                <div class="product-grid-item-bottom">
+                    <!-- <span class="product-price">${{product[dataViewParam.productsCard?.cost]}}</span> -->
+                    <span class="product-price"></span>
+                    <p-button icon="pi pi-pencil" (click)="dataViewParam.onRowSelected(product)"></p-button>
+                </div>
+            </div>
+
+        </div>
+    </ng-template>
+</p-dataView>

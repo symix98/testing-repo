@@ -1,0 +1,32 @@
+<p-card>
+    <div class='form-title'><i class='pi pi-sitemap pi-fw'></i> Document Progress Tracking</div>
+    <hr>
+    <div class='timeline'>
+        <p-timeline [value]='events' layout='horizontal' [align]='"top"'>
+            <ng-template pTemplate='marker' let-event>
+                <span class='custom-marker shadow-2' [style.backgroundColor]='event.color'>
+                    <b *ngIf='!event.revise' [style.color]="'#ffffff'">{{event.sequence}}</b>
+                    <b *ngIf='event.revise' [style.color]="'#f30909f3'">{{event.sequence}}</b>
+                </span>
+            </ng-template>
+            <ng-template pTemplate='content' let-event>
+                <b> {{event.stepName}} </b>
+                <br> {{event.date}} <br>
+                <span *ngIf="event.subAssigned" [style.Color]="event.color" for="">Initiated By</span>
+                <label> {{event.subAssigned}} </label>
+                <span *ngIf="event.appAssigned" [style.Color]="event.color" for="">Action By</span>
+                <label> {{event.appAssigned}} </label>
+                <br>
+                <b *ngIf="event.revise" style="color: rgb(255 0 0 / 77%);">
+                    <label>
+                        Document rejected by {{event.reviseto}} <br>
+                        to be revised by {{event.revise}}, with comment: <br>
+                        {{event.comment}}
+                    </label>
+                </b>
+            </ng-template>
+            <ng-template pTemplate='opposite' let-event>
+            </ng-template>
+        </p-timeline>
+    </div>
+</p-card>

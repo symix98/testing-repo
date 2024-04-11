@@ -1,0 +1,10 @@
+<b class="m-2">Project Explorer</b>
+<p-tree 
+[value]="files"
+[filter]=" true"
+[(selection)]="selectedFolder"
+(onNodeSelect)="OnNodeSelection($event)"
+selectionMode="single"
+(onLazyLoad)="loadCarsLazy($event)"
+(onNodeExpand)="nodeExpand($event)"
+></p-tree>

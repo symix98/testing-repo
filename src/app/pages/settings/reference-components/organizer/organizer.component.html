@@ -1,0 +1,8 @@
+<div class='card'>
+    <p-toolbar>
+        <div class='p-toolbar-group-left'>
+            <button pButton type='button' [loading]='isLoading' class='mr-2' label='Add Organizer' (click)='onOrganizerAdd()'></button>
+        </div>
+    </p-toolbar>
+    <app-table-template *ngIf='tableParam' #tbl [tableParam]='tableParam'></app-table-template>
+</div>

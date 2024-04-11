@@ -1,0 +1,249 @@
+<div style="margin-top: 100px;">
+    <p-card>
+        <!-- <ng-template pTemplate="title"> Document Numbering</ng-template> -->
+        <h6>Document Numbering</h6>
+        <ng-template pTemplate="content">
+            <div class="card">
+                <div class="p-fluid grid">
+                    <div class="field col-12 md:col-3">
+                        <div class="p-inputgroup">
+                            <span class="p-inputgroup-addon"><input type="checkbox"
+                                    [(ngModel)]="documentForm.autonumber" id="autonumber"
+                                    (click)="showAutoNumber()"></span>
+                            <input type="text" pInputText placeholder="Auto Numbering" readonly="true">
+                        </div>
+                    </div>
+
+                    <div *ngIf="isAutoNumber" class="field col-12 md:col-3">
+                        <!-- <label for="documenttype"><b>Document Category <span class="requiredfield">*</span></b></label> -->
+                        <p-dropdown [(ngModel)]="documentForm.documenttype" inputId="documenttype"
+                            (onChange)="getDocNoProperties()" [options]="documentType"
+                            placeholder="Select Document Category" #docType="ngModel" [showClear]="true">
+                            <ng-template let-item pTemplate="item">
+                                <span [class]="item.value">{{item.label}}</span>
+                            </ng-template>
+                        </p-dropdown>
+                        <!-- [ngClass]="{'ng-dirty': (docType.invalid && submitted) || (docType.dirty && docType.invalid)}"> -->
+                        <!-- <small *ngIf="(docType.invalid && submitted) || (docType.dirty && docType.invalid)"
+                            class="p-error">Document Type is required.</small> -->
+                    </div>
+
+                    <div *ngIf="isAutoNumber && (isContSubconDoc || isCompSubconDoc || isIsometrics)"
+                        class="col-12 md:col-3">
+                        <div class="p-inputgroup">
+                            <span class="p-inputgroup-addon"><input type="checkbox" size="auto"
+                                    [(ngModel)]="documentForm.samesequenceno" (change)="showSubSequenceNo()"></span>
+                            <input type="text" pInputText value="Same Sequenceno"
+                                style="color: steelblue; font-weight: bold;" readonly="true">
+                        </div>
+                    </div>
+
+                    <div *ngIf="isSameSeqNo " class="col-12 md:col-3">
+                        <div class="p-inputgroup">
+                            <span class="p-inputgroup-addon"><input type="checkbox" size="auto"
+                                    [(ngModel)]="documentForm.editsequenceno" (change)="allowSequenceNoEdit()"></span>
+                            <input type="text" pInputText value="Edit Sequenceno"
+                                style="color: steelblue; font-weight: bold;" readonly="true">
+                        </div>
+                    </div>
+
+                </div>
+
+                <div *ngIf="isAutoNumber">
+                    <hr>
+                    <div *ngIf="documentForm.documenttype" class="p-fluid grid">
+                        <div *ngIf="isCompSubconDoc || isIsometrics" class="field col-12 md:col-3">
+                            <label for="complexno">Complex </label>
+                            <input #complexno="ngModel" id="complexno" type="text" required pInputText
+                                [(ngModel)]="documentForm.complexno"
+                                [ngClass]="{'ng-dirty': (complexno.invalid && submitted) || (complexno.dirty && complexno.invalid)}"
+                                (change)="generateDocumentNo()" readonly>
+                            <!-- <small
+                                *ngIf="(complexno.invalid && submitted) || (complexno.dirty && complexno.invalid)"
+                                class="p-error">Complex is required.</small> -->
+                        </div>
+
+                        <div class="field col-12 md:col-3">
+                            <label for="originatorno">Originator </label>
+                            <p-dropdown [(ngModel)]="documentForm.originatorno" inputId="originatorno" optionLabel="name" optionValue="code"
+                                [options]="docOriginatorList" placeholder="Select Originator"
+                                #originatorno="ngModel" (onChange)="generateDocumentNo()" [showClear]="true">
+                                <ng-template let-item pTemplate="item">
+                                    <div class="dropdown-item">
+                                        <div>{{item.name}}</div>
+                                        <div>{{item.code}}</div>
+                                        
+                                    </div>
+                                </ng-template>
+                            </p-dropdown>
+
+                            <!-- <p-dropdown [options]="docOriginatorList" optionLabel="name" optionValue="code"
+                                [filter]="true" filterBy="name" [showClear]="true" placeholder="Select Originator"
+                                [(ngModel)]="documentForm.originatorno" (onChange)="generateDocumentNo()">
+                            </p-dropdown> -->
+                        </div>
+
+                        <!-- For Company Subcon  -->
+                        <div *ngIf="isCompSubconDoc && !isIsometrics" class="field col-12 md:col-3">
+                            <label for="doctypeno">Document Type </label>
+
+                            <p-dropdown [options]="docTypeList" optionLabel="name" optionValue="code" [filter]="true"
+                                filterBy="name" [showClear]="true" placeholder="Select Document Type"
+                                [(ngModel)]="documentForm.doctypeno" (onChange)="generateDocumentNo()">
+                                <ng-template let-item pTemplate="item">
+                                    <div class="dropdown-item">
+                                        <div>{{item.name}}</div>
+                                        <div>{{item.code}}</div>
+                                    </div>
+                                </ng-template>
+                            </p-dropdown>
+                        </div>
+
+
+                        <div *ngIf="!isCompSubconDoc && !isIsometrics" class="field col-12 md:col-3">
+                            <label for="disciplineno">Discipline</label>
+                            <p-dropdown [options]="docDisciplineList" optionLabel="name" optionValue="code"
+                                [filter]="true" filterBy="name" [showClear]="true" placeholder="Select Discipline"
+                                [(ngModel)]="documentForm.disciplineno" #disciplineno="ngModel"
+                                [ngClass]="{'ng-dirty': (disciplineno.invalid && submitted) || (disciplineno.dirty && disciplineno.invalid)}"
+                                (onChange)="generateDocumentNo()">
+                                <ng-template let-item pTemplate="item">
+                                    <div class="dropdown-item">
+                                        <div>{{item.name}}</div>
+                                        <div>{{item.code}}</div>
+                                    </div>
+                                </ng-template>
+                            </p-dropdown>
+                        </div>
+
+                        <div *ngIf="!isCompSubconDoc && !isIsometrics" class="field col-12 md:col-3">
+                            <label for="unitno">Unit</label>
+                            <p-dropdown [options]="docUnitList" optionLabel="description" optionValue="name"
+                                [filter]="true" filterBy="description" [showClear]="true"
+                                placeholder="Select Discipline" [(ngModel)]="documentForm.unitno"
+                                (onChange)="generateDocumentNo()">
+                                <ng-template let-item pTemplate="item">
+                                    <div class="dropdown-item">
+                                        <div>{{item.description}}</div>
+                                        <div>{{item.name}}</div>
+                                    </div>
+                                </ng-template>
+                            </p-dropdown>
+                        </div>
+
+                        <div *ngIf="isCompSubconDoc" class="field col-12 md:col-3">
+                            <label for="disciplinecodeno">Discipline</label>
+                            <p-dropdown [options]="docDisciplineList" optionLabel="name" optionValue="code"
+                                [filter]="true" filterBy="name" [showClear]="true" placeholder="Select Discipline"
+                                [(ngModel)]="documentForm.disciplinecodeno" #disciplinecodeno="ngModel"
+                                [ngClass]="{'ng-dirty': (disciplinecodeno.invalid && submitted) || (disciplinecodeno.dirty && disciplinecodeno.invalid)}"
+                                (onChange)="generateDocumentNo()">
+                                <ng-template let-item pTemplate="item">
+                                    <div class="dropdown-item">
+                                        <div>{{item.name}}</div>
+                                        <div>{{item.code}}</div>
+                                    </div>
+                                </ng-template>
+                            </p-dropdown>
+                        </div>
+
+                        <div *ngIf="!isCompSubconDoc && !isIsometrics" class="field col-12 md:col-3">
+                            <label for="doctypeno">Document Type </label>
+
+                            <p-dropdown [options]="docTypeList" optionLabel="name" optionValue="code" [filter]="true"
+                                filterBy="name" [showClear]="true" placeholder="Select Originator"
+                                [(ngModel)]="documentForm.doctypeno" (onChange)="generateDocumentNo()">
+                                <ng-template let-item pTemplate="item">
+                                    <div class="dropdown-item">
+                                        <div>{{item.name}}</div>
+                                        <div>{{item.code}}</div>
+                                    </div>
+                                </ng-template>
+                            </p-dropdown>
+                        </div>
+
+                        <div *ngIf="isCompSubconDoc || isIsometrics" class="field col-12 md:col-3">
+                            <label for="areacodeno">Area Code</label>
+                            <p-dropdown [options]="docAreaCodeList" optionLabel="description" optionValue="name"
+                                [filter]="true" filterBy="description" [showClear]="true" placeholder="Select Area Code"
+                                [(ngModel)]="documentForm.areacodeno" (onChange)="generateDocumentNo()">
+                                <ng-template let-item pTemplate="item">
+                                    <div class="dropdown-item">
+                                        <div>{{item.description}}</div>
+                                        <div>{{item.name}}</div>
+                                    </div>
+                                </ng-template>
+                            </p-dropdown>
+                        </div>
+
+                        <div class="field col-12 md:col-3">
+                            <label for="sequenceno">Sequence No <span class="requiredfield">* </span></label>
+                            <input id="sequenceno" name="sequenceno" type="text" pInputText
+                                [(ngModel)]="documentForm.sequenceno" (change)="generateDocumentNo()" [disabled] = "!isAllowSeqNoEdit" />
+                        </div>
+
+                        <div *ngIf="isSameSeqNo" class="field col-12 md:col-3">
+                            <label for="subsequenceno">Sub-Sequence No</label>
+                            <input id="subsequenceno" name="subsequenceno" type="number" pInputText
+                                [(ngModel)]="documentForm.subsequenceno" min="1" (change)="generateDocumentNo()"
+                                disabled />
+                        </div>
+                    </div>
+
+                    <label *ngIf="isAutoNumber"><span class="requiredfield">* </span>Required</label>
+
+                    <div *ngIf="isAutoNumber && this.docNoTemp" class="grid grid-nogutter justify-content-end">
+                        <p-button label="Apply Document No" (onClick)="applyDocumentNo()" icon="pi pi-check-circle"
+                            iconPos="left"></p-button>
+
+                        <!-- <button pButton icon="pi pi-check-circle" label="Apply Document No"
+                            [disabled]="!seqno" (click)="applyDocumentNo()"></button> -->
+                    </div>
+                </div>
+
+
+            </div>
+
+            <div class="p-fluid grid">
+                <div class="field col-12 md:col-12">
+                    <h6>Uploaded Document(s)</h6>
+                    <div class="scrollcard" style="margin-top: 10px;">
+
+                        <p-table [value]="documentsList" responsiveLayout="scroll">
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th>File Name</th>
+                                    <th style="text-align: center;">File Type </th>
+                                    <th style="text-align: center;">File Size</th>
+                                    <th>Document No</th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-document let-rowIndex="rowIndex">
+                                <tr>
+                                    <td>{{document.name}}</td>
+                                    <td style="text-align: center;">{{document.type}}</td>
+                                    <td style="text-align: center;">{{document.size}}</td>
+                                    <td>{{document.docno}}</td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </div>
+
+
+                </div>
+            </div>
+        </ng-template>
+        <!-- <ng-template pTemplate="footer">
+            <div class="grid grid-nogutter justify-content-end">
+                <p-button label="Next" (onClick)="nextPage()" icon="pi pi-angle-right" iconPos="right"></p-button>
+            </div>
+        </ng-template> -->
+
+        <ng-template pTemplate="footer">
+            <div class="grid grid-nogutter justify-content-between">
+                <p-button label="Back" (onClick)="prevPage()" icon="pi pi-angle-left"></p-button>
+                <p-button label="Next" (onClick)="nextPage()" icon="pi pi-angle-right" iconPos="right"></p-button>
+            </div>
+        </ng-template>
+    </p-card>
+</div>

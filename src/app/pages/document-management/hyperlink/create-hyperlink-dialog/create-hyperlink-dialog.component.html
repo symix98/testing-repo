@@ -1,0 +1,59 @@
+<div *ngIf="!isCopyLink">
+    <div class="p-grid p-fluid">
+        <div class="p-col-12">
+            <label for="Users">Users: </label>
+            <p-autoComplete [(ngModel)]="selectedUsers" [suggestions]="filteredUsers"
+                (completeMethod)="filterUsers($event)" field="name" [multiple]="true">
+            </p-autoComplete>
+        </div>
+    </div>
+
+    <form [formGroup]="form">
+        <div class="p-grid p-fluid">
+            <div class="p-col-12">
+                <label for="message">Message</label>
+                <textarea id="message" formControlName="message" [rows]="5" [cols]="30" pInputTextarea
+                    autoResize="autoResize"></textarea>
+            </div>
+            <!-- <div class="p-col-12">
+                <label>Permissions</label>
+                <div class="p-field-checkbox mt-2">
+                    <p-checkbox inputId="canView" formControlName="canView" binary="true" label="Can View"></p-checkbox>
+                </div>
+                <div class="p-field-checkbox mt-2">
+                    <p-checkbox inputId="canEdit" formControlName="canEdit" binary="true" label="Can Edit"></p-checkbox>
+                </div>
+                <div class="p-field-checkbox mt-2">
+                    <p-checkbox inputId="canDownload" formControlName="canDownload" binary="true"
+                        label="Can Download"></p-checkbox>
+                </div>
+            </div>
+
+            <div class="p-col-12 mt-2">
+                <label for="isPublic">Visibility</label>
+                <p-selectButton id="isPublic" type="text" formControlName="isPublic" [options]="stateOptions"
+                    optionLabel="label" optionValue="value"></p-selectButton>
+            </div>
+
+            <div class="p-col-12 mt-2">
+                <label for="expiryDate">Expiry Date</label>
+                <p-calendar id="expiryDate" formControlName="expiryDate" [showIcon]="true" dateFormat="yy-mm-dd"
+                    [readonlyInput]="true"></p-calendar>
+            </div> -->
+        </div>
+    </form>
+    <button pButton icon="pi pi-send" label="Send" class="mt-2 mr-2" (click)="onSubmit()"></button>
+    <button pButton icon="pi pi-copy" label="Copy Link" class="mt-2" (click)="onCopyLink()"></button>
+</div>
+
+<div *ngIf="isCopyLink">
+
+        <div class="col-12">
+            <div class="p-inputgroup">
+                <span class="p-inputgroup-addon"><i class="pi pi-link"></i></span>
+                <input type="text" [(ngModel)]="linkUrl" pInputText placeholder="Username">
+                <button type="button" pButton pRipple icon="pi pi-copy" label="Copy" (click)="copyClipBoard()"></button>
+            </div>
+        </div>
+
+    </div>

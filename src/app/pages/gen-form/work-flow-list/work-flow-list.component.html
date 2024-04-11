@@ -1,0 +1,22 @@
+<p-toolbar styleClass="p-mb-3">
+    <div class="p-toolbar-group-left">
+        <button pButton icon="pi pi-chevron-left" label="back" (click)="back()"></button>
+    </div>
+</p-toolbar>
+
+<div class="mb-1"></div>
+
+<div class="card">
+
+    <span>
+        <h5 style="margin: 0rem 0 0.5rem 0;"><b>Work Flow Details</b></h5>
+        <h6 style="margin: 0rem 0 1rem 0;">Steps Related to Work Flow Selected - {{selectedFormType}}</h6>
+    </span>
+    <div>
+        <button pButton class="btn" icon="pi pi-plus" label="Create Step" (click)="addNewStep()"></button>
+    </div>
+    <div *ngIf="selectedFormType" class="card">
+        <p-tree [value]="tableData" layout="horizontal" selectionMode="single" [(selection)]="selectedNode" (onNodeSelect)="onNodeSelect($event)"></p-tree>
+    </div>
+
+</div>

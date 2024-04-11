@@ -1,0 +1,14 @@
+
+<div class="col-12 md:col-2">
+    <div class="p-inputgroup">
+        <span class="p-inputgroup-addon"><input type="checkbox" size="auto"
+            [(ngModel)]="showDocHistory" ></span>
+            <!-- (change)="showDocumentHistory()" -->
+        <input type="text" pInputText value="Show History" readonly="true">
+    </div>
+</div>
+<p></p>
+<div style="padding: 6px;">
+    <app-table-template *ngIf='tableParam' #tbl [tableParam]="tableParam">
+    </app-table-template>
+</div>

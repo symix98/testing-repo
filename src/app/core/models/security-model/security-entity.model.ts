@@ -1,0 +1,20 @@
+export enum SecurityEntity {
+    engineering ="engineering",
+    engineering_drawing ="engineering.drawing",
+    engineering_spool = "engineering.spool", 
+    engineering_joint = "engineering.joint",
+    engineering_batching = "engineering.batching",
+    material = "material",
+    spool_status = "spool_status",
+    dwr = "dwr",
+    ndt = "ndt",
+    ndt_report = "ndt.report",
+    ndt_request = "ndt.request",
+    settings = "settings",
+    import_export = "import_export",
+    stores = "stores",
+    welders = "welders",
+    reports = "reports",
+    sotrage_service="storage_service",
+    rsfFom = "rsfForm"
+}

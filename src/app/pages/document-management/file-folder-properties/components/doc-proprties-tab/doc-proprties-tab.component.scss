@@ -1,0 +1,41 @@
+.data-form {
+  margin-top: 1rem;
+}
+
+.container-fluid {
+  display: flex;
+  justify-content: space-between;
+
+  #left-card {
+    width: 69%;
+  }
+
+  #right-card {
+    width: 30%;
+  }
+}
+
+p {
+  font-size: 1.2rem;
+}
+
+#revisionInfo {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 10rem;
+  }
+
+#buttons {
+  float: right;
+}
+
+#buttons button {
+  margin-left: 1rem;
+}
+
+#imgDetails {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}

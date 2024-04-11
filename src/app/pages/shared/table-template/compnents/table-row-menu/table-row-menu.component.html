@@ -1,0 +1,7 @@
+<button pButton class="p-button-text" icon="pi pi-ellipsis-v" (click)="menu.toggle($event)"></button>
+
+<p-overlayPanel #menu id="config_menu" [showCloseIcon]='false'>
+    <ng-template pTemplate>
+        <p-tieredMenu  [model]="items"></p-tieredMenu >
+    </ng-template>
+</p-overlayPanel>

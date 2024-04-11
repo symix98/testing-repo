@@ -1,0 +1,78 @@
+<p-card header="Security">
+    <div class="card">
+        <h6 style="color: steelblue">File : {{ data.documentsNumber }} </h6>
+        <hr>
+
+        <label style="font-weight: 500;">User Role</label>
+        <p-listbox [options]="userRoles" [(ngModel)]="selectedRole" optionLabel="description" optionValue="description"
+            [listStyle]="{'min-height':'160px', 'max-height':'160px'}" (onClick)="userRoleSelection()"></p-listbox>
+
+        <p></p>
+
+        <label style="font-weight: 500; margin-bottom: 10px;">Permission For : <span
+                style="font-size: 14px; color: steelblue;">{{permissionFor}}</span></label>
+        <p-table [value]="userPermissions" dataKey="id" [tableStyle]="{ 'max-width': '20rem' }"
+            styleClass="p-datatable-gridlines p-datatable-sm">
+            <!-- editMode="row" -->
+            <ng-template pTemplate="header">
+                <tr>
+                    <th style="width: 80%; text-align: center;">Permissions</th>
+                    <th style="width: 10%; text-align: center;">Allow</th>
+                    <th style="width: 10%; text-align: center;">Deny</th>
+                    <!-- <th style="width: 5%; text-align: center;">Actions</th> -->
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-permissions let-editing="editing" let-ri="rowIndex">
+                <tr [pEditableRow]="permissions">
+                    <td>{{ permissions.permission }}</td>
+                    <td pEditableColumn style="text-align: center;">
+                        <p-cellEditor>
+                            <ng-template pTemplate="input">
+                                <p-checkbox [binary]="true" inputId="{{ permissions.id }}"
+                                    name="{{ permissions.id }}"
+                                    [(ngModel)]="permissions.allow" [readonly]="isTableDisabled"></p-checkbox>
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                                <!-- {{ permissions.allow }} -->
+                                <span *ngIf="permissions.allow">&#10003;</span>
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+                    <td pEditableColumn style="text-align: center;">
+                        <p-cellEditor>
+                            <ng-template pTemplate="input">
+                                <p-checkbox [binary]="true" inputId="{{ permissions.id }}"
+                                    name="{{ userPermissions.id }}"
+                                    [(ngModel)]="permissions.deny" [readonly]="isTableDisabled"></p-checkbox>
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                                <!-- {{ permissions.deny }} -->
+                                <span *ngIf="permissions.deny">&#10003;</span>
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+                    <!-- <td style="width: 5%; text-align: center;">
+                        <div class="flex align-items-center justify-content-space-between gap-4">
+                            <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil"
+                                (click)="onRowEditInit(appUsers)" style="width: fit-content;"
+                                class="p-button-rounded p-button-text"></button>
+                            <button *ngIf="!editing && isTransmittalDraft" pButton pRipple type="button"
+                                icon="pi pi-trash" (click)="onRowRemove(appUser)" style="width: fit-content;"
+                                class="p-button-rounded p-button-text"></button>
+                            <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check"
+                                (click)="onRowEditSave(appUsers)"
+                                class="p-button-rounded p-button-text p-button-success mr-2"></button>
+                            <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times"
+                                (click)="onRowEditCancel()"
+                                class="p-button-rounded p-button-text p-button-danger"></button>
+                        </div>
+                    </td> -->
+                </tr>
+            </ng-template>
+        </p-table>
+
+        <div class="grid grid-nogutter justify-content-end" style="margin-top: 10px;">
+            <button pButton class="mt-2 p-button-sm" icon="pi pi-check-circle" label="Apply" [disabled]="isTableDisabled"></button>
+        </div>
+    </div>
+</p-card>

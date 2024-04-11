@@ -1,0 +1,358 @@
+<div *ngIf='this.fileTypeRefType'>
+    <div class='p-fluid card'>
+        <div class='flex-container'>
+            <div class='field col-12' style='padding: 10px'>
+                <label><b>Name : </b></label>
+                <input type='text' pInputText (change)='edited($event)' [disabled]='isInputDisabled' [(ngModel)]='fileTypeName' />
+            </div>
+            <div class='field col-12' style='padding: 10px'>
+                <label><b>Code : </b></label>
+                <input type='text' pInputText (change)='edited($event)' [disabled]='isInputDisabled' [(ngModel)]='fileTypeCode' />
+            </div>
+            <div class='field col-12' style='padding: 10px'>
+                <label><b>Description : </b></label>
+                <input type='text' pInputText (change)='edited($event)' [disabled]='isInputDisabled' [(ngModel)]='fileTypeDesc' />
+            </div>
+        </div>
+    </div>
+    
+    <div class="flex flex-wrap md:justify-content-between justify-content-center">
+        <div class="flex align-items-center justify-content-center"></div>
+        <div class="flex align-items-center justify-content-center">
+            <button pButton type="button" label="Save" icon='pi pi-save' class="p-button-sm" [disabled]='isDisabled' (click)='saveFileTypeRefStep()'></button>
+        </div>
+    </div>
+</div>
+
+<div *ngIf='this.documentTypeRefType'>
+    <div class='p-fluid card'>
+        <div class='flex-container'>
+            <div class='field col-12' style='padding: 10px'>
+                <label><b>Name : </b></label>
+                <input type='text' pInputText (change)='edited($event)' [disabled]='isInputDisabled' [(ngModel)]='documentTypeName' />
+            </div>
+            <div class='field col-12' style='padding: 10px'>
+                <label><b>Code : </b></label>
+                <input type='text' pInputText (change)='edited($event)' [disabled]='isInputDisabled' [(ngModel)]='documentTypeCode' />
+            </div>
+            <div class='field col-12' style='padding: 10px'>
+                <label><b>Description : </b></label>
+                <input type='text' pInputText (change)='edited($event)' [disabled]='isInputDisabled' [(ngModel)]='documentTypeDesc' />
+            </div>
+        </div>
+    </div>
+    
+    <div class="flex flex-wrap md:justify-content-between justify-content-center">
+        <div class="flex align-items-center justify-content-center"></div>
+        <div class="flex align-items-center justify-content-center">
+            <button pButton type="button" label="Save" icon='pi pi-save' class="p-button-sm" [disabled]='isDisabled' (click)='saveDocumentTypeRefStep()'></button>
+        </div>
+    </div>
+</div>
+
+<div *ngIf='this.documentSubTypeRefType'>
+    <div class='p-fluid card'>
+        <div class='flex-container'>
+            <div class='field col-12' style='padding: 10px'>
+                <label><b>Name : </b></label>
+                <input type='text' pInputText (change)='edited($event)' [disabled]='isInputDisabled' [(ngModel)]='documentSubTypeName' />
+            </div>
+            <div class='field col-12' style='padding: 10px'>
+                <label><b>Code : </b></label>
+                <input type='text' pInputText (change)='edited($event)' [disabled]='isInputDisabled' [(ngModel)]='documentSubTypeCode' />
+            </div>
+            <div class='field col-12' style='padding: 10px'>
+                <label><b>Description : </b></label>
+                <input type='text' pInputText (change)='edited($event)' [disabled]='isInputDisabled' [(ngModel)]='documentSubTypeDesc' />
+            </div>
+        </div>
+    </div>
+    
+    <div class="flex flex-wrap md:justify-content-between justify-content-center">
+        <div class="flex align-items-center justify-content-center"></div>
+        <div class="flex align-items-center justify-content-center">
+            <button pButton type="button" label="Save" icon='pi pi-save' class="p-button-sm" [disabled]='isDisabled' (click)='saveDocumentSubTypeRefStep()'></button>
+        </div>
+    </div>
+</div>
+
+<div *ngIf='this.disciplineRefType'>
+    <div class='p-fluid card'>
+        <div class='flex-container'>
+            <div class='field col-12' style='padding: 10px'>
+                <label><b>Name : </b></label>
+                <input type='text' pInputText (change)='edited($event)' [disabled]='isInputDisabled' [(ngModel)]='disciplineName' />
+            </div>
+            <div class='field col-12' style='padding: 10px'>
+                <label><b>Code : </b></label>
+                <input type='text' pInputText (change)='edited($event)' [disabled]='isInputDisabled' [(ngModel)]='disciplineCode' />
+            </div>
+            <div class='field col-12' style='padding: 10px'>
+                <label><b>Description : </b></label>
+                <input type='text' pInputText (change)='edited($event)' [disabled]='isInputDisabled' [(ngModel)]='disciplineDesc' />
+            </div>
+        </div>
+    </div>
+    
+    <div class="flex flex-wrap md:justify-content-between justify-content-center">
+        <div class="flex align-items-center justify-content-center"></div>
+        <div class="flex align-items-center justify-content-center">
+            <button pButton type="button" label="Save" icon='pi pi-save' class="p-button-sm" [disabled]='isDisabled' (click)='saveDisciplineRefStep()'></button>
+        </div>
+    </div>
+</div>
+
+<div *ngIf='this.statusRefType'>
+    <div class='p-fluid card'>
+        <div class='flex-container'>
+            <div class='field col-12' style='padding: 10px'>
+                <label><b>Name : </b></label>
+                <input type='text' pInputText (change)='edited($event)' [disabled]='isInputDisabled' [(ngModel)]='statusName' />
+            </div>
+            <div class='field col-12' style='padding: 10px'>
+                <label><b>Code : </b></label>
+                <input type='text' pInputText (change)='edited($event)' [disabled]='isInputDisabled' [(ngModel)]='statusCode' />
+            </div>
+            <div class='field col-12' style='padding: 10px'>
+                <label><b>Description : </b></label>
+                <input type='text' pInputText (change)='edited($event)' [disabled]='isInputDisabled' [(ngModel)]='statusDesc' />
+            </div>
+        </div>
+    </div>
+    
+    <div class="flex flex-wrap md:justify-content-between justify-content-center">
+        <div class="flex align-items-center justify-content-center"></div>
+        <div class="flex align-items-center justify-content-center">
+            <button pButton type="button" label="Save" icon='pi pi-save' class="p-button-sm" [disabled]='isDisabled' (click)='saveStatusRefStep()'></button>
+        </div>
+    </div>
+</div>
+
+<div *ngIf='this.organizerRefType'>
+    <div class='p-fluid card'>
+        <div class='flex-container'>
+            <div class='field col-12' style='padding: 10px'>
+                <label><b>Name : </b></label>
+                <input type='text' pInputText (change)='edited($event)' [disabled]='isInputDisabled' [(ngModel)]='organizerName' />
+            </div>
+            <div class='field col-12' style='padding: 10px'>
+                <label><b>Code : </b></label>
+                <input type='text' pInputText (change)='edited($event)' [disabled]='isInputDisabled' [(ngModel)]='organizerCode' />
+            </div>
+            <div class='field col-12' style='padding: 10px'>
+                <label><b>Type : </b></label>
+                <input type='text' pInputText (change)='edited($event)' [disabled]='isInputDisabled' [(ngModel)]='organizerType' />
+            </div>
+            <div class='field col-12' style='padding: 10px'>
+                <label><b>Description : </b></label>
+                <input type='text' pInputText (change)='edited($event)' [disabled]='isInputDisabled' [(ngModel)]='organizerDesc' />
+            </div>
+        </div>
+    </div>
+    
+    <div class="flex flex-wrap md:justify-content-between justify-content-center">
+        <div class="flex align-items-center justify-content-center"></div>
+        <div class="flex align-items-center justify-content-center">
+            <button pButton type="button" label="Save" icon='pi pi-save' class="p-button-sm" [disabled]='isDisabled' (click)='saveOrganizerRefStep()'></button>
+        </div>
+    </div>
+</div>
+
+<div *ngIf='this.recipientRefType'>
+    <div class='p-fluid card'>
+        <div class='flex-container'>
+            <div class='field col-12' style='padding: 10px'>
+                <label><b>Name : </b></label>
+                <input type='text' pInputText (change)='edited($event)' [disabled]='isInputDisabled' [(ngModel)]='recipientName' />
+            </div>
+            <div class='field col-12' style='padding: 10px'>
+                <label><b>Code : </b></label>
+                <input type='text' pInputText (change)='edited($event)' [disabled]='isInputDisabled' [(ngModel)]='recipientCode' />
+            </div>
+            <div class='field col-12' style='padding: 10px'>
+                <label><b>Type : </b></label>
+                <input type='text' pInputText (change)='edited($event)' [disabled]='isInputDisabled' [(ngModel)]='recipientType' />
+            </div>
+            <div class='field col-12' style='padding: 10px'>
+                <label><b>Description : </b></label>
+                <input type='text' pInputText (change)='edited($event)' [disabled]='isInputDisabled' [(ngModel)]='recipientDesc' />
+            </div>
+        </div>
+    </div>
+    
+    <div class="flex flex-wrap md:justify-content-between justify-content-center">
+        <div class="flex align-items-center justify-content-center"></div>
+        <div class="flex align-items-center justify-content-center">
+            <button pButton type="button" label="Save" icon='pi pi-save' class="p-button-sm" [disabled]='isDisabled' (click)='saveRecipientRefStep()'></button>
+        </div>
+    </div>
+</div>
+
+<div *ngIf='this.acceptCodeRefType'>
+    <div class='p-fluid card'>
+        <div class='flex-container'>
+            <div class='field col-12' style='padding: 10px'>
+                <label><b>Number : </b></label>
+                <input type='text' pInputText (change)='edited($event)' [disabled]='isInputDisabled' [(ngModel)]='acceptCodeNumber' />
+            </div>
+            <div class='field col-12' style='padding: 10px'>
+                <label><b>Name : </b></label>
+                <input type='text' pInputText (change)='edited($event)' [disabled]='isInputDisabled' [(ngModel)]='acceptCodeName' />
+            </div>
+        </div>
+    </div>
+    
+    <div class="flex flex-wrap md:justify-content-between justify-content-center">
+        <div class="flex align-items-center justify-content-center"></div>
+        <div class="flex align-items-center justify-content-center">
+            <button pButton type="button" label="Save" icon='pi pi-save' class="p-button-sm" [disabled]='isDisabled' (click)='saveAcceptanceCodeRefStep()'></button>
+        </div>
+    </div>
+</div>
+
+<div *ngIf='this.categoriesRefType'>
+    <div class='p-fluid card'>
+        <div class='flex-container'>
+            <div class='field col-12' style='padding: 10px'>
+                <label><b>Number : </b></label>
+                <input type='text' pInputText (change)='edited($event)' [disabled]='isInputDisabled' [(ngModel)]='categoriesNumber' />
+            </div>
+            <div class='field col-12' style='padding: 10px'>
+                <label><b>Name : </b></label>
+                <input type='text' pInputText (change)='edited($event)' [disabled]='isInputDisabled' [(ngModel)]='categoriesName' />
+            </div>
+            <div class='field col-12' style='padding: 10px'>
+                <label><b>Target Accept Number : </b></label>
+                <input type='text' pInputText (change)='edited($event)' [disabled]='isInputDisabled' [(ngModel)]='categoriesTargetAcceptNumber' />
+            </div>
+            <div class='field col-12' style='padding: 10px'>
+                <label><b>Result : </b></label>
+                <input type='text' pInputText (change)='edited($event)' [disabled]='isInputDisabled' [(ngModel)]='categoriesResult' />
+            </div>
+        </div>
+    </div>
+    
+    <div class="flex flex-wrap md:justify-content-between justify-content-center">
+        <div class="flex align-items-center justify-content-center"></div>
+        <div class="flex align-items-center justify-content-center">
+            <button pButton type="button" label="Save" icon='pi pi-save' class="p-button-sm" [disabled]='isDisabled' (click)='saveCategoriesRefStep()'></button>
+        </div>
+    </div>
+</div>
+
+<div *ngIf='this.areaRefType'>
+    <div class='p-fluid card'>
+        <div class='flex-container'>
+            <div class='field col-12' style='padding: 10px'>
+                <label><b>Name : </b></label>
+                <input type='text' pInputText (change)='edited($event)' [disabled]='isInputDisabled' [(ngModel)]='areaName' />
+            </div>
+            <div class='field col-12' style='padding: 10px'>
+                <label><b>Description : </b></label>
+                <input type='text' pInputText (change)='edited($event)' [disabled]='isInputDisabled' [(ngModel)]='areaDesc' />
+            </div>
+        </div>
+    </div>
+    
+    <div class="flex flex-wrap md:justify-content-between justify-content-center">
+        <div class="flex align-items-center justify-content-center"></div>
+        <div class="flex align-items-center justify-content-center">
+            <button pButton type="button" label="Save" icon='pi pi-save' class="p-button-sm" [disabled]='isDisabled' (click)='saveAreaRefStep()'></button>
+        </div>
+    </div>
+</div>
+
+<div *ngIf='this.subAreaRefType'>
+    <div class='p-fluid card'>
+        <div class='flex-container'>
+            <div class='field col-12' style='padding: 10px'>
+                <label><b>Name : </b></label>
+                <input type='text' pInputText (change)='edited($event)' [disabled]='isInputDisabled' [(ngModel)]='subAreaName' />
+            </div>
+            <div class='field col-12' style='padding: 10px'>
+                <label><b>Description : </b></label>
+                <input type='text' pInputText (change)='edited($event)' [disabled]='isInputDisabled' [(ngModel)]='subAreaDesc' />
+            </div>
+            <!-- <div class='field col-12' style='padding: 10px'>
+                <label for='Value'><b>Area : </b></label>
+                <p-dropdown [options]='areaList' [disabled]='isInputDisabled' [showClear]='true' #Value [(ngModel)]='selAreaId'
+                (onChange)='onAreaChange($event)' placeholder='Select Area' optionLabel='label'></p-dropdown>
+            </div> -->
+        </div>
+    </div>
+    
+    <div class="flex flex-wrap md:justify-content-between justify-content-center">
+        <div class="flex align-items-center justify-content-center"></div>
+        <div class="flex align-items-center justify-content-center">
+            <button pButton type="button" label="Save" icon='pi pi-save' class="p-button-sm" [disabled]='isDisabled' (click)='saveSubAreaRefStep()'></button>
+        </div>
+    </div>
+</div>
+
+<div *ngIf='this.locationRefType'>
+    <div class='p-fluid card'>
+        <div class='flex-container'>
+            <div class='field col-12' style='padding: 10px'>
+                <label><b>Name : </b></label>
+                <input type='text' pInputText (change)='edited($event)' [disabled]='isInputDisabled' [(ngModel)]='locationName' />
+            </div>
+            <div class='field col-12' style='padding: 10px'>
+                <label><b>Description : </b></label>
+                <input type='text' pInputText (change)='edited($event)' [disabled]='isInputDisabled' [(ngModel)]='locationDesc' />
+            </div>
+            <div class='field col-12' style='padding: 10px'>
+                <label><b>Sub Area : </b></label>
+                <p-dropdown placeholder='Select Sub Area' optionLabel='name' [showClear]="true"></p-dropdown>
+            </div>
+        </div>
+    </div>
+    
+    <div class="flex flex-wrap md:justify-content-between justify-content-center">
+        <div class="flex align-items-center justify-content-center"></div>
+        <div class="flex align-items-center justify-content-center">
+            <button pButton type="button" label="Save" icon='pi pi-save' class="p-button-sm" [disabled]='isDisabled' (click)='saveLocationRefStep()'></button>
+        </div>
+    </div>
+</div>
+
+<div *ngIf='this.roleRefType'>
+    <div class='p-fluid card'>
+        <div class='flex-container'>
+            <div class='field col-12' style='padding: 10px'>
+                <label><b>Role Id : </b></label>
+                <input type='text' pInputText (change)='edited($event)' [disabled]='isInputDisabled' [(ngModel)]='roleName' />
+            </div>
+            <div class='field col-12' style='padding: 10px'>
+                <label><b>Description : </b></label>
+                <input type='text' pInputText (change)='edited($event)' [disabled]='isInputDisabled' [(ngModel)]='roleDesc' />
+            </div>
+        </div>
+    </div>
+    <div class="flex flex-wrap md:justify-content-between justify-content-center">
+        <div class="flex align-items-center justify-content-center"></div>
+        <div class="flex align-items-center justify-content-center">
+            <button pButton type="button" label="Save" icon='pi pi-save' class="p-button-sm" [disabled]='isDisabled' (click)='saveRoleRefStep()'></button>
+        </div>
+    </div>
+</div>
+
+<div *ngIf='this.roleRidRefType'>
+    <div class='p-fluid card'>
+        <div class='flex-container'>
+            <div class='field col-12' style='padding: 10px'>
+                <label><b>Role Id : </b></label>
+                <input type='text' pInputText (change)='edited($event)' [disabled]='isInputDisabled' [(ngModel)]='Roles.roleId' />
+            </div>
+            <div class='field col-12' style='padding: 10px'>
+                <label><b>Description : </b></label>
+                <input type='text' pInputText (change)='edited($event)' [disabled]='isInputDisabled' [(ngModel)]='Roles.description' />
+            </div>
+        </div>
+    </div>
+    <div class="flex flex-wrap md:justify-content-between justify-content-center">
+        <div class="flex align-items-center justify-content-center"></div>
+        <div class="flex align-items-center justify-content-center">
+            <button pButton type="button" label="Update" icon='pi pi-save' class="p-button-sm" [disabled]='isDisabled' (click)='saveRoleRefStep()'></button>
+        </div>
+    </div>
+</div>

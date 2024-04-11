@@ -1,0 +1,57 @@
+<div>
+    <p-card header='Flow Details'>
+        <div *ngIf='this.data.workflow'>
+            <div style='padding-bottom: 0.5rem;'>
+                <label><b>The Selected Work Flow is {{this.selectedWorkFlowType}}</b></label>
+            </div>
+            <div style='padding-bottom: 0.5rem;'>
+                <label><b>The Current Work Flow Step of the Work Flow is {{this.csName}}</b></label>
+            </div>
+            <div>
+                <p-timeline [value]='workFlowSteps' layout='horizontal' align='top'>
+                    <ng-template pTemplate='content' let-event>
+                        {{event}}
+                    </ng-template>
+                </p-timeline>
+            </div>
+        </div>
+        <div *ngIf='!this.data.workflow'>
+            <label><b>Select the Work Flow : </b></label>
+            &nbsp;
+            <p-dropdown [options]='getFormTypes' [(ngModel)]='selectedWorkFlow' (onChange)='onWorkFlowSelected($event)'
+                placeholder='Select a Work Flow' optionLabel='name' [showClear]='true' [disabled]='false'>
+            </p-dropdown>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <label><b>Assign Users : </b></label>
+            &nbsp;
+            <p-autoComplete [(ngModel)]='selectedUsers' [suggestions]='filteredUsers' (completeMethod)='filterUsers($event)'
+                placeholder='Assign User' field='name' [multiple]='true'>
+            </p-autoComplete>
+        </div>
+        <div *ngIf='!this.data.workflow' class='mb-5'></div>
+        <div *ngIf='selectedWorkFlow'>
+            <h6>The Selected Work Flow is {{ selectedWorkFlow.name }} and the steps related to it.</h6>
+            <div class='card'>
+                <p-table [columns]='cols' [value]='tableData' [resizableColumns]='true' styleClass='p-datatable-tableData'>
+                    <ng-template pTemplate='header' let-columns>
+                        <tr>
+                            <th pResizableColumn [pSortableColumn]='col.field' *ngFor='let col of columns'>
+                                {{col.header}}<p-sortIcon [field]='col.field'></p-sortIcon>
+                            </th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate='body' let-data let-columns='columns'>
+                        <tr class='table-cell' [pSelectableRow]='data'>
+                            <td class='table-cell' *ngFor='let col of columns'>
+                                {{data[col.field]}}
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+            <div class='grid grid-nogutter justify-content-end'>
+                <button pButton icon='pi pi-save' type='button' label='Apply' styleClass='p-button-sm' [disabled]='this.isDisable' (click)='applyWorkFlow()'></button>
+            </div>
+        </div>
+    </p-card>
+</div>

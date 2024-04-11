@@ -1,0 +1,19 @@
+
+    <div class="card" *ngFor="let file of uploadingList ; let i = index">
+        <div class="pfluid grid">
+            <div class="col-10">
+                <div class="grid grid-nogutter justify-content-between">
+                    <label for="">file Name: </label><b>{{file?.docno}}</b>
+                    <label for="">file size: </label><b>{{file?.size}}</b>
+                    
+                </div>
+            </div>
+            
+            <div class="col-2">
+                <i class="m-2 pi pi-check-circle" *ngIf="!isLoading[i]" style="font-size: 2.5rem; color: green;"></i>
+            </div>
+        </div>
+        
+        <p-progressBar *ngIf="isLoading[i]"  mode="indeterminate" [style]="{'height': '6px'}"></p-progressBar>
+    </div>
+

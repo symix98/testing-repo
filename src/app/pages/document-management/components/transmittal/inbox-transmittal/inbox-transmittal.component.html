@@ -1,0 +1,156 @@
+<p-card>
+  <h4>Transmittal: {{ transmittal?.transmittalNo }}</h4>
+  <ng-template pTemplate="content">
+    <form #docForm="ngForm">
+      <div class="grid p-fluid">
+        <div class="field col-12 md:col-12">
+          <div class="row">
+            <div class="field">
+              <label
+                >Project Name: <span>{{ transmittal.projectName }}</span></label
+              >
+            </div>
+  
+            <div class="field">
+              <label
+                >Subject: <span>{{ transmittal.subject }}</span></label
+              >
+            </div>
+  
+            <div class="field">
+              <label
+                >Purpose: <span>{{ transmittal.purpose }}</span></label
+              >
+            </div>
+  
+            <div class="field">
+              <label
+                >Type: <span>{{ transmittal.type }}</span></label
+              >
+            </div>
+  
+            <div class="field">
+              <label
+                >Status:
+                <span
+                  [ngClass]="
+                    transmittal.status === 'active'
+                      ? 'active-status'
+                      : 'inactive-status'
+                  "
+                  >{{ transmittal?.status }}</span
+                ></label
+              >
+            </div>
+          </div>
+          
+
+          <div id="docsTable" class="container-fluid">
+            <p-table
+              [value]="transmittalDocuments"
+              [tableStyle]="{ 'max-width': '150rem' }"
+            >
+              <ng-template pTemplate="header">
+                <tr>
+                  <th>documentsNumber</th>
+                  <th>revision</th>
+                  <th>version</th>
+                  <th>revisionDate</th>
+                  <th>title</th>
+                  <th>phase</th>
+                  <th>documentsFor</th>
+                  <th>initiatedBy</th>
+                  <th>receiveDate</th>
+                  <th>disciplines</th>
+                  <th>isTransmitted</th>
+                  <th>recipient</th>
+                  <th>status</th>
+                  <th>Actions</th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-selectedDocument>
+                <tr>
+                  <td>{{ selectedDocument.documentsNumber }}</td>
+                  <td>{{ selectedDocument.revision }}</td>
+                  <td>{{ selectedDocument.version }}</td>
+                  <td>{{ selectedDocument.revisionDate }}</td>
+                  <td>{{ selectedDocument.title }}</td>
+                  <td>{{ selectedDocument.phase }}</td>
+                  <td>{{ selectedDocument.documentsFor }}</td>
+                  <td>{{ selectedDocument.initiatedBy }}</td>
+                  <td>{{ selectedDocument.receiveDate }}</td>
+                  <td>{{ selectedDocument.disciplines }}</td>
+                  <td>{{ selectedDocument.isTransmitted }}</td>
+                  <td>{{ selectedDocument.recipient?.name }}</td>
+                  <td>{{ selectedDocument.status?.name }}</td>
+                  <td>
+                    <div
+                      class="flex align-items-center justify-content-space-between gap-4"
+                    ></div>
+                  </td>
+                </tr>
+              </ng-template>
+            </p-table>
+          </div>
+
+          <div class="field col-12 md:col-12" *ngIf="transmittalRecipient?.isAckRequired">
+            <p-checkbox
+              id="acknowledgeCheckbox"
+              [binary]="true"
+              inputId="acknowledgeCheckbox"
+              name="acknowledgeCheckbox"
+              label="Acknowledge"
+              [(ngModel)]="acknowledgeCheckboxValue"
+              (ngModelChange)="setAcknowledgeCheckboxValue()"
+            ></p-checkbox>
+          </div>
+
+          <div
+            id="comments"
+            class="field col-12 md:col-12"
+            *ngIf="transmittalRecipient?.isRespRequired"
+          >
+            <label>Comments</label>
+            <textarea
+              rows="5"
+              cols="30"
+              pInputTextarea
+              id="comments"
+              name="comments"
+              [(ngModel)]="transmittalRecipient.comments"
+            ></textarea>
+          </div>
+
+          <div id="buttons">
+            <button
+              *ngIf="transmittalRecipient?.isAckRequired && transmittalRecipient?.isRespRequired"
+              pButton
+              [disabled]="acknowledgeCheckboxValue === false || !transmittalRecipient.comments"
+              icon="pi pi-check"
+              label="Save"
+              (click)="save()"
+            ></button>
+
+            <button
+              *ngIf="transmittalRecipient?.isAckRequired && !transmittalRecipient?.isRespRequired"
+              pButton
+              [disabled]="acknowledgeCheckboxValue === false"
+              icon="pi pi-check"
+              label="Acknowledge"
+              (click)="save()"
+            ></button>
+
+            <button
+              *ngIf="!transmittalRecipient?.isAckRequired && transmittalRecipient?.isRespRequired"
+              pButton
+              [disabled]="!transmittalRecipient.comments"
+              icon= "pi pi-reply"
+              label="Respond"
+              (click)="save()"
+            ></button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </ng-template>
+</p-card>

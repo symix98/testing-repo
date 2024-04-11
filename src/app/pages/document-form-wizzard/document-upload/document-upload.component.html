@@ -1,0 +1,97 @@
+<div style="margin-top: 100px">
+  <p-card>
+    <!-- <ng-template pTemplate="title"> Document Upload</ng-template> -->
+    <h6>Document Upload</h6>
+    <ng-template pTemplate="content">
+      <div class="p-fluid grid">
+        <div class="field col-12 md:col-12">
+          <!-- <h6>Upload Files</h6> -->
+
+          <p-panel>
+            <ng-template pTemplate="header">
+              <p-fileUpload
+                #fileUpload
+                styleClass="mt-2"
+                name="myfile[]"
+                [customUpload]="true"
+                mode="basic"
+                (uploadHandler)="onFileUpload($event, fileUpload)"
+                chooseLabel="Browse"
+                [auto]="true"
+                [multiple]="true"
+              >
+              </p-fileUpload>
+
+              <!-- <input
+                #saveStorageButton
+                type="file"
+                style="display: none"
+                (change)="saveFileToSessionStorage($event)"
+                accept=".xlsx"
+              />
+              <button
+                class="mr-2"
+                icon="pi pi-cloud-upload"
+                pButton
+                type="button"
+                label="Import Template"
+                (click)="saveStorageButton.click()"
+                style="background-color: #2196f3; width: fit-content"
+              ></button> -->
+
+              <span style="margin-left: 10px"
+                ><label style="color: red">{{ docMissMessage }}</label></span
+              >
+            </ng-template>
+
+            <ng-template pTemplate="content">
+              <div class="scrollcard">
+                <p-table [value]="documentsList" responsiveLayout="scroll">
+                  <ng-template pTemplate="header">
+                    <tr>
+                      <th>File Name</th>
+                      <th style="text-align: center">File Type</th>
+                      <th style="text-align: center">File Size</th>
+                      <th style="width: 10rem; text-align: center">Action</th>
+                    </tr>
+                  </ng-template>
+                  <ng-template
+                    pTemplate="body"
+                    let-document
+                    let-rowIndex="rowIndex"
+                  >
+                    <tr>
+                      <td>{{ document.name }}</td>
+                      <td style="text-align: center">{{ document.type }}</td>
+                      <td style="text-align: center">{{ document.size }}</td>
+                      <td style="text-align: center">
+                        <button
+                          pButton
+                          pRipple
+                          icon="pi pi-trash"
+                          class="p-button-rounded p-button-danger p-button-sm"
+                          (click)="deleteDocument(rowIndex, document.id)"
+                        ></button>
+                      </td>
+                    </tr>
+                  </ng-template>
+                </p-table>
+              </div>
+            </ng-template>
+          </p-panel>
+        </div>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="footer">
+      <div class="grid grid-nogutter justify-content-end">
+        <!-- <p-button label="Back" (onClick)="prevPage()" icon="pi pi-angle-left"></p-button> -->
+        <p-button
+          label="Next"
+          (onClick)="nextPage()"
+          icon="pi pi-angle-right"
+          iconPos="right"
+        ></p-button>
+      </div>
+    </ng-template>
+  </p-card>
+</div>

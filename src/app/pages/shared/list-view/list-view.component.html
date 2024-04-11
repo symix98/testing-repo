@@ -1,0 +1,193 @@
+<div class="p-d-flex p-flex-wrap p-ai-center" *ngIf="!noData && !loading">
+    <!-- Legend needs enhancement -->
+    <div class="p-d-flex p-flex-wrap p-ai-baseline">
+
+        <div style="margin:0.2rem;">
+            <i class="pi pi-clock"></i> Draft
+        </div>
+        <div style="margin:0.2rem;">
+            <i class="pi pi-eye" style="color:#c1946a;"></i> For Review
+        </div>
+        <div style="margin:0.2rem;">
+            <i class="pi pi-refresh" style="color:#c1946a;"></i> To Revise
+        </div>
+
+        <div style="margin:0.2rem;">
+            <i class="pi pi-check" style="color:green;"></i> Committed
+        </div>
+    </div>
+    <!-- Legend needs enhancement -->
+
+    <!--Filtering and Sorting-->
+    <div class="p-ml-auto">
+        <div *ngIf="filterOptions.length>0 || sortOptions.length>0">
+            <p-button label="" icon="pi pi-sliders-h" [badge]="sortFilterBadge"
+                styleClass="p-button-primary p-button-lg p-mr-2" [style]="{width: '4rem'}" (click)="showModalDialog()">
+            </p-button>
+        </div>
+
+
+        <!-- Filtering and Sorting Dialog -->
+        <p-dialog header="Filter By" [(visible)]="displayModal" [modal]="true" [style]="{width: '50vw'}"
+            [baseZIndex]="10000" [draggable]="false" [resizable]="false" [showHeader]="false">
+            <div class="p-d-flex p-flex-column" style="padding:1rem;">
+                <div style="text-align: center;">
+                    <h4 *ngIf="sortOptions.length>0 && filterOptions.length>0">
+                        Sort and Filter
+                    </h4>
+                    <h4 *ngIf="sortOptions.length>0 && filterOptions.length===0">
+                        Sort
+                    </h4>
+                    <h4 *ngIf="sortOptions.length===0 && filterOptions.length>0">
+                        Filter
+                    </h4>
+
+                </div>
+                <div *ngIf="sortOptions.length>0">
+                    <div class="filterSortHeader">
+                        <h5>Sort By</h5>
+                    </div>
+                    <div class="filterSortDetails">
+                        <!-- <div class="p-fluid"> -->
+                        <p-selectButton [options]="sortOptions" [(ngModel)]="value3" multiple="multiple"
+                            optionLabel="label" optionValue="value" (onChange)="sortChange($event)">
+                        </p-selectButton>
+                        <!--      </div> -->
+                    </div>
+                </div>
+
+                <div *ngIf="filterOptions.length>0">
+                    <div *ngFor="let elem of filterOptions">
+                        <div class="filterSortHeader">
+                            <h5>{{elem.filterTitle}}</h5>
+                        </div>
+                        <div class="filterSortDetails">
+                            <p-selectButton [options]="elem.filterOptions" [(ngModel)]="value2" multiple="multiple"
+                                optionLabel="filterBy" optionValue="filterBy"
+                                (onChange)="filterChange($event,elem.filterOptions[0].filterByField)">
+                            </p-selectButton>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <ng-template pTemplate="footer">
+                <button pButton pRipple type="button" (click)="clearFilter()" label="Clear" style="margin-top:1rem;"
+                    class="p-button-outlined p-mr-2"></button>
+
+                <button pButton pRipple type="button" (click)="applyFilterSort()" label="Apply"
+                    style="margin-top:1rem;"></button>
+            </ng-template>
+        </p-dialog>
+        <!-- Filtering and Sorting Dialog -->
+    </div>
+    <!--Filtering and Sorting-->
+</div>
+
+
+<!-- ListView Data -->
+
+<div *ngIf="dataLoaded && !loading">
+    <p-card *ngFor="let item of data" (click)="handleListClick(item)">
+        <div class="p-d-flex p-flex-wrap">
+            <div *ngIf="listViewHeader[0].icon"><i [ngClass]="listViewHeader[0].icon"></i></div>
+
+            <div *ngIf="listViewHeader[0].dynamicIcon">
+                <i [ngStyle]="{ 'color': IconsColorsAvailable[item[listViewHeader[0].dynamicIcon.iconField]] }"
+                    [ngClass]="IconsAvailable[item[listViewHeader[0].dynamicIcon.iconField]]"></i>
+            </div>
+
+            <div style="flex: 1;" class="p-d-flex p-flex-column">
+                <div class="p-d-flex p-flex-wrap">
+                    <div *ngIf="listViewHeader[0].title">
+                        <h5>{{listViewHeader[0].title}}</h5>
+                    </div>
+
+                    <div *ngIf=" listViewHeader[0].dynamicTitle.length>0">
+                        <b><span *ngFor="let elem of listViewHeader[0].dynamicTitle">
+                                <span *ngIf="elem.isFieldFromApi"> {{item[elem.text] + ' '}}</span>
+                                <span *ngIf="!elem.isFieldFromApi"> {{elem.text +' '}}</span>
+                            </span></b>
+                    </div>
+
+                    <div *ngIf="listViewHeader[0].dateField" class="p-ml-auto">
+                        {{dateService.convertDate(item[listViewHeader[0].dateField])}}
+                    </div>
+                </div>
+
+                <div class="p-d-flex p-flex-wrap p-jc-between " *ngFor="let elem of listViewBody">
+                    <div *ngFor="let b of elem.body">
+                        <b><span *ngIf="b.caption">{{b.caption}}:</span> </b>
+                        <span *ngIf="b.field">{{item[b.field]}}</span>
+                        <span *ngIf="b.referenceMapKey">
+                            {{ b.referenceMap| mapPipe: b.referenceMapKey:b.dataKeyToMap:b.mappedValueToShow:item}}
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </p-card>
+</div>
+
+<div class="p-grid" style="text-align: center;" *ngIf='loading'>
+    <div class="p-col-12 p-pt-4 p-pb-4">
+        <h4>Please wait... <p-progressSpinner [style]="{width: '26px', height: '26px'}"></p-progressSpinner>
+        </h4>
+    </div>
+</div>
+
+<div *ngIf="noData">
+    <h4>No data to display</h4>
+</div>
+
+<!-- ListView Data -->
+
+
+
+
+
+
+
+
+
+
+<!-- <div>
+    <p-card *ngFor="let item of data">
+        <div class="p-d-flex p-flex-column">
+            <div *ngIf="listViewHeader.length>0">
+                <div class="p-d-flex p-flex-wrap p-ai-baseline">
+                    <div *ngIf="listViewHeader[0].icon"><i [ngClass]="listViewHeader[0].icon"></i></div>
+
+                    <div *ngIf="listViewHeader[0].dynamicIcon">
+                        <i [ngStyle]="{ 'color': IconsColorsAvailable[item[listViewHeader[0].dynamicIcon.iconField]] }"
+                            [ngClass]="IconsAvailable[item[listViewHeader[0].dynamicIcon.iconField]]"></i>
+                    </div>
+
+                    <div *ngIf="listViewHeader[0].title">
+                        <h5>{{listViewHeader[0].title}}</h5>
+                    </div>
+
+                    <div *ngIf=" listViewHeader[0].dynamicTitle.length>0">
+                        <b><span *ngFor="let elem of listViewHeader[0].dynamicTitle">
+                                <span *ngIf="elem.isFieldFromApi"> {{item[elem.text] + ' '}}</span>
+                                <span *ngIf="!elem.isFieldFromApi"> {{elem.text +' '}}</span>
+                            </span></b>
+                    </div>
+
+                    <div *ngIf="listViewHeader[0].dateField" class="p-ml-auto">{{item[listViewHeader[0].dateField]}}
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="p-d-flex p-flex-column">
+                <div class="p-d-flex p-flex-wrap p-jc-between" *ngFor="let elem of listViewBody">
+                    <div *ngFor="let b of elem.body">
+                        <b><span *ngIf="b.caption">{{b.caption}}:</span> </b>{{item[b.field]}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </p-card>
+</div> -->

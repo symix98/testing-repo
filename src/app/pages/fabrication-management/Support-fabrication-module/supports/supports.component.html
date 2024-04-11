@@ -1,0 +1,11 @@
+<p-card>
+    <p-toolbar *ngIf="(groupButtons && groupButtons.length) && !hideGroup" styleClass="p-mb-3">
+        <div class="p-toolbar-group-left">
+            <label class="quick-filter-label p-mr-1">{{tableParam?.filterName}}</label>
+            <button *ngFor="let filter of groupButtons" pButton pRipple [label]="filter.label"
+                (click)="onQuickFilterClick(filter)" [ngClass]="{'p-button-text': !selectedGroup || filter.label!=selectedGroup.label}">
+            </button>
+        </div>
+    </p-toolbar>
+    <app-table-template *ngIf='tableParam' #tbl [tableParam]="tableParam"></app-table-template>
+</p-card>

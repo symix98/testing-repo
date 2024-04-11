@@ -1,0 +1,34 @@
+p-celleditor input.p-inputtext {
+    width: 100%;
+}
+th  .p-inputgroup {
+    width: 80%;
+}
+tr th {
+    height:2.5rem;
+}
+
+tr td {
+    height:2.5rem;
+}
+
+.quick-filter-label {
+    color: #7a869a;
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.sticky {
+    z-index: 1;
+    position: -webkit-sticky;
+    position: sticky !important;
+    top: 0;
+}
+
+.sticky1 {
+    z-index: 1;
+    position: -webkit-sticky;
+    position: sticky !important;
+    top: 2.4rem;
+}

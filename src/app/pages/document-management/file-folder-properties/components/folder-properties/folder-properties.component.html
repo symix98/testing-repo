@@ -1,0 +1,10 @@
+<p-card header='Attribute Details'>
+    <div class='card'>
+        <p-toolbar>
+            <div class='p-toolbar-group-left'>
+                <button pButton type='button' [loading]='isLoading' label='Add Attribute' (click)='onFolderPathAdd()'></button>
+            </div>
+        </p-toolbar>
+        <app-table-template *ngIf='tableParam' #tbl [tableParam]='tableParam'></app-table-template>
+    </div>
+</p-card>

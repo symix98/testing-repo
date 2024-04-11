@@ -1,0 +1,59 @@
+<div class="card">
+    <form  [formGroup]="storageServiceGroup">
+        <div class="card p-fluid p-formgrid p-grid">
+           <div class="form-group">
+               <h5>Services</h5>
+               <div class="input-group"> 
+                 <label for="id" class="block input-label">Id</label>
+                  <input class="input-field" formControlName="serviceId" type="text" id="id" name="id" pInputText > 
+               </div>
+
+               <div class="input-group">
+                <label for="secret" class="block input-label">Secret</label> <input class="input-field" 
+                formControlName="secretKey" type="text" id="secret" name="secret" pInputText > 
+              </div>
+
+              <div class="input-group">
+                <label for="name"  class="block input-label">Name</label> <input class="input-field" 
+                formControlName="name" type="text" id="name" name="name" pInputText > 
+              </div>
+
+              <div class="input-group">
+                <label for="description"  class="block input-label">Description</label>
+                 <input class="input-field" formControlName="description"  type="text" id="description" name="description" pInputText > 
+              </div>
+
+              <div class="input-group">
+                <label for="type" class="block input-label">Type</label>
+                <p-dropdown class="input-field" formControlName="serviceType"
+                [options]="serviceTypes"  optionLabel="param_name" 
+                
+                (ngModelChange)="onChange($event)"
+                optionValue="param_value" ></p-dropdown>
+            </div>
+
+           </div>
+           <div class="form-group" *ngIf="templates&&templates.length>0">
+            <h5>Properties</h5>
+ 
+              <div formArrayName="serviceTypes" *ngFor="let s of storageServiceGroup.get('serviceTypes').controls;let i=index">
+               json file is  {{s.value| json}}
+                <div *ngFor="let item of s.value | keyvalue">
+                  Key: <b>{{item.key}}</b> and Value: <b>{{item.value}}</b>
+              </div>
+                <div [formGroupName]="i"  *ngFor="let item of s.value | keyvalue">
+                 <div class="input-group">
+                   <label for="id" class="block input-label" >{{item.key}}</label>
+                   <input class="input-field" type="text" pInputText [formControlName]="item.key"> 
+               </div>
+               </div>
+
+           
+             </div>
+           
+           </div>
+        </div>
+        {{storageServiceGroup.value | json}}
+        
+    </form>
+</div>

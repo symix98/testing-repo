@@ -1,0 +1,44 @@
+<div class="scrollcard">
+    <p-orderList [value]="userFilter" header="Private Search List" filterBy="queryName"
+    filterPlaceholder="Search by name" style="width: 100%;" (onSelectionChange)="getSearchQueryDetails($event)">
+    <ng-template let-filter let-index pTemplate="item">
+        <div class="filter-item">
+            <div class="filter-list-detail">
+                <span><i class="pi pi-bookmark" style="padding-right: 5px;" ></i>{{filter.queryName}} </span>
+            </div>
+
+            <div class="orderlist-item">
+                <i class="pi pi-window-maximize" pTooltip="Edit Filter" (click)="onIconClick(index, filter)"></i>
+            </div>
+        </div>
+    </ng-template>
+</p-orderList>
+</div>
+
+
+<!-- <p></p> -->
+<div class="scrollcardpublic">
+    <!-- [listStyle]="{'max-height':'50rem'}" -->
+    <p-orderList [value]="userPublicFilter"  header="Public Search List" filterBy="queryName"
+    filterPlaceholder="Search by name" style="width: 100%;" (onSelectionChange)="getSearchQueryDetails($event)">
+    <ng-template let-filter let-index pTemplate="item">
+        <div class="filter-item">
+            <div class="filter-list-detail">
+                <span><i class="pi pi-bookmark" style="padding-right: 5px;" ></i>{{filter.queryName}} </span>
+            </div>
+
+            <div class="orderlist-item">
+                <i class="pi pi-window-maximize" pTooltip="Edit Filter" (click)="onEditPublicFilter(index, filter)"></i>
+            </div>
+        </div>
+    </ng-template>
+</p-orderList>
+</div>
+
+
+
+
+
+
+
+

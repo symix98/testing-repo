@@ -1,0 +1,16 @@
+<div class="grid" style="text-align: center;" *ngIf='loading'>
+    <div class="col-12 pt-4 pb-4">
+           <h4>Please wait... <p-progressSpinner [style]="{width: '26px', height: '26px'}"></p-progressSpinner>
+           </h4>
+    </div>
+</div>
+
+<!--The layout of the user will be displayed through the layout component-->
+<layout *ngIf="layoutLoaded" [dashboardId]="dashboardId" [column]="layoutColumn" [overview]="layoutOverview">
+</layout>
+
+<div class="grid" style="text-align: center;" *ngIf='!layoutLoaded && noDataFound'>
+    <div class="col-12 pt-4 pb-4">
+           <h4>No dashboards are available</h4>
+    </div>
+</div>

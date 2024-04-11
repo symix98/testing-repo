@@ -1,0 +1,17 @@
+:host ::ng-deep {
+    canvas {
+        width: 100%;
+        height: 250px;
+    }
+
+    .signature-container {
+        border-style: dashed;
+        border-width: 1px;
+        margin-bottom: 20px;
+        background-color: lightgray;
+    }
+
+    .signature-image {
+        width: 50%;
+    }
+}

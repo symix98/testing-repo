@@ -1,0 +1,11 @@
+<p-toast></p-toast>
+<router-outlet></router-outlet>
+
+<p-confirmDialog [style]="{width: '450px'}" #cd>
+  <p-footer>
+    <button pButton pRipple label="Confirm" (click)="cd.accept()" class="p-mr-2" icon="pi pi-check"></button>
+    <button pButton pRipple type="button" label="Cancel" (click)="cd.reject()" icon="pi pi-times"
+      class="p-button-outlined"></button>
+  </p-footer>
+</p-confirmDialog>
+<router-outlet></router-outlet>

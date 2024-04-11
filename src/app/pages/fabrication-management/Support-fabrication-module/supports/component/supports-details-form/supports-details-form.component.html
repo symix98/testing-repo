@@ -1,0 +1,296 @@
+<button pButton class='mb-2' icon="pi pi-pencil" label="Edit" (click)="onEdit()"></button>
+<div class="card p-fluid grid">
+    <div class="lg:col-9 col-12">
+        <div class="col-12">
+        </div>
+        <form *ngIf="supportDetails" id="ngForm" (ngSubmit)="submitForm()" #form="ngForm">
+            <div class=" p-fluid formgrid grid">
+                
+                <div class="col-12 mt-2">
+                    <h3>Support Details</h3>
+                </div>
+
+
+                <div class='field pt-3 col-12 md-2 w-2'>
+                    <label for='isDetailed'>isDetailed:</label>
+                    <input type='text' id='isDetailed' name='isDetailed' [(ngModel)]='supportDetails.isDetailed'
+                        pInputText [disabled]="isDisable"  />
+                </div>
+                <div class='field pt-3 col-12 md-2 w-2'>
+                    <label for='support'>support:</label>
+                    <input type='text' id='support' name='support' [(ngModel)]='supportDetails.support' pInputText [disabled]="isDisable"  />
+                </div>
+                <div class='field pt-3 col-12 md-2 w-2'>
+                    <label for='suppItem'>suppItem:</label>
+                    <input type='text' id='suppItem' name='suppItem' [(ngModel)]='supportDetails.suppItem' pInputText [disabled]="isDisable"  />
+                </div>
+                <div class='field pt-3 col-12 md-2 w-2'>
+                    <label for='supStatus'>supStatus:</label>
+                    <input type='text' id='supStatus' name='supStatus' [(ngModel)]='supportDetails.supStatus'
+                        pInputText [disabled]="isDisable"  />
+                </div>
+                <div class='field pt-3 col-12 md-2 w-2'>
+                    <label for='supStDes'>supStDes:</label>
+                    <input type='text' id='supStDes' name='supStDes' [(ngModel)]='supportDetails.supStDes' pInputText [disabled]="isDisable"  />
+                </div>
+                <div class='field pt-3 col-12 md-2 w-2'>
+                    <label for='supStGRP'>supStGRP:</label>
+                    <input type='text' id='supStGRP' name='supStGRP' [(ngModel)]='supportDetails.supStGRP'
+                        pInputText [disabled]="isDisable"  />
+                </div>
+
+
+            </div>
+            <app-custom-collapse [collapsed]='show'>
+                <div class=" p-fluid formgrid grid">
+                    
+                    <div class='field pt-3 col-12 md-2 w-2'>
+                        <label for='suppPnt'>suppPnt:</label>
+                        <input type='text' id='suppPnt' name='suppPnt' [(ngModel)]='supportDetails.suppPnt'
+                            pInputText [disabled]="isDisable"  />
+                    </div>
+                    <div class='field pt-3 col-12 md-2 w-2'>
+                        <label for='subWT'>subWT:</label>
+                        <input type='text' id='subWT' name='subWT' [(ngModel)]='supportDetails.subWT' pInputText [disabled]="isDisable"  />
+                    </div>
+                    <div class='field pt-3 col-12 md-2 w-2'>
+                        <label for='othWT'>othWT:</label>
+                        <input type='text' id='othWT' name='othWT' [(ngModel)]='supportDetails.othWT' pInputText [disabled]="isDisable"  />
+                    </div>
+                    <div class='field pt-3 col-12 md-2 w-2'>
+                        <label for='supWT'>supWT:</label>
+                        <input type='text' id='supWT' name='supWT' [(ngModel)]='supportDetails.supWT' pInputText [disabled]="isDisable"  />
+                    </div>
+                    <div class='field pt-3 col-12 md-2 w-2'>
+                        <label for='supTAG'>supTAG:</label>
+                        <input type='text' id='supTAG' name='supTAG' [(ngModel)]='supportDetails.supTAG' pInputText [disabled]="isDisable"  />
+                    </div>
+                    <div class='field pt-3 col-12 md-2 w-2'>
+                        <label for='rsfNo'>rsfNo:</label>
+                        <input type='text' id='rsfNo' name='rsfNo' [(ngModel)]='supportDetails.rsfNo' pInputText [disabled]="isDisable"  />
+                    </div>
+
+                    <div class='field pt-3 col-12 md-2 w-2'>
+                        <label for='sRange'>sRange:</label>
+                        <input type='text' id='sRange' name='sRange' [(ngModel)]='supportDetails?.supportDetails.sRange'
+                            pInputText [disabled]="isDisable"  />
+                    </div>
+                    <div class='field pt-3 col-12 md-2 w-2'>
+                        <label for='supCode'>supCode:</label>
+                        <input type='text' id='supCode' name='supCode'
+                            [(ngModel)]='supportDetails.supportDetails.supCode' pInputText [disabled]="isDisable"  />
+                    </div>
+                    <div class='field pt-3 col-12 md-2 w-2'>
+                        <label for='suppType'>suppType:</label>
+                        <input type='text' id='suppType' name='suppType'
+                            [(ngModel)]='supportDetails.supportDetails.suppType' pInputText [disabled]="isDisable"  />
+                    </div>
+                    <div class='field pt-3 col-12 md-2 w-2'>
+                        <label for='train'>train:</label>
+                        <input type='text' id='train' name='train' [(ngModel)]='supportDetails.supportDetails.train'
+                            pInputText [disabled]="isDisable"  />
+                    </div>
+                    <div class='field pt-3 col-12 md-2 w-2'>
+                        <label for='location'>location:</label>
+                        <input type='text' id='location' name='location'
+                            [(ngModel)]='supportDetails.supportDetails.location' pInputText [disabled]="isDisable"  />
+                    </div>
+                    <div class='field pt-3 col-12 md-2 w-2'>
+                        <label for='suppCat'>suppCat:</label>
+                        <input type='text' id='suppCat' name='suppCat'
+                            [(ngModel)]='supportDetails.supportDetails.suppCat' pInputText [disabled]="isDisable"  />
+                    </div>
+                    <div class='field pt-3 col-12 md-2 w-2'>
+                        <label for='splCntr'>splCntr:</label>
+                        <input type='text' id='splCntr' name='splCntr'
+                            [(ngModel)]='supportDetails.supportDetails.splCntr' pInputText [disabled]="isDisable"  />
+                    </div>
+                    <div class='field pt-3 col-12 md-2 w-2'>
+                        <label for='ccc'>ccc:</label>
+                        <input type='text' id='ccc' name='ccc' [(ngModel)]='supportDetails.supportDetails.ccc'
+                            pInputText [disabled]="isDisable"  />
+                    </div>
+                    <div class='field pt-3 col-12 md-2 w-2'>
+                        <label for='sC'>sC:</label>
+                        <input type='text' id='sC' name='sC' [(ngModel)]='supportDetails.supportDetails.sC'
+                            pInputText [disabled]="isDisable"  />
+                    </div>
+                    <div class='field pt-3 col-12 md-2 w-2'>
+                        <label for='pipe'>pipe:</label>
+                        <input type='text' id='pipe' name='pipe' [(ngModel)]='supportDetails.supportDetails.pipe'
+                            pInputText [disabled]="isDisable"  />
+                    </div>
+                    <div class='field pt-3 col-12 md-2 w-2'>
+                        <label for='pipeType'>pipeType:</label>
+                        <input type='text' id='pipeType' name='pipeType'
+                            [(ngModel)]='supportDetails.supportDetails.pipeType' pInputText [disabled]="isDisable"  />
+                    </div>
+                    <div class='field pt-3 col-12 md-2 w-2'>
+                        <label for='fab'>fab:</label>
+                        <input type='text' id='fab' name='fab' [(ngModel)]='supportDetails.supportDetails.fab'
+                            pInputText [disabled]="isDisable"  />
+                    </div>
+                    <div class='field pt-3 col-12 md-2 w-2'>
+                        <label for='scScope'>scScope:</label>
+                        <input type='text' id='scScope' name='scScope'
+                            [(ngModel)]='supportDetails.supportDetails.scScope' pInputText [disabled]="isDisable"  />
+                    </div>
+                    <div class='field pt-3 col-12 md-2 w-2'>
+                        <label for='supcount'>supcount:</label>
+                        <input type='text' id='supcount' name='supcount'
+                            [(ngModel)]='supportDetails.supportDetails.supcount' pInputText [disabled]="isDisable"  />
+                    </div>
+                    <div class='field pt-3 col-12 md-2 w-2'>
+                        <label for='rsfStatus'>rsfStatus:</label>
+                        <input type='text' id='rsfStatus' name='rsfStatus'
+                            [(ngModel)]='supportDetails.supportDetails.rsfStatus' pInputText [disabled]="isDisable"  />
+                    </div>
+                    <div class='field pt-3 col-12 md-2 w-2'>
+                        <label for='status'>status:</label>
+                        <input type='text' id='status' name='status' [(ngModel)]='supportDetails.supportDetails.status'
+                            pInputText [disabled]="isDisable"  />
+                    </div>
+                    <div class='field pt-3 col-12 md-2 w-2'>
+                        <label for='rse'>rse:</label>
+                        <input type='text' id='rse' name='rse' [(ngModel)]='supportDetails.supportDetails.rse'
+                            pInputText [disabled]="isDisable"  />
+                    </div>
+                    <div class='field pt-3 col-12 md-2 w-2'>
+                        <label for='rseDate'>rseDate:</label>
+                        <input type='text' id='rseDate' name='rseDate'
+                            [(ngModel)]='supportDetails.supportDetails.rseDate' pInputText [disabled]="isDisable"  />
+                    </div>
+
+                    
+                    <div class='field pt-3 col-12 md-2 w-2'>
+                        <label for='parentCwa'>parentCwa:</label>
+                        <input type='text' id='parentCwa' name='parentCwa'
+                            [(ngModel)]='supportDetails.supportLocation.parentCwa' pInputText [disabled]="isDisable"  />
+                    </div>
+                    <div class='field pt-3 col-12 md-2 w-2'>
+                        <label for='lev01'>lev01:</label>
+                        <input type='text' id='lev01' name='lev01' [(ngModel)]='supportDetails.supportLocation.lev01'
+                            pInputText [disabled]="isDisable"  />
+                    </div>
+                    <div class='field pt-3 col-12 md-2 w-2'>
+                        <label for='lev01Desc'>lev01Desc:</label>
+                        <input type='text' id='lev01Desc' name='lev01Desc'
+                            [(ngModel)]='supportDetails.supportLocation.lev01Desc' pInputText [disabled]="isDisable"  />
+                    </div>
+                    <div class='field pt-3 col-12 md-2 w-2'>
+                        <label for='lev02'>lev02:</label>
+                        <input type='text' id='lev02' name='lev02' [(ngModel)]='supportDetails.supportLocation.lev02'
+                            pInputText [disabled]="isDisable"  />
+                    </div>
+                    <div class='field pt-3 col-12 md-2 w-2'>
+                        <label for='lev02Desc'>lev02Desc:</label>
+                        <input type='text' id='lev02Desc' name='lev02Desc'
+                            [(ngModel)]='supportDetails.supportLocation.lev02Desc' pInputText [disabled]="isDisable"  />
+                    </div>
+                    <div class='field pt-3 col-12 md-2 w-2'>
+                        <label for='layer'>layer:</label>
+                        <input type='text' id='layer' name='layer' [(ngModel)]='supportDetails.supportLocation.layer'
+                            pInputText [disabled]="isDisable"  />
+                    </div>
+                    <div class='field pt-3 col-12 md-2 w-2'>
+                        <label for='suppLocat'>suppLocat:</label>
+                        <input type='text' id='suppLocat' name='suppLocat'
+                            [(ngModel)]='supportDetails.supportLocation.suppLocat' pInputText [disabled]="isDisable"  />
+                    </div>
+    
+                    <div class='field pt-3 col-12 md-2 w-2'>
+                        <label for='parentIso'>parentIso:</label>
+                        <input type='text' id='parentIso' name='parentIso'
+                            [(ngModel)]='supportDetails.supportParents.parentIso' pInputText [disabled]="isDisable"  />
+                    </div>
+                    <div class='field pt-3 col-12 md-2 w-2'>
+                        <label for='parentSpl'>parentSpl:</label>
+                        <input type='text' id='parentSpl' name='parentSpl'
+                            [(ngModel)]='supportDetails.supportParents.parentSpl' pInputText [disabled]="isDisable"  />
+                    </div>
+                    <div class='field pt-3 col-12 md-2 w-2'>
+                        <label for='splStatus'>splStatus:</label>
+                        <input type='text' id='splStatus' name='splStatus'
+                            [(ngModel)]='supportDetails.supportParents.splStatus' pInputText [disabled]="isDisable"  />
+                    </div>
+                    <div class='field pt-3 col-12 md-2 w-2'>
+                        <label for='splStDes'>splStDes:</label>
+                        <input type='text' id='splStDes' name='splStDes'
+                            [(ngModel)]='supportDetails.supportParents.splStDes' pInputText [disabled]="isDisable"  />
+                    </div>
+                    <div class='field pt-3 col-12 md-2 w-2'>
+                        <label for='splStGrp'>splStGrp:</label>
+                        <input type='text' id='splStGrp' name='splStGrp'
+                            [(ngModel)]='supportDetails.supportParents.splStGrp' pInputText [disabled]="isDisable"  />
+                    </div>
+                    <div class='field pt-3 col-12 md-2 w-2'>
+                        <label for='splWeight'>splWeight:</label>
+                        <input type='text' id='splWeight' name='splWeight'
+                            [(ngModel)]='supportDetails.supportParents.splWeight' pInputText [disabled]="isDisable"  />
+                    </div>
+                    <div class='field pt-3 col-12 md-2 w-2'>
+                        <label for='splRff'>splRff:</label>
+                        <input type='text' id='splRff' name='splRff' [(ngModel)]='supportDetails.supportParents.splRff'
+                            pInputText [disabled]="isDisable"  />
+                    </div>
+                    <div class='field pt-3 col-12 md-2 w-2'>
+                        <label for='parentIns'>parentIns:</label>
+                        <input type='text' id='parentIns' name='parentIns'
+                            [(ngModel)]='supportDetails.supportParents.parentIns' pInputText [disabled]="isDisable"  />
+                    </div>
+                    <div class='field pt-3 col-12 md-2 w-2'>
+                        <label for='parentPnt'>parentPnt:</label>
+                        <input type='text' id='parentPnt' name='parentPnt'
+                            [(ngModel)]='supportDetails.supportParents.parentPnt' pInputText [disabled]="isDisable"  />
+                    </div>
+                    <div class='field pt-3 col-12 md-2 w-2'>
+                        <label for='parentCls'>parentCls:</label>
+                        <input type='text' id='parentCls' name='parentCls'
+                            [(ngModel)]='supportDetails.supportParents.parentCls' pInputText [disabled]="isDisable"  />
+                    </div>
+                    <div class='field pt-3 col-12 md-2 w-2'>
+                        <label for='suppMater'>suppMater:</label>
+                        <input type='text' id='suppMater' name='suppMater'
+                            [(ngModel)]='supportDetails.supportParents.suppMater' pInputText [disabled]="isDisable"  />
+                    </div>
+                    <div class='field pt-3 col-12 md-2 w-2'>
+                        <label for='parentMat'>parentMat:</label>
+                        <input type='text' id='parentMat' name='parentMat'
+                            [(ngModel)]='supportDetails.supportParents.parentMat' pInputText [disabled]="isDisable"  />
+                    </div>
+                    
+                </div>
+                <div class="grid grid-nogutter justify-content-end w-1">
+                    <button *ngIf="!isDisable" [loading]="isLoading" pButton [disabled]="!form.valid" label="Submit" type="submit"></button>
+                </div>
+            </app-custom-collapse>
+
+
+            <div>
+                <a class="grid grid-nogutter justify-content-end" style="cursor: pointer;"
+                    (click)="show=!show;  image.h = show? '250' : '150' ; image.w =  show? '350' : '200' ">{{ show ?
+                    'Show less': 'Show More' }} <i
+                        class="{{ show ? 'pi pi-angle-double-up ':'pi pi-angle-double-down'}}"></i></a>
+            </div>
+
+        </form>
+    </div>
+
+    <div class=" p-2 card lg:col-3 col-12">
+        <h5>preview Image</h5>
+        <p-image *ngIf="picture" [src]="'data:' + picture.pictureContentType + ';base64,' + picture.picture"
+            onerror="this.attributes.src.value='../../../../assets/images/product.jpg';" [width]="image.w"
+            [height]="image.h" alt="" class="m-2 flex" [preview]="true" [imageStyle]="{'object-fit': 'contain'}">
+        </p-image>
+    </div>
+</div>
+<p-tabView [(activeIndex)]="activeIndex">
+    <p-tabPanel leftIcon="pi pi-list" header="Material TakeOff">
+
+        <app-mat-takeoff-list *ngIf="supportDetails && activeIndex == 0" [input]="supportDetails"></app-mat-takeoff-list>
+    </p-tabPanel>
+
+    <p-tabPanel leftIcon="pi pi-briefcase" header="Status">
+        <app-support-status-list *ngIf="supportDetails && activeIndex == 1" [parentHeader]="supportDetails"></app-support-status-list>
+    </p-tabPanel>
+</p-tabView>

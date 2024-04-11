@@ -1,0 +1,9 @@
+<div class="p-fluid">
+
+<label for="name">Name:</label>
+<input pInputText  type="text" id="name" name="name" [(ngModel)]="folderName"><br><br>
+<label for="Description">Description</label>
+<input pInputText  id="description" name="description" [(ngModel)]="description" placeholder="Optional" />
+<br>
+</div>
+<button class="mt-2" pButton icon="pi pi-plus" label="Create New Folder" (click)="createNewFolder()" ></button>

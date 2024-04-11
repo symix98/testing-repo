@@ -1,0 +1,51 @@
+<p-card>
+    <ng-template pTemplate="title">
+        Materials Take-off (MTO)
+        <hr>
+        <!-- <div class="mainheader">
+            <h2>Materials Take-off</h2>
+        </div>
+        <p></p> -->
+    </ng-template>
+
+    <p-table [loading]="isLoading" [value]="mtoList" [columns]="mtoListCols" [rowHover]="true" [paginator]="true"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rows]="20"
+        [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50,100]"
+        [globalFilterFields]="['name', 'type', 'material']" dataKey="id" responsiveLayout="scroll">
+        <ng-template pTemplate="header" let-columns>
+            <tr>
+                <th *ngFor="let col of columns">
+                    {{col.header}}
+                </th>
+                <th style="width: 15rem; text-align: center;">
+                    Action
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex">
+            <tr>
+                <td *ngFor="let col of columns">
+                    <!-- <b>{{rowData[col.field]}}</b> -->
+                    {{rowData[col.field]}}
+                </td>
+
+                <td style="text-align: center;">
+                    <button type="button" pButton pRipple icon="pi pi-search" class="mr-2"
+                        (click)="viewMTO(rowData)" pTooltip="View MTO"></button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</p-card>
+
+
+
+<!-- <div class="card">
+    <div class="mainheader">
+        <h2>Materials Take-off</h2>
+    </div>
+    <p></p>
+
+    <app-table-template *ngIf='tableParam' #tbl [tableParam]="tableParam">
+    </app-table-template>
+</div> -->

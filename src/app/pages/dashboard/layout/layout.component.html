@@ -1,0 +1,34 @@
+<div class="col-12 p-d-flex p-jc-between">
+    <div>
+        <!-- <button *ngIf="customizeButtonVisible" pButton pRipple label="Customize Dashboard" icon="pi pi-pencil"
+            (click)="customizeDashboard()"></button> -->
+        <app-components-menu *ngIf="customizeDash" (componentChosen)="add($event,0)"></app-components-menu> 
+    </div>
+    <div>
+        <button *ngIf="customizeDash" pButton pRipple type="button" icon="pi pi-check"
+            class="p-button-rounded mr-2 mb-2" (click)="saveLayout()"></button>
+    </div>
+</div>
+
+<div class="grid" style="text-align: center;" *ngIf='loading'>
+    <div class="col-12 pt-4 pb-4">
+        <h4>Please wait... <p-progressSpinner [style]="{width: '26px', height: '26px'}"></p-progressSpinner>
+        </h4>
+    </div>
+</div>
+
+<div *ngIf="overview">
+    <div class="col-12 first" pDroppable="color" (onDrop)="dropDragged($event,0)">
+        <ng-template add-component></ng-template>
+    </div>
+</div>
+
+
+<div class="grid">
+    <div *ngFor="let item of columnToArray; let i = index" class="col-12 lg:col-6 colLayout" pDroppable="color"
+        (onDrop)="dropDragged($event,componentLocation+i)">
+        <div class="p-fluid">
+            <ng-template add-component></ng-template>
+        </div>
+    </div>
+</div>

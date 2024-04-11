@@ -1,0 +1,42 @@
+h4 {
+  background-color: #e0f4ff;
+  width: 100%;
+  padding: 1rem;
+}
+
+span {
+  font-weight: bold;
+}
+
+.active-status {
+  color: #22c55e;
+}
+
+.inactive-status {
+  color: #64748b;
+}
+
+#buttons button {
+  width: fit-content;
+  float: right;
+}
+
+button {
+  width: fit-content;
+}
+
+button:not(:nth-child(3)) {
+  margin-left: 1rem;
+}
+
+#docsTable {
+  margin-bottom: 3rem;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin: 2rem 1rem;
+}

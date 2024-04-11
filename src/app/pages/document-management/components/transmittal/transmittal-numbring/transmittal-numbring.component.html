@@ -1,0 +1,50 @@
+<div class="card">
+  <div class="p-fluid grid">
+    <div class="field col-12 md:col-6">
+      <label for="contacttitle">Originator <span class="requiredfield">*</span></label>
+      <p-dropdown [(ngModel)]="selectedOriginator" inputId="originator" optionLabel="name" optionValue="code"
+        [options]="transmittalOriginatorRecipient" placeholder="Select Originator" #originator="ngModel"
+        (onChange)="generateDocumentNo()" [showClear]="true">
+        <ng-template let-item pTemplate="item">
+          <div class="dropdown-item">
+            <div>{{ item.name }}</div>
+            <div>{{ item.code }}</div>
+          </div>
+        </ng-template>
+      </p-dropdown>
+    </div>
+
+    <div class="field col-12 md:col-6">
+      <label for="contacttitle">Recipient <span class="requiredfield">*</span></label>
+      <p-dropdown [(ngModel)]="selectedRecipient" inputId="recipient" optionLabel="name" optionValue="code"
+        [options]="transmittalOriginatorRecipient" placeholder="Select Recipient" #recipient="ngModel"
+        (onChange)="generateDocumentNo()" [showClear]="true">
+        <ng-template let-item pTemplate="item">
+          <div class="dropdown-item">
+            <div>{{ item.name }}</div>
+            <div>{{ item.code }}</div>
+          </div>
+        </ng-template>
+      </p-dropdown>
+    </div>
+
+    <div class="field col-12 md:col-12">
+      <label for="contacttitle">Transmittal Number</label>
+      <input class="custom-textbox" type="text" pInputText readonly="true"
+        [placeholder]="transmittalNumbering || 'Select Originator and Recipient' " />
+    </div>
+  </div>
+</div>
+
+
+<div class="grid grid-nogutter justify-content-between">
+  <div class="grid grid-nogutter justify-content-start">
+  </div>
+
+  <div class="grid grid-nogutter justify-content-end">
+    <button pButton class="mr-2" icon="pi pi-save" label="Save" [disabled]="!transmittalNumbering"
+      (click)="saveTransmittal()"></button>
+
+    <p-button icon="pi pi-times" label="Close" (onClick)="closeForm()"></p-button>
+  </div>
+</div>

@@ -1,0 +1,10 @@
+<div class="">
+    <div class="pfluid ">
+        <div class="grid grid-nogutter justify-content-between">
+            <label for="">file Name: </label><b>{{file.documentsNumber}}</b>
+            <label for="">file size: </label><b>{{file.ssize}}</b>
+
+        </div>
+    </div>
+    <p-progressBar *ngIf="isLoading" mode="indeterminate" [style]="{'height': '6px'}"></p-progressBar>
+</div>

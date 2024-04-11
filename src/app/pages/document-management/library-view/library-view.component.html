@@ -1,0 +1,9 @@
+
+<div class="p-fluid grid card">
+    <div class="p-2 col-3 card">
+        <app-doc-datasource (oneNodeSelected)="oneNodeSelected($event)" (oneNodeSelectedId)="oneNodeSelectedId($event)"></app-doc-datasource>
+    </div>
+    <div class="p-2 col-9 card">
+        <app-documents-manag-list [breadcrumbPath]="path" [path]="filePath" [folderNum]="folderId"></app-documents-manag-list>
+    </div>
+</div>

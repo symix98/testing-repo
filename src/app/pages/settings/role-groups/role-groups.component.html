@@ -1,0 +1,35 @@
+<div class='card'>
+    <p-toolbar>
+        <div class='p-toolbar-group-left'>
+            <button pButton icon="pi pi-plus" label='Add Role' type='button' [loading]='isLoading' [disabled]='isDisable' (click)='onRolesAdd()'></button>
+        </div>
+    </p-toolbar>
+
+    <div class='mb-1'></div>
+
+    <div class='card'>
+        <p-table [value]='rolesTableData' [rows]='10' [rowsPerPageOptions]='[10,15,25,50,100]' selectionMode='single' [(selection)]='isSelected'
+            [paginator]='true' [showCurrentPageReport]='true' sortMode='single' [totalRecords]='rolesTableData?.length' [tableStyle]="{'min-width': '100%'}"
+            (onRowSelect)='onRowSelected($event)' [scrollable]='true' currentPageReportTemplate='Showing {first} to {last} of {totalRecords} entries'>
+            <ng-template pTemplate='header'>
+                <tr>
+                    <th pSortableColumn='roleId'>Role <p-sortIcon field='roleId'></p-sortIcon></th>
+                    <th pSortableColumn='description'>Description <p-sortIcon field='description'></p-sortIcon></th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate='body' let-role>
+                <tr [pSelectableRow]='role'>
+                    <td style='padding: 0.8rem 1.5rem !important;'>{{role.roleId}}</td>
+                    <td style='padding: 0.8rem 1.5rem !important;'>{{role.description}}</td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate='emptymessage' let-role>
+                <tr>
+                    <td class='table-cell'>
+                        No records found
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</div>

@@ -1,0 +1,44 @@
+:host ::ng-deep {
+    .p-card-content {
+        padding: 0.5rem 0 0.2rem 0 !important;
+    }
+}
+
+:host ::ng-deep {
+    .p-timeline-horizontal .p-timeline-event {
+        min-width: max-content;
+    }
+}
+
+:host ::ng-deep {
+    .p-timeline.p-timeline-horizontal .p-timeline-event-opposite {
+        flex: 0;
+        padding: 0.5rem;
+    }
+}
+
+:host ::ng-deep {
+    .p-timeline.p-timeline-horizontal .p-timeline-event-content {
+        padding: 1rem 0 0.5rem 0;
+    }
+}
+
+.timeline {
+    padding: 0rem 0.6rem;
+}
+
+.form-title {
+    font-weight: 700;
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+}
+
+.custom-marker {
+    z-index: 1;
+    width: 3rem;
+    height: 3rem;
+    display: flex;
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+}

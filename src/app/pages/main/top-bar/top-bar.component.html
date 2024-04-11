@@ -1,0 +1,56 @@
+<div class="layout-topbar">
+
+  <a href="#" class="layout-topbar-logo">
+    <img id="layout-topbar-logo" src="assets/images/ccc-logo.png" alt="babylon-layout" />
+  </a>
+
+  <a class="layout-menu-button" href="#" (click)="app.onMenuButtonClick($event)">
+    <i class="pi pi-bars"></i>
+  </a>
+
+  <a id="topbar-menu-button" href="#" (click)="app.onTopbarMenuButtonClick($event)">
+    <i class="pi pi-ellipsis-v"></i>
+  </a>
+
+  <ul class="topbar-menu fadeInDown" [ngClass]="{'topbar-menu-visible': app.topbarMenuActive}">
+    <li #profile class="user-profile" *ngIf="app.profileMode === 'popup'|| app.isHorizontal()"
+      [ngClass]="{'active-topmenuitem':app.activeTopbarItem === profile}">
+
+      <a href="#" (click)="app.onTopbarItemClick($event,profile)">
+        <img alt="babylon-layout" src="assets/images/user.svg" />
+        <span class="topbar-item-name">Employee</span>
+      </a>
+
+      <ul class="fadeInDown">
+        <li role="menuitem">
+          <a (click)="openUserProfile()" *ngIf="!app.isMobile()">
+            <i class="pi pi-user"></i>
+            <span><b>{{ name }}</b></span>
+          </a>
+          <a href="#" (click)="logout()">
+            <span>Logout</span>
+          </a>
+        </li>
+      </ul>
+    </li>
+
+    <li #inbox [ngClass]="{'active-topmenuitem': app.activeTopbarItem === inbox}">
+      <a href="#" (click)="app.onTopbarItemClick($event, inbox)">
+        <i class="topbar-icon pi pi-inbox"></i>
+        <span class="topbar-item-name">Message</span>
+        <!-- <span *ngIf="myTaskCount>0 " class="topbar-badge">{{myTaskCount}}<b *ngIf="myTaskCount>=20 ">+</b></span> -->
+      </a>
+
+      <ul class="fadeInDown">
+        <li role="menuitem">
+          <a (click)="openInbox()" *ngIf="!app.isMobile()" [disabled] = 'true'>
+            <i class="pi pi-lock"></i>
+            <span><b>Inbox</b></span>
+            <!-- <span class="topbar-submenuitem-badge">{{myTaskCount}}<b *ngIf="myTaskCount>=20 ">+</b></span> -->
+          </a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+
+</div>

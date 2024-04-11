@@ -1,0 +1,46 @@
+<p-toolbar styleClass="p-mb-3">
+    <div class="p-toolbar-group-left">
+        <button pButton icon="pi pi-plus" label="Add New Work Flow" [disabled]="isInputDisabled" (click)="AddNewForm()"></button>
+    </div>
+</p-toolbar>
+
+<div class="mb-1"></div>
+
+<div class="card">
+    
+    <p-table
+        [value]="formTypeData" [rows]="10" [rowsPerPageOptions]="[10,15,25,50,100]"
+        selectionMode="single" [paginator]="true" [showCurrentPageReport]="true" sortMode="single"
+        [totalRecords]="formTypeData?.length" [(selection)]="isSelected" [tableStyle]="{'min-width': '100%'}" [scrollable]="true"
+        (onRowSelect)="onRowSelected($event)" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries">
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="formType" style="width:50%">Form Type <p-sortIcon field="formType"></p-sortIcon></th>
+                <th pSortableColumn="steps" style="width:50%">No of Steps <p-sortIcon field="steps"></p-sortIcon></th>
+            </tr>
+       <!-- <tr>
+                <th style="padding: 0rem 1rem;">
+                    <button pButton type="button" icon="pi pi-filter" style="padding: 0rem 1rem;" [ngClass]="{ 'p-button-rounded': true,'p-button-outlined': true }"></button>
+                </th>
+                <th style="padding: 0rem 1rem;">
+                    <button pButton type="button" icon="pi pi-filter" style="padding: 0rem 1rem;" [ngClass]="{ 'p-button-rounded': true,'p-button-outlined': true }"></button>
+                </th>
+            </tr> -->
+        </ng-template>
+        <ng-template pTemplate="body" let-product>
+            <tr [pSelectableRow]="product">
+                <td style="padding: 0.8rem 1.5rem !important;">{{product.formType}}</td>
+                <td style="padding: 0.8rem 1.5rem !important;">{{product.steps}}</td>
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="emptymessage" let-product>
+            <tr>
+                <td class="table-cell">
+                    No records found
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+
+</div>

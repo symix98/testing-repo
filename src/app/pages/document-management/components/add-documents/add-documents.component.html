@@ -1,0 +1,10 @@
+<app-table-template *ngIf="tableParam" #tbl [tableParam]="tableParam">
+</app-table-template>
+<button
+      pButton
+      pRipple
+      label="Save"
+      id="saveSelectedDocumentsButton"
+      icon="pi pi-save"
+      (click)="saveDocuments()"
+    ></button>

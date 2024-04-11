@@ -1,0 +1,29 @@
+<p-card class="timeline" (click)="updateUnRead(inboxItem)">
+    <div [ngClass]="inboxItem.unread?'addBorder':''">
+        <div style="text-align: right;margin:0!important;padding:0!important;">
+            <i *ngIf="!inboxItem.unread" class="pi pi-eye"
+                style="font-size:1.2rem; color:#87A96B; margin:0!important;padding:0!important;"> Seen</i>
+            <i *ngIf="inboxItem.unread" class="pi pi-eye-slash"
+                style="font-size:1.2rem; color:#5072A7; margin:0!important;padding:0!important;"></i>
+        </div>
+        <div class="p-d-flex p-flex-wrap p-ai-center" style="padding: 0px 2px 2px 2px;">
+            <div>
+                <h5><b>{{inboxItem.assignedByName}}</b></h5>
+            </div>
+            <div class="p-ml-auto">
+                <div [ngClass]="inboxItem.unread?'unreadMessage':''">
+                    {{dateAgo}}
+                </div>
+            </div>
+        </div>
+
+        <!--   margin-left:0.8rem; -->
+        <div class="p-d-flex p-flex-wrap p-flex-column" style="padding: 2px;">
+            <div [ngClass]="inboxItem.unread?'unreadMessage':''">
+                <h5>{{inboxItem.title}}</h5>
+            </div>
+            <div [ngClass]="inboxItem.unread?'unreadMessage':''">{{inboxItem.description}}</div>
+            <div [ngClass]="inboxItem.unread?'unreadMessage':''" class="p-mt-2">{{inboxItem.message}}</div>
+        </div>
+    </div>
+</p-card>

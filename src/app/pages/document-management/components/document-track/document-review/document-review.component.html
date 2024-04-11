@@ -1,0 +1,14 @@
+<div class='p-fluid grid' style='flex-direction: row-reverse;'>
+    <div class="col-12">
+        <app-document-timeline *ngIf="detailsData" [documentId]="documentid" [data]="detailsData"></app-document-timeline>
+    </div>
+    <div class="col-12">
+        <app-doc-proprties-tab [data]='detailsData' [flag]='propBtnsFlag'></app-doc-proprties-tab>
+    </div>
+    <div *ngIf='!isApprove' class='btns'>
+        <div class='flex'>
+            <button pButton pRipple type='button' label='Previous Status' class='p-button mr-3' (click)='onPreviousStep()' [disabled]='false'></button>
+            <button pButton pRipple type='button' label='Next Status' class='p-button mr-2' (click)='onNextStep()' [disabled]='false'></button>
+        </div>
+    </div>
+</div>

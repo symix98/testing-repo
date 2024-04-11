@@ -1,0 +1,24 @@
+.p-datatable.p-datatable-sm-wfp .p-datatable-header {
+    padding: 0.05rem 0.05rem;
+  }
+  .p-datatable.p-datatable-sm-wfp .p-datatable-thead > tr > th {
+    padding: 0.05rem 0.05rem;
+  }
+  .p-datatable.p-datatable-sm-wfp .p-datatable-tbody > tr > td {
+    padding: 0.05rem 0.05rem;
+  }
+  .p-datatable.p-datatable-sm-wfp .p-datatable-tfoot > tr > td {
+    padding: 0.05rem 0.05rem;
+  }
+  .p-datatable.p-datatable-sm-wfp .p-datatable-footer {
+    padding: 0.05rem 0.05rem;
+  }
+
+  .p-tabview .p-tabview-nav li .p-tabview-nav-link:not(.p-disabled):focus {
+    box-shadow: 0 0 0 0.0rem;
+  }
+ 
+  .p-datatable-tbody {
+    font-size: 12px !important;
+  }
+   

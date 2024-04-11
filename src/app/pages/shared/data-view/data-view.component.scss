@@ -1,0 +1,24 @@
+:host ::ng-deep {
+    .card {
+        margin-bottom: 0.5rem !important;
+        border-radius: 10px !important;
+    }
+    .p-dataview .p-dataview-content {
+        background: none !important;
+        color: #495057;
+    }
+    .p-paginator {
+        background: none !important;
+    }
+    .quick-filter-label {
+        color: #7a869a;
+        font-size: 12px;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+    .specialNotes {
+        color: red;
+        font-style: italic;
+        font-weight: bold;
+    }
+}

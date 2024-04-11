@@ -1,0 +1,10 @@
+.btns {
+    width: fit-content;
+    margin-left: 0.5rem;
+}
+
+:host ::ng-deep {
+    .p-fluid .p-button {
+        width: auto;
+    }
+}

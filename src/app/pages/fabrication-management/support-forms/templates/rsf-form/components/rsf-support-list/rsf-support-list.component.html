@@ -1,0 +1,54 @@
+<button  *ngIf="!isDisabled" class="mb-2" pButton icon="pi pi-plus" label="Add Supports" (click)="startSelect()"></button>
+<p-table 
+        [columns]="cols" 
+        [value]="tableData" 
+        [resizableColumns]="true"
+        (onEditComplete) = "onEditComplete($event)"
+        responsiveLayout="stack"
+        scrollHeight="50vh"
+        scrollDirection="both"
+        [loading]="isLoading"
+        [showCurrentPageReport]="true"
+        [paginator]="true" 
+        [rows]="15" 
+        [totalRecords]="tableData?.length"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+         >
+            <ng-template pTemplate="header" let-columns>
+                <tr>
+                    
+                    <th pResizableColumn  *ngFor="let col of columns" [pSortableColumn]="col.field">
+                        {{col.header}} <p-sortIcon [field]="col.field"></p-sortIcon>
+                    </th>
+                    <th *ngIf="isEditHeader"></th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-data let-columns="columns" let-index="rowIndex">
+                <tr>
+                    
+                    <td [pEditableColumn]="data" *ngFor="let col of columns">
+                        <p-cellEditor *ngIf="col.field != 'isDaily'">
+                            <ng-template pTemplate="input">
+                                <input pInputText type="text" [(ngModel)]="data[col.field]">
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                                {{data[col.field]}}
+                            </ng-template>
+                        </p-cellEditor>
+                        <p-cellEditor *ngIf="col.field == 'isDaily'">
+                            <ng-template pTemplate="input">
+                                <p-checkbox [(ngModel)]="data[col.field]" [binary]="true" inputId="binary"></p-checkbox>
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                                {{data[col.field]}}
+                            </ng-template>
+                        </p-cellEditor>
+                            
+                    </td>
+                    <td *ngIf="isEdit && !isInputDisabled ">
+                        <button pButton pRipple icon="pi pi-trash" (click)="deleteRow(data)"></button>
+                    </td>
+                    
+                </tr>
+            </ng-template>
+    </p-table>

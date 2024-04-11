@@ -1,0 +1,60 @@
+#addDocumentButton {
+  margin-bottom: 1rem;
+}
+
+label {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+#buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+.users {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.container-fluid {
+  margin-top: 1rem;
+}
+
+#selectedRecipientsTable {
+  margin-bottom: 1rem;
+}
+:host ::ng-deep {
+  .p-calendar .p-datepicker {
+    width: 350px;
+  }
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 30rem;
+}
+
+// Response Page Styling
+.response-properties {
+  display: flex;
+  justify-content: space-between;
+  margin: 0.5rem;
+}
+
+::ng-deep {
+  .p-accordion-header-text {
+    color: #2196f3;
+    font-weight: bold;
+  }
+}
+
+.comments {
+  margin: 1rem 0 0 .4rem
+}

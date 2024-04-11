@@ -1,0 +1,31 @@
+        <form *ngIf="statusForm" id="ngForm" (ngSubmit)="submitForm()" #form="ngForm">
+            <div class=" p-fluid formgrid grid">
+                
+                <div class='col-2'>
+                    <label for='status'>status:</label>
+                    <input type='text' id='status' name='status' [(ngModel)]='statusForm.status' pInputText required />
+                </div>
+                <div class='col-10'>
+                    <label for='satatusName'>Status Name:</label>
+                    <input type='text' id='satatusName' name='satatusName' [(ngModel)]='statusForm.satatusName' pInputText required />
+                </div>
+                <!-- <div class='col-12'>
+                    <label for='isSubcontractor'>Is Subcontractor:</label>
+                    <p-checkbox id='isSubcontractor' name='isSubcontractor' [(ngModel)]="statusForm.isSubcontractor"></p-checkbox>
+
+                </div>
+                <div class='col-12'>
+                    <label for='isCCC'>Is CCC:</label>
+                    <p-checkbox id='isCCC' name='isCCC' [(ngModel)]="statusForm.isCCC"></p-checkbox>
+                </div> -->
+                <div class='mt-2 col-12'>
+                    <label for='weight'>Weight:</label>
+                    <p-inputNumber id='weight' name='weight' [(ngModel)]="statusForm.weight"></p-inputNumber>
+                </div>
+                
+            </div>
+           
+                <div class="grid grid-nogutter justify-content-end mt-2">
+                    <button *ngIf="!isDisable" [loading]="isLoading" pButton [disabled]="!form.valid" icon="pi pi-check" label="Submit" type="submit"></button>
+                </div>
+        </form>

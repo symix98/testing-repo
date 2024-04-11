@@ -1,0 +1,379 @@
+<div class="p-fluid p-formgrid grid" style="padding: 6px;">
+    <div class="field col-12 md:col-3">
+        <label for="documentsNumber">Document Number</label>
+        <input name="documentsNumber" type="text" pInputText [(ngModel)]="searchQueryForm.documentsNumber"
+            autocomplete="off" autofocus />
+    </div>
+
+    <div class="field col-12 md:col-3">
+        <label for="title">Title</label>
+        <input name="title" type="text" pInputText [(ngModel)]="searchQueryForm.title" autocomplete="off" />
+    </div>
+
+    <div class="field col-12 md:col-3">
+        <label for="disciplines">Disciplines</label>
+        <input name="disciplines" type="text" pInputText [(ngModel)]="searchQueryForm.disciplines" autocomplete="off" />
+    </div>
+
+    <div class="field col-12 md:col-3">
+        <label for="sstatus">Status</label>
+        <input name="sstatus" type="text" pInputText [(ngModel)]="searchQueryForm.sstatus" autocomplete="off" />
+    </div>
+
+    <div class="field col-12 md:col-3">
+        <label for="revision">Revision</label>
+        <input name="revision" type="number" pInputText [(ngModel)]="searchQueryForm.revision" autocomplete="off"
+            min="0" />
+    </div>
+
+    <div class="field col-12 md:col-3">
+        <label for="version">Version</label>
+        <input name="version" type="number" pInputText [(ngModel)]="searchQueryForm.version" autocomplete="off"
+            min="0" />
+    </div>
+
+    <div class="field col-12 md:col-3">
+        <label for="phase">Phase</label>
+        <input name="phase" type="text" pInputText [(ngModel)]="searchQueryForm.phase" autocomplete="off" />
+    </div>
+
+
+    <div class="field col-12 md:col-3">
+        <label for="fileType">File Type</label>
+        <p-multiSelect name="fileType" [options]="fileTypeList" [(ngModel)]="selectedFileType"
+            defaultLabel="Select File Type" optionLabel="name" optionValue="code"></p-multiSelect>
+    </div>
+</div>
+
+
+<div style="margin-bottom: 20px; ">
+    <a class="grid grid-nogutter justify-content-end" style="cursor: pointer;"
+        (click)="showExtraFilters=!showExtraFilters;  image.h = showExtraFilters? '250' : '150' ; image.w =  showExtraFilters? '350' : '200' ">{{
+        showExtraFilters ? 'Show Less Filters': 'Show More Filters' }} <i
+            class="{{ showExtraFilters ? 'pi pi-angle-double-up ':'pi pi-angle-double-down'}}"></i></a>
+</div>
+
+<div [ngClass]="{'scrollcard': showExtraFilters}">
+    <div class="p-fluid p-formgrid grid" *ngIf="showExtraFilters">
+        <div class="field col-12 md:col-3" *ngIf="isValueInArray('Classes')">
+            <label for="classes">Classes</label>
+            <input name="classes" type="text" pInputText [(ngModel)]="searchQueryForm.classes" autocomplete="off" />
+        </div>
+
+        <div class="field col-12 md:col-3" *ngIf="isValueInArray('Revision Date')">
+            <label for="in">Revision Date</label>
+            <p-calendar name="revisionDate" [(ngModel)]="searchQueryForm.revisionDate" [showIcon]="true"
+                dateFormat="dd-M-yy" [touchUI]="true" [readonlyInput]="true"></p-calendar>
+        </div>
+
+        <div class="field col-12 md:col-3" *ngIf="isValueInArray('Documents For')">
+            <label for="documentsFor">Documents For</label>
+            <input name="documentsFor" type="text" pInputText [(ngModel)]="searchQueryForm.documentsFor"
+                autocomplete="off" />
+        </div>
+
+        <div class="field col-12 md:col-3" *ngIf="isValueInArray('Initiated By')">
+            <label for="in">Initiated By</label>
+            <input name="initiatedBy" type="text" pInputText [(ngModel)]="searchQueryForm.initiatedBy"
+                autocomplete="off" />
+        </div>
+
+        <div class="field col-12 md:col-3" *ngIf="isValueInArray('Receive Date')">
+            <label for="in">Receive Date</label>
+            <p-calendar name="receiveDate" [(ngModel)]="searchQueryForm.receiveDate" [showIcon]="true"
+                dateFormat="dd-M-yy" [touchUI]="true" [readonlyInput]="true"></p-calendar>
+        </div>
+
+        <div class="field col-12 md:col-3" *ngIf="isValueInArray('Reply Required')">
+            <label for="in">Reply Required</label>
+            <input name="replyRequired" type="text" pInputText [(ngModel)]="searchQueryForm.replyRequired"
+                autocomplete="off" />
+        </div>
+
+        <div class="field col-12 md:col-3" *ngIf="isValueInArray('Reply Required By')">
+            <label for="in">Reply Required By</label>
+            <p-calendar name="replyRequiredBy" [(ngModel)]="searchQueryForm.replyRequiredBy" [showIcon]="true"
+                dateFormat="dd-M-yy" [touchUI]="true" [readonlyInput]="true"></p-calendar>
+        </div>
+
+        <div class="field col-12 md:col-3" *ngIf="isValueInArray('Replied Date')">
+            <label for="in">Replied Date</label>
+            <p-calendar name="repliedDate" [(ngModel)]="searchQueryForm.repliedDate" [showIcon]="true"
+                dateFormat="dd-M-yy" [touchUI]="true" [readonlyInput]="true"></p-calendar>
+        </div>
+
+
+        <div class="field col-12 md:col-3" *ngIf="isValueInArray('TQ Status')">
+            <label for="in">TQ Status</label>
+            <input name="tqStatus" type="text" pInputText [(ngModel)]="searchQueryForm.tqStatus" autocomplete="off" />
+        </div>
+
+        <div class="field col-12 md:col-3" *ngIf="isValueInArray('Path')">
+            <label for="in">Path</label>
+            <input name="path" type="text" pInputText [(ngModel)]="searchQueryForm.path" autocomplete="off" />
+        </div>
+
+        <div class="field col-12 md:col-3" *ngIf="isValueInArray('Work Flow')">
+            <label for="in">Work Flow</label>
+            <input name="workflow" type="text" pInputText [(ngModel)]="searchQueryForm.workflow" autocomplete="off" />
+        </div>
+
+        <div class="field col-12 md:col-3" *ngIf="isValueInArray('Current Step')">
+            <label for="in">Current Step</label>
+            <input name="currentStep" type="text" pInputText [(ngModel)]="searchQueryForm.currentStep"
+                autocomplete="off" />
+        </div>
+
+        <div class="field col-12 md:col-3" *ngIf="isValueInArray('Ssize')">
+            <label for="in">Ssize</label>
+            <input name="ssize" type="text" pInputText [(ngModel)]="searchQueryForm.ssize" autocomplete="off" />
+        </div>
+
+        <div class="field col-12 md:col-3" *ngIf="isValueInArray('Transmitted')">
+            <label for="in">Transmitted</label>
+            <!-- <input name="isTransmitted" type="text" pInputText [(ngModel)]="searchQueryForm.isTransmitted" autocomplete="off" /> -->
+
+            <p-dropdown name="isTransmitted" [(ngModel)]="searchQueryForm.isTransmitted" [options]="statusList"
+                placeholder="Select Value" [showClear]="true">
+                <ng-template let-option pTemplate="item">
+                    <span [class]="option.value">{{option.label}}</span>
+                </ng-template>
+            </p-dropdown>
+        </div>
+
+        <div class="field col-12 md:col-3" *ngIf="isValueInArray('Confidential')">
+            <label for="in">Confidential</label>
+            <!-- <input name="confidential" type="text" pInputText [(ngModel)]="searchQueryForm.confidential" autocomplete="off" /> -->
+
+            <p-dropdown name="confidential" [(ngModel)]="searchQueryForm.confidential" [options]="statusList"
+                placeholder="Select Value" [showClear]="true">
+                <ng-template let-option pTemplate="item">
+                    <span [class]="option.value">{{option.label}}</span>
+                </ng-template>
+            </p-dropdown>
+        </div>
+
+        <div class="field col-12 md:col-3" *ngIf="isValueInArray('Additional Reference')">
+            <label for="in">Additional Reference</label>
+            <input name="additionalReference" type="text" pInputText [(ngModel)]="searchQueryForm.additionalReference"
+                autocomplete="off" />
+        </div>
+
+        <div class="field col-12 md:col-3" *ngIf="isValueInArray('Review Status')">
+            <label for="in">Review Status</label>
+            <input name="reviewStatus" type="text" pInputText [(ngModel)]="searchQueryForm.reviewStatus"
+                autocomplete="off" />
+        </div>
+
+        <div class="field col-12 md:col-3" *ngIf="isValueInArray('Model Reference')">
+            <label for="in">Model Reference</label>
+            <input name="modelReference" type="text" pInputText [(ngModel)]="searchQueryForm.modelReference"
+                autocomplete="off" />
+        </div>
+
+        <div class="field col-12 md:col-3" *ngIf="isValueInArray('Created By')">
+            <label for="in">Created By</label>
+            <input name="createdBy" type="text" pInputText [(ngModel)]="searchQueryForm.createdBy" autocomplete="off" />
+        </div>
+
+        <div class="field col-12 md:col-3" *ngIf="isValueInArray('Date Modified')">
+            <label for="in">Date Modified</label>
+            <p-calendar name="dateModified" [(ngModel)]="searchQueryForm.dateModified" [showIcon]="true"
+                dateFormat="dd-M-yy" [touchUI]="true" [readonlyInput]="true"></p-calendar>
+        </div>
+
+        <div class="field col-12 md:col-3" *ngIf="isValueInArray('Related Items')">
+            <label for="in">Related Items</label>
+            <input name="relatedItems" type="text" pInputText [(ngModel)]="searchQueryForm.relatedItems"
+                autocomplete="off" />
+        </div>
+
+        <div class="field col-12 md:col-3" *ngIf="isValueInArray('Access Level')">
+            <label for="in">Access Level</label>
+            <input name="accessLevel" type="text" pInputText [(ngModel)]="searchQueryForm.accessLevel"
+                autocomplete="off" />
+        </div>
+
+        <div class="field col-12 md:col-3" *ngIf="isValueInArray('Csi Spec Code')">
+            <label for="in">Csi Spec Code</label>
+            <input name="csiSpecCode" type="text" pInputText [(ngModel)]="searchQueryForm.csiSpecCode"
+                autocomplete="off" />
+        </div>
+
+        <div class="field col-12 md:col-3" *ngIf="isValueInArray('Current')">
+            <label for="in">Current</label>
+            <input name="current" type="text" pInputText [(ngModel)]="searchQueryForm.current" autocomplete="off" />
+        </div>
+
+        <div class="field col-12 md:col-3" *ngIf="isValueInArray('Facility Code')">
+            <label for="in">Facility Code</label>
+            <input name="facilityCode" type="text" pInputText [(ngModel)]="searchQueryForm.facilityCode"
+                autocomplete="off" />
+        </div>
+
+        <div class="field col-12 md:col-3" *ngIf="isValueInArray('File Name')">
+            <label for="in">File Name</label>
+            <input name="fileName" type="text" pInputText [(ngModel)]="searchQueryForm.fileName" autocomplete="off" />
+        </div>
+
+        <div class="field col-12 md:col-3" *ngIf="isValueInArray('Forecast Subm To Client')">
+            <label for="in">Forecast Subm To Client</label>
+            <p-calendar name="forecastSubmToClient" [(ngModel)]="searchQueryForm.forecastSubmToClient" [showIcon]="true"
+                dateFormat="dd-M-yy" [touchUI]="true" [readonlyInput]="true"></p-calendar>
+        </div>
+
+        <div class="field col-12 md:col-3" *ngIf="isValueInArray('Job Number')">
+            <label for="in">Job Number</label>
+            <input name="jobNumber" type="text" pInputText [(ngModel)]="searchQueryForm.jobNumber" autocomplete="off" />
+        </div>
+
+        <div class="field col-12 md:col-3" *ngIf="isValueInArray('Lock')">
+            <label for="in">Lock</label>
+            <!-- <input name="lock" type="text" pInputText [(ngModel)]="searchQueryForm.lock" autocomplete="off" /> -->
+
+            <p-dropdown name="lock" [(ngModel)]="searchQueryForm.lock" [options]="statusList"
+                placeholder="Select Value" [showClear]="true" >
+                <ng-template let-option pTemplate="item">
+                    <span [class]="option.value">{{option.label}}</span>
+                </ng-template>
+            </p-dropdown>
+        </div>
+
+        <div class="field col-12 md:col-3" *ngIf="isValueInArray('Last Modified Date')">
+            <label for="in">Last Modified Date</label>
+            <p-calendar name="lastModifiedDate" [(ngModel)]="searchQueryForm.lastModifiedDate" [showIcon]="true"
+                dateFormat="dd-M-yy" [touchUI]="true" [readonlyInput]="true"></p-calendar>
+        </div>
+
+        <div class="field col-12 md:col-3" *ngIf="isValueInArray('Milestone')">
+            <label for="in">Milestone</label>
+            <input name="milestone" type="text" pInputText [(ngModel)]="searchQueryForm.milestone" autocomplete="off" />
+        </div>
+
+        <div class="field col-12 md:col-3" *ngIf="isValueInArray('No Of Markups')">
+            <label for="in">No Of Markups</label>
+            <input name="numberOfMarkups" type="number" pInputText [(ngModel)]="searchQueryForm.numberOfMarkups"
+                autocomplete="off" />
+        </div>
+
+        <div class="field col-12 md:col-3" *ngIf="isValueInArray('Activity Id')">
+            <label for="in">Activity Id</label>
+            <input name="activityId" type="text" pInputText [(ngModel)]="searchQueryForm.activityId"
+                autocomplete="off" />
+        </div>
+
+        <div class="field col-12 md:col-3" *ngIf="isValueInArray('Planned Submit Date')">
+            <label for="in">Planned Submit Date</label>
+            <p-calendar name="plannedSubmissionDate" [(ngModel)]="searchQueryForm.plannedSubmissionDate"
+                [showIcon]="true" dateFormat="dd-M-yy" [touchUI]="true" [readonlyInput]="true"></p-calendar>
+        </div>
+
+        <div class="field col-12 md:col-3" *ngIf="isValueInArray('Print Size')">
+            <label for="in">Print Size</label>
+            <input name="printSize" type="text" pInputText [(ngModel)]="searchQueryForm.printSize" autocomplete="off" />
+        </div>
+
+        <div class="field col-12 md:col-3" *ngIf="isValueInArray('Purchase Order')">
+            <label for="in">Purchase Order</label>
+            <input name="purchaseOrder" type="text" pInputText [(ngModel)]="searchQueryForm.purchaseOrder"
+                autocomplete="off" />
+        </div>
+
+        <div class="field col-12 md:col-3" *ngIf="isValueInArray('Remarks')">
+            <label for="in">Remarks</label>
+            <input name="remarks" type="text" pInputText [(ngModel)]="searchQueryForm.remarks" autocomplete="off" />
+        </div>
+
+        <div class="field col-12 md:col-3" *ngIf="isValueInArray('Review Source')">
+            <label for="in">Review Source</label>
+            <input name="reviewSource" type="text" pInputText [(ngModel)]="searchQueryForm.reviewSource"
+                autocomplete="off" />
+        </div>
+
+        <!-- <div class="field col-12 md:col-3" *ngIf="isValueInArray('Project Field1')">
+            <label for="in">Project Field1</label>
+            <input name="projectField1" type="text" pInputText [(ngModel)]="searchQueryForm.projectField1" autocomplete="off" />
+        </div>
+    
+        <div class="field col-12 md:col-3" *ngIf="isValueInArray('Project Field2')">
+            <label for="in">Project Field2</label>
+            <input name="projectField2" type="text" pInputText [(ngModel)]="searchQueryForm.projectField2" autocomplete="off" />
+        </div>
+    
+        <div class="field col-12 md:col-3" *ngIf="isValueInArray('Project Field3')">
+            <label for="in">Project Field3</label>
+            <input name="projectField3" type="text" pInputText [(ngModel)]="searchQueryForm.projectField3" autocomplete="off" />
+        </div>
+    
+        <div class="field col-12 md:col-3" *ngIf="isValueInArray('Project Field4')">
+            <label for="in">Project Field4</label>
+            <input name="projectField4" type="text" pInputText [(ngModel)]="searchQueryForm.projectField4" autocomplete="off" />
+        </div>
+    
+        <div class="field col-12 md:col-3" *ngIf="isValueInArray('Project Field5')">
+            <label for="in">Project Field5</label>
+            <input name="projectField5" type="text" pInputText [(ngModel)]="searchQueryForm.projectField5" autocomplete="off" />
+        </div>
+    
+        <div class="field col-12 md:col-3" *ngIf="isValueInArray('Project Field6')">
+            <label for="in">Project Field6</label>
+            <input name="projectField6" type="text" pInputText [(ngModel)]="searchQueryForm.projectField6" autocomplete="off" />
+        </div>
+
+        <div class="field col-12 md:col-3" *ngIf="isValueInArray('Project Field7')">
+            <label for="in">Project Field7</label>
+            <input name="projectField7" type="text" pInputText [(ngModel)]="searchQueryForm.projectField7" autocomplete="off" />
+        </div> -->
+    </div>
+</div>
+
+
+<div class="grid grid-nogutter justify-content-between" style="padding: 6px;">
+    <div class="grid grid-nogutter justify-content-start">
+        <button style="width: 128px;" class="mr-2" pButton icon="pi pi-plus" label="Add Filters"
+            (click)="addMoreFilter()"></button>
+        <!-- <p-button icon="pi pi-save" iconPos="right" label="Save Filter" (onClick)="addFilterQuery()"></p-button> -->
+        <div *ngIf="!isUpdate" style="margin-right: 8px;">
+            <p-button class="mr-2" icon="pi pi-save" iconPos="right" label="Save Search"
+                (onClick)="addFilterQuery()"></p-button>
+        </div>
+        <div *ngIf="isUpdate" style="margin-right: 8px;">
+            <p-button icon="pi pi-save" iconPos="right" label="Update Search" (onClick)="EditFilterQuery()"></p-button>
+        </div>
+
+        <p-button icon="pi pi-undo" iconPos="right" label="Clear Filters" (onClick)="clearFields()"></p-button>
+    </div>
+
+    <div class="grid grid-nogutter justify-content-end">
+        <button class="p-button-secondary" pButton icon="pi pi-search" label="Search Documents"
+            (click)="searchDocuments()"></button>
+    </div>
+</div>
+
+<p-dialog header="Additional Filters" [(visible)]="showMoreFilter" [style]="{width: '50vw', height: '72vh'}"
+    [modal]="true">
+
+    <div class="p-card" style="padding: 20px;">
+        <p-pickList [source]="sourceFilters" [target]="targetFilters" sourceHeader="Available Filters"
+            targetHeader="Selected Filters" [dragdrop]="true" [responsive]="true" [sourceStyle]="{'height':'30rem'}"
+            [targetStyle]="{'height':'30rem'}" filterBy="name" sourceFilterPlaceholder="Search by name"
+            targetFilterPlaceholder="Search by name" [showSourceControls]="false" [showTargetControls]="false">
+            <ng-template let-filter pTemplate="item">
+                <div class="filter-item">
+                    {{filter.name}}
+                </div>
+            </ng-template>
+        </p-pickList>
+    </div>
+
+    <div class="grid grid-nogutter justify-content-between" style="margin-top: 20px;">
+        <div class="grid grid-nogutter justify-content-start">
+        </div>
+
+        <div class="grid grid-nogutter justify-content-end">
+            <!-- <button style="width: 128px;" class="mr-2" pButton icon="pi pi-check-square" label="Apply Filters"
+                (click)="applySelectedFilter()" [disabled]="!targetFilters.length"></button> -->
+            <p-button icon="pi pi-times" iconPos="left" label="Close" (onClick)="closeFilterForm()"></p-button>
+        </div>
+    </div>
+</p-dialog>

@@ -1,0 +1,60 @@
+<div class="mt-2">
+    <p-card>
+        <ng-template pTemplate="title">
+            General Information
+        </ng-template>
+        <ng-template pTemplate="subtitle">
+            Request For Inspection
+        </ng-template>
+        <ng-template pTemplate="content">
+            <div class='card grid p-fluid'>
+                <div class='field flex-container'>
+                    <div class='col-4' style='padding: 0px 10px'>
+                        <label for='Value'><b>Form Type : </b></label>
+                        <p-dropdown required [options]='formTypes' [disabled]='false' [showClear]='true' #Value
+                        [(ngModel)]='selectType' [class]="{'ng-invalid' : !selectType, 'ng-dirty' : !selectType}"
+                        (onChange)='onFormChange($event)' placeholder='Select Form Type'></p-dropdown>
+                    </div>
+                </div>
+                <div class='field flex-container'>
+                    <div class='col-4' style='padding: 0px 10px'>
+                        <label><b>Area</b></label>
+                        <input required type='text' placeholder="Area" pInputText [disabled]='false' (change)='onEdited($event)' [(ngModel)]='generalObj.area'/>
+                    </div>
+                    <div class='col-4' style='padding: 0px 10px'>
+                        <label><b>Location</b></label>
+                        <input required type='text' placeholder="Location" pInputText [disabled]='false' (change)='onEdited($event)' [(ngModel)]='generalObj.location'/>
+                    </div>
+                    <div class='col-4' style='padding: 0px 10px'>
+                        <label><b>Description</b></label>
+                        <input required type='text' placeholder="Description" pInputText [disabled]='false' (change)='onEdited($event)' [(ngModel)]='generalObj.description'/>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+    </p-card>
+</div>
+
+<!-- 
+<div class="mt-2">
+    <p-card>
+        <ng-template pTemplate="title">
+            Information
+        </ng-template>
+        <ng-template pTemplate="subtitle">
+            Request
+        </ng-template>
+    </p-card>
+</div>
+-->
+
+<div class='mt-3' style='height: 50px'>
+    <div class="grid grid-nogutter justify-content-between">
+        <div>
+            <p-button icon='pi pi-book' label='List' iconPos='left' [disabled]='false' (onClick)='onList()'></p-button>
+        </div>
+        <div class="grid grid-nogutter justify-content-end">
+            <p-button icon='pi pi-save' label='Save' iconPos="left" [disabled]='false' (onClick)='onSubmitRequest()'></p-button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,75 @@
+<p-dataView #dv [value]="data" [paginator]="dataViewParam.paginator" [rows]="dataViewParam.rowPerPageDefault"
+    layout="list" [lazy]="true" [loading]="loading" (onLazyLoad)="loadData($event)" [totalRecords]="totalItems"
+    [sortOrder]="dataViewParam.sortOrder">
+    <ng-template pTemplate="header" *ngIf="dataViewParam.quickFilters.length>0">
+        <div class="p-d-flex p-flex-wrap p-ai-center">
+            <div><label class="quick-filter-label p-mr-1">Quick Filters:</label></div>
+            <div class="p-d-flex p-flex-wrap">
+                <div *ngFor="let filter of dataViewParam.quickFilters">
+                    <button pButton pRipple [label]="filter.label" (click)="quickFilter(filter)"
+                        [ngClass]="{'p-button-text': !activeQuickFilter || filter.label!=activeQuickFilter.label}">
+                    </button>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+
+    <ng-template let-product pTemplate="listItem">
+        <div class="p-col-12">
+            <div class="card" (click)="dataViewParam.onRowSelected(product)">
+                <div class="product-list-item">
+                    <div *ngIf="dataViewParam.dataViewRowTitle" class="p-d-flex p-flex-column">
+                        <div class="p-d-flex p-flex-wrap">
+                            <div>
+                                <h5><b><span class="p-mr-1"><i
+                                                [ngClass]="IconsAvailable[product[dataViewParam.dataViewRowTitle.iconField]]"
+                                                style="font-size:1.2rem;"></i></span>{{dataViewParam.dataViewRowTitle.title}}</b>
+                                </h5>
+                            </div>
+                            <div class="p-ml-auto">
+                                {{dateService.dateFormatDayMonthYear(product[dataViewParam.dataViewRowTitle.dateField])}}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div *ngIf="dataViewParam.dataViewContent">
+                        <div *ngFor="let elem of dataViewParam.dataViewContent">
+                            <div *ngIf="elem.dataViewFields">
+                                <span *ngFor="let item of elem.dataViewFields; let i=index">
+                                    <span *ngIf="!item.calculatedField">
+                                        <span *ngIf="item.order==1 && !item.dataFromDetails && !item.referenceMap">
+                                            {{item.caption?item.caption:''}}{{product[item.fieldName]}}
+                                        </span>
+                                        <span *ngIf="item.order==-1 && !item.dataFromDetails && !item.referenceMap">
+                                            {{product[item.fieldName]}}{{item.caption?item.caption:''}}
+                                        </span>
+                                        <span *ngIf="item.order==1 && item.dataFromDetails && !item.referenceMap">
+                                            {{item.caption?item.caption:''}}{{product[item.detailFieldName][0][item.fieldName]}}
+                                        </span>
+                                        <span *ngIf="item.order==-1 && item.dataFromDetails && !item.referenceMap">
+                                            {{product[item.detailFieldName][0][item.fieldName]}}{{item.caption?item.caption:''}}
+                                        </span>
+                                        <span *ngIf="item.order==1 && !item.dataFromDetails && item.referenceMap">
+                                            {{item.caption?item.caption:''}}
+                                            {{ item.referenceMap|
+                                            mapPipe:item.referenceMapKey:item.fieldName:item.mappedValueToShow:product}}
+                                        </span>
+                                    </span>
+                                    <span *ngIf="item.calculatedField">
+                                        <span *ngIf="item.order==1">{{item.caption}}</span>
+                                        {{product[item.fieldToCalculateOn].length}}
+                                        <span *ngIf="item.order==-1">{{item.caption}}</span>
+                                    </span>
+                                    <span *ngIf="i!==elem.dataViewFields.length-1">-</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                
+                </div>
+            </div>
+
+        </div>
+    </ng-template>
+</p-dataView>

@@ -1,0 +1,40 @@
+<div class="p-fluid">
+    <div class="field col-12">
+        <label for="queryname">Filter Name: <span class="requiredfield">*</span></label>
+        <input #queryname="ngModel" id="documentname" type="text" required pInputText
+            [(ngModel)]="documentQuery.queryName" autofocus
+            [ngClass]="{'ng-dirty': (queryname.invalid && submitted) || (queryname.dirty && queryname.invalid)}">
+        <small *ngIf="(queryname.invalid && submitted) || (queryname.dirty && queryname.invalid)" class="p-error">Filter
+            Name is required.</small>
+    </div>
+
+    <div class="field col-12">
+        <label for="queryDesc">Description:</label>
+        <textarea [rows]="3" pInputTextarea autoResize="autoResize" [(ngModel)]="documentQuery.queryDesc"
+            [maxlength]="255"></textarea>
+    </div>
+
+    <div class="field col-12 md:col-6">
+        <p-selectButton [options]="stateOptions" [(ngModel)]="documentQuery.isPrivate" optionLabel="label"
+            optionValue="value"></p-selectButton>
+    </div>
+
+    <div class="field col-12 md:col-6">
+        <div class="p-inputgroup">
+            <span class="p-inputgroup-addon"><input type="checkbox" size="auto"
+                    [(ngModel)]="documentQuery.isActive"></span>
+            <input type="text" pInputText value="Active" readonly="true">
+        </div>
+    </div>
+
+    <hr>
+    <div *ngIf="isUpdate" class="field col-12">
+        <label>Created By : &nbsp; </label> 
+        <span style="font-size: 14px; color: rgb(6, 65, 114); font-weight: bold;">{{ documentQuery.createdBy }} </span>
+    </div>
+</div>
+
+<div class="grid grid-nogutter justify-content-end">
+    <button pButton class="mr-2" [icon]="buttonIcon" [label]="buttonName" (click)="saveFilterQuery()" [disabled]="!documentQuery.queryName"></button>
+    <p-button label="Close" (click)="closeForm()"></p-button>
+</div>

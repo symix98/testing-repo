@@ -1,0 +1,64 @@
+<p-card id="left-card">
+  <ng-template pTemplate="content">
+    <form *ngIf="data" #docForm="ngForm" class="data-form">
+      <div class="file-details">
+        <div class="propertiesSide1">
+          <img
+            *ngIf="data.fileType === 'PDF'"
+            src="../../../../../../assets/images/pdf-logo.png"
+            alt="File Type Image"
+          />
+          <img
+            *ngIf="data.fileType === 'XLSX' || data.fileType === 'EXCEL'"
+            src="../../../../../../assets/images/excel-logo.png"
+            alt="File Type Image"
+          />
+          <h4 style="color: #2196f3">{{ data.documentsNumber }}</h4>
+          <button
+            pButton
+            type="button"
+            label="Download File"
+            (click)="downloadFile()"
+            [disabled]="data.filePath"
+          ></button>
+        </div>
+
+        <div class="propertiesSide2">
+
+          <div class="field">
+            <h6 for="createdBy">Created By: <span>{{ data.createdBy  || "N/A" }}</span></h6>
+          </div>
+
+          <div class="field">
+            <h6 for="dateModified">Date Modified: <span>{{ data.dateModified || "N/A" | date}}</span></h6>
+          </div>
+
+          <div class="field">
+            <h6 for="lastModifiedDate">Last Modified Date: <span>{{ data.lastModifiedDate || "N/A"  | date}}</span></h6>
+          </div>
+
+        </div>
+
+        <div class="propertiesSide3">
+
+          <div class="path">
+            <h6 for="path">Path</h6>
+            <input
+              *ngIf="data.path; else pathUnavailable"
+              [disabled]="true"
+              type="text"
+              id="path"
+              name="path"
+              [(ngModel)]="data.path"
+              class="p-inputtext"
+            />
+          </div>
+          <ng-template #pathUnavailable><h5>Unavailable</h5></ng-template>
+
+          <h6>Document Size: <span>{{ data.ssize || "Unavailable" }}</span></h6>
+        </div>
+
+      </div>
+    </form>
+  </ng-template>
+</p-card>

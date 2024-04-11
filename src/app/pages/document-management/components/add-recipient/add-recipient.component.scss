@@ -1,0 +1,32 @@
+input.p-inputtext {
+  margin-bottom: 1rem;
+}
+
+input.p-inputtext:not(:first-child),
+p-checkbox {
+  margin-left: 1.5rem;
+}
+
+p-checkbox {
+  margin-bottom: 2rem;
+}
+
+h6 {
+  font-weight: bold;
+}
+
+.field button {
+  float: right;
+}
+
+.p-fluid {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+button {
+  margin-top: 2rem;
+  float: right;
+}

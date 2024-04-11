@@ -1,0 +1,124 @@
+<p-toolbar>
+    <div class="p-toolbar-group-left">
+        <h4>
+            Project Info <i class="pi pi-info-circle"></i>
+        </h4>
+    </div>
+    <div class="toolbar-group-right">
+        <div class="p-toolbar-group-right">
+            <div *ngIf="!editing">
+                <p-button class="mr-2" label="Edit" iconPos="left" icon="pi pi-pencil" (click)="edit()">
+                </p-button>
+            </div>
+            <div *ngIf="editing">
+                <button class="mr-2 p-button-outlined" label="Save" iconPos="left" pButton pRipple type="button"
+                    icon="pi pi-check" (click)="save()"></button>
+            </div>
+        </div>
+    </div>
+</p-toolbar>
+
+<div class="card">
+    <form #projectInfoForm="ngForm">
+        <div class="card fluid formgrid grid">
+            <div class="field pt-3 col-12 md:col-6">
+                <span class="p-float-label">
+                    <input type="text" pInputText id="name" name="name" [(ngModel)]="projectInfo.name"
+                        [disabled]="!editing">
+                    <label>Project Name</label>
+                </span>
+            </div>
+
+            <div class="field pt-3 col-12 md:col-6">
+                <span class="p-float-label">
+                    <input type="text" pInputText id="contractNumber" name="contractNumber"
+                        [(ngModel)]="projectInfo.contractNumber" [disabled]="!editing">
+                    <label>Project No.</label>
+                </span>
+            </div>
+            <div class="field pt-3 col-12 md:col-6">
+                <span class="p-float-label">
+                    <p-calendar [style]="{'width':'100%'}" dateFormat="yy-mm-dd" [readonlyInput]="true" id="startDate"
+                        name="startDate" [(ngModel)]="projectInfo.startDate" [disabled]="!editing">
+                    </p-calendar> <label>Start Date</label>
+                </span>
+            </div>
+            <div class="field pt-3 col-12 md:col-6">
+                <span class="p-float-label">
+                    <p-calendar [style]="{'width':'100%'}" dateFormat="yy-mm-dd" [readonlyInput]="true" id="endDate"
+                        name="endDate" [(ngModel)]="projectInfo.endDate" [disabled]="!editing">
+                    </p-calendar> <label>End Date</label>
+                </span>
+            </div>
+
+            <div class="mt-3 md:col-6">
+                <div class="flex justify-content-center">
+                    <button pButton type="button" label="Upload Company Logo" class="p-mt-2" icon="pi pi-save"
+                        iconPos="default" [disabled]="this.logos[0] || !editing"
+                        (click)="companyFileInput.click()"></button>
+                </div>
+            </div>
+            <div class="mt-3 md:col-6">
+                <div style="text-align: center;">
+                    <button pButton label="Upload Client Logo" class="p-mt-2" icon="pi pi-save"
+                        [disabled]="this.logos[1] || !editing" (click)="clientFileInput.click()"></button>
+                </div>
+            </div>
+
+            <div class="md:col-6">
+                <ng-container *ngIf="logos[0]; else viewCompanyLogo">
+                    <h5>Company Logo</h5>
+                    <div class="p-grid">
+                        <div class="col-12">
+                            <div class="image-container">
+                                <img [src]="'data:' + logos[0].type + ';base64,' + logos[0].blob" class="app-image">
+                                <div class="middle">
+                                    <div class="edit-text" (click)="removeFile('Company')">Remove</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+                <ng-template #viewCompanyLogo>
+                    <ng-container *ngIf="companyLogoExists">
+                        <h5>Company Logo</h5>
+                        <div class="logo-image-container">
+                            <img class="logo-image" [src]="companyLogo">
+                        </div>
+                    </ng-container>
+                </ng-template>
+            </div>
+
+            <div class="md:col-6">
+                <ng-container *ngIf="logos[1]; else viewClientLogo">
+                    <h5>Client Logo</h5>
+                    <div class="grid">
+                        <div class="col-12">
+                            <div class="image-container">
+                                <img [src]="'data:' + logos[1].type + ';base64,' + logos[1].blob" class="app-image">
+                                <div class="middle">
+                                    <div class="edit-text" (click)="removeFile('Client')">Remove</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+                <ng-template #viewClientLogo>
+                    <ng-container *ngIf="clientLogoExists">
+                        <h5>Client Logo</h5>
+                        <div class="logo-image-container">
+                            <img class="logo-image" [src]="clientLogo">
+                        </div>
+                    </ng-container>
+                </ng-template>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div [formGroup]="inputForm">
+    <input formControlName="companyFileInput" #companyFileInput style="display: none" type="file"
+        (change)="addFile($event,'Company')" accept="image/*">
+    <input formControlName="clientFileInput" #clientFileInput style="display: none" type="file"
+        (change)="addFile($event,'Client')" accept="image/*">
+</div>

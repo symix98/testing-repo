@@ -1,0 +1,479 @@
+<p-toolbar *ngIf="tableParam.quickFilters && tableParam.quickFilters.length" styleClass="p-mb-3">
+    <div class="p-toolbar-group-left">
+        <label class="quick-filter-label p-mr-1">{{tableParam.filterName}}</label>
+        <button *ngFor="let filter of tableParam.quickFilters" pButton pRipple [label]="filter.label"
+            (click)="quickFilter(filter)"
+            [ngClass]="{'p-button-text': !activeQuickFilter || filter.label!=activeQuickFilter.label}">
+        </button>
+    </div>
+</p-toolbar>
+
+<p-table #dt [responsive]="true" responsiveLayout="scroll" [value]="data" [columns]="selectedCols" [loading]="loading"
+    [lazy]="true" (onLazyLoad)="paginate($event, dt)"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true"
+    [totalRecords]="totalItems" [rows]="rows" [paginator]="tableParam.paginator"
+    [rowsPerPageOptions]="[5,10,15,25,50,100]" [rowHover]="true" [(selection)]="selectedObjects"
+    [dataKey]="tableParam.dataKey" editMode="row" sortMode="single" [rowTrackBy]="trackByIndex"
+    columnResizeMode="expand" [resizableColumns]="true" styleClass="p-datatable-sm-wfp"
+    [selectionMode]="tableParam.selectionMode" (onRowSelect)="rowSelected($event)" [scrollable]="false"
+    [scrollHeight]="tableParam.scrollHeight" (onRowUnselect)='rowUnselected($event)' [lazy]='true'
+    (onHeaderCheckboxToggle)="selectAll($event)" (onRowExpand)="onRowExpand($event)">
+
+    <!-- Table Caption -->
+    <ng-template pTemplate="caption" *ngIf='tableParam.showTableCaption'>
+        <div class="p-d-flex p-ai-center p-jc-between">
+            <div class="grid grid-nogutter justify-content-end mr-6">
+                <p-multiSelect *ngIf="tableParam.showToggler" [showToggleAll]="false" [showHeader]="false"
+                [options]="colOptions" (onChange)="refresh()" [(ngModel)]="selectedCols" optionLabel="title"
+                selectedItemsLabel="Select Columns" placeholder="Choose Columns"></p-multiSelect>
+            </div>
+            
+            <div>
+                <span *ngFor="let button of headerButtons">
+                    <span *ngIf='!button.items'>
+                        <button *ngIf='!button.disabled && button.hasPermission' pButton pRipple [label]="button.title"
+                            [icon]="button.icon" class="p-mr-2 mr-1 p-d-inline-block"
+                            (click)='handleButtonClick(button)'
+                            [disabled]='addedObject || (!editable && button.isUpdate)'
+                            [className]="button.class + ' p-m-1 mr-1'">
+                        </button>
+                        <button *ngIf='button.disabled && button.hasPermission' pButton pRipple [label]="button.title"
+                            [icon]="button.icon" class="p-mr-2 mr-1 p-d-inline-block"
+                            (click)='handleButtonClick(button)'
+                            [disabled]='!selectedObjects || !selectedObjects.length || addedObject || (!editable && button.isUpdate)'
+                            [className]="button.class + ' p-m-1 mr-1'">
+                        </button>
+                    </span>
+                    <p-splitButton *ngIf='button.items && button.hasPermission' [label]="button.title"
+                        [icon]="button.icon" class="p-mr-2 mr-1 p-m-1 p-d-inline-block" [model]="button.items"
+                        [disabled]='!editable && button.isUpdate'>
+                    </p-splitButton>
+                </span>
+            </div>
+            <span class="p-input-icon-left" *ngIf='tableParam.searchable && !tableParam.alwaysShowAdvanced'>
+                <div class="p-inputgroup">
+                    <span class="p-inputgroup-addon">
+                        <i class="pi pi-search"></i>
+                    </span>
+                    <input #globalSearch pInputText type="text"
+                        [disabled]="showAdvancedSearch || activeQuickFilter || tableParam.editMode == editModes.inMemory || addedObject || editedObjects"
+                        (input)="search($event.target.value)" [ngModel]="dt.filters['global']?.value"
+                        placeholder="Search..." />
+                    <p-toggleButton *ngIf="tableParam.advancedSearch" [style]="{'height': '2.5em'}"
+                        [(ngModel)]="showAdvancedSearch" (click)="search(undefined)" [onIcon]="'pi pi-angle-double-up'"
+                        offIcon="pi pi-angle-double-down"></p-toggleButton>
+                </div>
+            </span>
+        </div>
+    </ng-template>
+
+    <!-- Table Header -->
+    <ng-template pTemplate="header" let-columns>
+        <tr>
+
+            <th class="sticky" *ngIf="tableParam.expand" [style.width]="'3rem'">
+            </th>
+            <th class="sticky" *ngIf="tableParam.selectionMode == selectionModes.mulitple" [style.width]="'3rem'">
+                <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+            </th>
+
+            <th class="sticky" *ngIf="showAdvancedSearch && tableParam.selectionMode == selectionModes.single"
+                [style.width]="'3rem'">
+            </th>
+
+            <th class="sticky" *ngFor="let col of columns; let i = index" [style.width]="col.width ? col.width : 'auto'"
+                [pSortableColumn]="col.disableSort || tableParam.editMode==editModes.inMemory ? undefined: col.field"
+                pResizableColumn>
+                <div class="p-d-flex p-ai-center">
+                    {{col.title}}
+                    <p-sortIcon
+                        *ngIf="!col.disableSort && tableParam.editMode!=editModes.inMemory && !editedObjects && !addedObject"
+                        [field]="col.field"></p-sortIcon>
+                    <button *ngIf="col.filterable" pButton pRipple type="button" icon="pi pi-filter"
+                        class="p-button-rounded p-button-text"
+                        (click)="showColumnFilterPanel($event, col.fieldSearchReference? col.fieldSearchReference : col.field)">
+                    </button>
+                </div>
+            </th>
+            <th class="sticky" *ngIf="tableParam.editMode == editModes.inplace || editModes.inMemory"
+                [style.width]="'5rem'"></th>
+        </tr>
+        <tr #colFilters *ngIf="showAdvancedSearch">
+            <th class="sticky" *ngIf="tableParam.expand" [style.width]="'3rem'">
+            </th>
+
+            <th class="sticky1"><button tooltipPosition="bottom" pTooltip="Reset Filters" pButton pRipple
+                    icon="pi pi-filter-slash" class="p-button-text" (click)="clearFilters()"
+                    pTooltip="Clear Filters"></button>
+            </th>
+            <th class="sticky1" *ngFor="let col of columns">
+
+                <!-- String Or Number -->
+                <div *ngIf="col.filter?.filterType == 'number' || col.filter?.filterType == 'string'">
+                    <button pButton pRipple type="button" icon="pi pi-filter"
+                        [ngClass]="{ 'p-button-rounded': true, 'p-button-outlined': true, 'p-button-secondary': dt.filters[col.filter?.filterName]?.value == null, 'p-button-success': dt.filters[col.filter?.filterName]?.value != null}"
+                        (click)="stringFilter.toggle($event); setFilterCol(col)"></button>
+                </div>
+                <!-------------------->
+
+
+                <!-- List -->
+                <div *ngIf="col.filter?.filterType == 'list'">
+                    <button pButton pRipple type="button" icon="pi pi-filter"
+                        [ngClass]="{ 'p-button-rounded': true, 'p-button-outlined': true, 'p-button-secondary': dt.filters[col.filter?.filterName]?.value == null, 'p-button-success': dt.filters[col.filter?.filterName]?.value != null}"
+                        (click)="listFilter.toggle($event); setFilterCol(col)"></button>
+                </div>
+                <!-------------------->
+
+                <!-- Date -->
+                <div *ngIf="col.filter?.filterType.includes('date')">
+                    <button pButton pRipple type="button" icon="pi pi-filter"
+                        [ngClass]="{ 'p-button-rounded': true, 'p-button-outlined': true, 'p-button-secondary': dt.filters[col.filter?.filterName]?.value == null, 'p-button-success': dt.filters[col.filter?.filterName]?.value != null}"
+                        (click)="dateFilter.toggle($event); setFilterCol(col)"></button>
+                </div>
+                <!-------------------->
+
+                <!-- Boolean -->
+                <div *ngIf="col.filter?.filterType == 'boolean'">
+                    <button pButton pRipple type="button" icon="pi pi-filter"
+                        [ngClass]="{ 'p-button-rounded': true, 'p-button-outlined': true, 'p-button-secondary': dt.filters[col.filter?.filterName]?.value == null, 'p-button-success': dt.filters[col.filter?.filterName]?.value != null}"
+                        (click)="booleanFilter.toggle($event); setFilterCol(col)"></button>
+                </div>
+            </th>
+            <!-- <th><button pButton pRipple icon="pi pi-trash" class=" p-button-text" (click)="clearFilters()"></button>
+            </th>
+            <th class ="sticky" *ngFor="let col of columns">
+                <div *ngIf="col.searchable" class="p-inputgroup">
+                    <input #val [id]="col.fieldSearchReference ? col.fieldSearchReference : col.field"
+                        (input)="searchCol(col, $event.target.value)" pInputText type="text"
+                        [ngModel]="dt.filters[col.fieldSearchReference ? col.fieldSearchReference : col.field]?.value"
+                        placeholder="Search">
+                    <p-selectButton [options]="[{ label: '*', value: 'regex-' + col.field }
+                    , { label: '!', value: 'not-' + col.field }]" multiple="multiple" [(ngModel)]="searchVals"
+                        optionLabel="label" optionValue="value" (click)="searchCol(col, val.value)"></p-selectButton>
+                </div>
+            </th> -->
+        </tr>
+    </ng-template>
+
+    <!-- Table Body -->
+    <ng-template pTemplate="body" let-columns="columns" let-rowData let-editing="editing" let-ri="rowIndex"
+        let-expanded="expanded">
+
+        <tr *ngIf='tableParam.selectionMode == selectionModes.single' class="p-selectable-row"
+            [pSelectableRow]="rowData" (click)='rowClicked($event, rowData)' [pEditableRow]="rowData">
+            <td *ngIf="tableParam.expand">
+                <button type="button" pButton pRipple [pRowToggler]="rowData"
+                    class="p-button-text p-button-rounded p-button-plain"
+                    [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+            </td>
+            <td class="table-cell" *ngIf="tableParam.selectionMode == selectionModes.mulitple">
+                <p-tableCheckbox [value]="rowData">
+                </p-tableCheckbox>
+            </td>
+            <td class="table-cell" *ngIf="tableParam.selectionMode == selectionModes.single && showAdvancedSearch">
+            </td>
+            <td class="table-cell" *ngFor="let col of columns; let index = index; trackBy:trackByIndex;">
+                <p-cellEditor>
+                    <ng-template pTemplate="input">
+                        <input *ngIf="col.fieldType == 'object'" pInputText [disabled]='col.editDisabled'
+                            [value]='getNestedObject(rowData, col.objectReference)'>
+                        <p-inputNumber *ngIf="col.fieldType == 'number'" [disabled]='col.editDisabled'
+                            [(ngModel)]="rowData[col.field]" [min]="col.min" [max]="col.max">
+                        </p-inputNumber>
+                        <input *ngIf="col.fieldType == 'string'" pInputText [(ngModel)]="rowData[col.field]"
+                            [disabled]='col.editDisabled' [required]='col.required' [maxlength]="col.max">
+                        <p-checkbox *ngIf="col.fieldType == 'boolean'" [(ngModel)]="rowData[col.field]" [binary]="true"
+                            [disabled]='col.editDisabled'>
+                        </p-checkbox>
+
+                        <p-dropdown *ngIf="col.fieldType == 'list'" [(ngModel)]="rowData[col.field]"
+                            [style]="{'width':'100%'}" appendTo="body" [options]="col.arrayList"
+                            [disabled]='rowData[tableParam.dataKey] && col.editDisabled' [autoDisplayFirst]="false"
+                            [optionLabel]="col.foreignDisplayField" [optionValue]="col.foreignField" filter="true">
+                        </p-dropdown>
+
+                        <p-dropdown *ngIf="col.fieldType == 'map'" [(ngModel)]="rowData[col.field]"
+                            [autoDisplayFirst]="false" [disabled]='rowData[tableParam.dataKey] && col.editDisabled'
+                            [style]="{'width':'100%'}" appendTo="body" [optionLabel]="col.foreignDisplayField"
+                            [optionValue]="col.foreignField" [options]="col.map.get(rowData[col.mapKeyField])"
+                            filter="true">
+                        </p-dropdown>
+
+                        <p-calendar *ngIf="col.fieldType == 'date'" [style]="{'width':'100%'}" appendTo="body"
+                            dateFormat="MM dd, yy" [(ngModel)]="rowData[col.field]"></p-calendar>
+                    </ng-template>
+
+                    <ng-template pTemplate="output">
+                        <div *ngIf="col.fieldType=='string' || col.fieldType=='number'"> {{ rowData[col.field]}} </div>
+                        <div *ngIf="col.fieldType == 'object'"> {{getNestedObject(rowData, col.objectReference)}}</div>
+                        <p-checkbox *ngIf=" col.fieldType=='boolean'" [(ngModel)]=" rowData[col.field]" [binary]="true"
+                            disabled>
+                        </p-checkbox>
+                        <ng-template *ngIf="col.fieldType == 'component'" #dynamicInsert></ng-template>
+                        <ng-template *ngIf="col.fieldType == 'component1'" #dynamicInsert1></ng-template>
+                        <ng-template *ngIf="col.fieldType == 'component2'" #dynamicInsert2></ng-template>
+                        <ng-template *ngIf="col.fieldType == 'component3'" #dynamicInsert3></ng-template>
+                        <div *ngIf="col.fieldType == 'list' || col.fieldType=='map'">
+                            {{getForeignFieldDisplayValue(rowData, col)}}</div>
+                        <div *ngIf="col.fieldType == 'date'"> {{ rowData[col.field] | date }}</div>
+                    </ng-template>
+                </p-cellEditor>
+            </td>
+
+            <td class="table-cell" *ngIf="tableParam.editMode == editModes.inplace || editModes.inMemory">
+                <p-button [disabled]="!editable" *ngIf="!editing && tableParam.rowEdit" pInitEditableRow
+                    icon="pi pi-pencil" (click)="editInit(rowData)"></p-button>
+                <p-button *ngIf="!editing && tableParam.rowDelete" icon="pi pi-trash"
+                    (click)="handleRowClick(rowData, true)"></p-button>
+                <p-button *ngIf="editing" pSaveEditableRow icon="pi pi-check" (click)="handleRowClick(rowData)">
+                </p-button>
+                <p-button *ngIf="editing" pCancelEditableRow icon="pi pi-times" (click)="cancelEdit(rowData, ri)">
+                </p-button>
+            </td>
+        </tr>
+
+        <tr *ngIf='tableParam.selectionMode != selectionModes.single' class="p-selectable-row"
+            (click)='rowClicked($event, rowData)' [pEditableRow]="rowData">
+            <td *ngIf="tableParam.expand">
+                <button type="button" pButton pRipple [pRowToggler]="rowData"
+                    class="p-button-text p-button-rounded p-button-plain"
+                    [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+            </td>
+            <td class="table-cell" *ngIf="tableParam.selectionMode == selectionModes.mulitple">
+                <p-tableCheckbox [value]="rowData">
+                </p-tableCheckbox>
+            </td>
+
+            <td class="table-cell" *ngFor="let col of columns; let index = index; trackBy:trackByIndex;">
+                <p-cellEditor>
+                    <ng-template pTemplate="input">
+                        <input *ngIf="col.fieldType == 'object' && !col.arrayList" pInputText
+                            [disabled]='col.editDisabled && !rowData.new'
+                            [required]="col.required || col.field == dt.dataKey"
+                            [ngModel]='getNestedObject(rowData, col.objectReference)'
+                            (ngModelChange)="setNestedObject(rowData, col.field, $event)">
+
+                        <p-dropdown *ngIf="col.fieldType == 'object' && col.arrayList"
+                            [ngModel]="getNestedObject(rowData, col.objectReference)"
+                            (onChange)="setNestedObject(rowData, col.field, $event.value)" [style]="{'width':'100%'}"
+                            appendTo="body" [options]="col.arrayList"
+                            [required]='col.required || col.field == dt.dataKey'
+                            [disabled]='col.editDisabled && !rowData.new' [autoDisplayFirst]="false"
+                            [optionLabel]="col.foreignDisplayField" [optionValue]="col.foreignField" filter="true">
+                        </p-dropdown>
+
+                        <p-inputNumber *ngIf="col.fieldType == 'number'" [disabled]='col.editDisabled'
+                            [(ngModel)]="rowData[col.field]" [min]="col.min" [max]="col.max">
+                        </p-inputNumber>
+
+                        <input *ngIf="col.fieldType == 'string' && col.field !==  dt.dataKey" pInputText
+                            [(ngModel)]="rowData[col.field]" [required]='col.required' [disabled]="col.editDisabled"
+                            [maxlength]="col.max">
+
+                        <input *ngIf="col.fieldType == 'string' && col.field ===  dt.dataKey" pInputText
+                            [(ngModel)]="rowData[dt.dataKey]? rowData[dt.dataKey]: addedObject[dt.dataKey]"
+                            [disabled]="rowData[dt.dataKey] && ! rowData.new" required [maxlength]="col.max">
+
+                        <p-checkbox *ngIf="col.fieldType == 'boolean'" [disabled]='col.editDisabled'
+                            [(ngModel)]="rowData[col.field]" [binary]="true">
+                        </p-checkbox>
+
+                        <p-dropdown *ngIf="col.fieldType == 'list'" [(ngModel)]="rowData[col.field]"
+                            [style]="{'width':'100%'}" appendTo="body" [options]="col.arrayList"
+                            [required]='col.required' [disabled]='col.editDisabled' [autoDisplayFirst]="false"
+                            [optionLabel]="col.foreignDisplayField" [optionValue]="col.foreignField" filter="true">
+                        </p-dropdown>
+
+                        <p-dropdown *ngIf="col.fieldType == 'map'" [(ngModel)]="rowData[col.field]"
+                            [autoDisplayFirst]="false" [style]="{'width':'100%'}" appendTo="body"
+                            [optionLabel]="col.foreignDisplayField" [optionValue]="col.foreignField"
+                            [options]="col.map.get(rowData[col.mapKeyField])" filter="true"
+                            [disabled]='col.editDisabled'>
+                        </p-dropdown>
+                        <p-calendar *ngIf="col.fieldType == 'date'" [style]="{'width':'100%'}" appendTo="body"
+                            [(ngModel)]="rowData[col.field]" [readonlyInput]="true" dateFormat="MM dd, yy"
+                            [disabled]='col.editDisabled' [required]='col.required' [touchUI]="true"></p-calendar>
+                    </ng-template>
+
+                    <ng-template pTemplate="output">
+                        <div *ngIf="col.fieldType=='string' || col.fieldType=='number'">
+                            {{rowData[col.field]}}</div>
+                        <p-checkbox *ngIf="col.fieldType == 'boolean'" [(ngModel)]="rowData[col.field]" [binary]="true"
+                            disabled>
+                        </p-checkbox>
+
+                        <ng-template *ngIf="col.fieldType == 'component'" #dynamicInsert></ng-template>
+                        <ng-template *ngIf="col.fieldType == 'component1'" #dynamicInsert1></ng-template>
+                        <ng-template *ngIf="col.fieldType == 'component2'" #dynamicInsert2></ng-template>
+                        <ng-template *ngIf="col.fieldType == 'component3'" #dynamicInsert3></ng-template>
+                        <div [ngClass]="getStyle(rowData, col.style)" *ngIf="col.fieldType == 'object'">
+                            {{getNestedObject(rowData, col.objectReference)}}
+                        </div>
+
+                        <div *ngIf="col.fieldType == 'list' || col.fieldType=='map'">
+                            {{getForeignFieldDisplayValue(rowData, col)}}</div>
+
+                        <div *ngIf="col.fieldType == 'date'"> {{ rowData[col.field] | date }}
+                        </div>
+                    </ng-template>
+                </p-cellEditor>
+            </td>
+
+            <td class="table-cell" *ngIf="tableParam.editMode == editModes.inplace || editModes.inMemory">
+                <button *ngIf="!editing && tableParam.rowEdit" pButton pRipple type="button" pInitEditableRow
+                    icon="pi pi-pencil" [disabled]="!editable" (click)="editInit(rowData)"
+                    class=" p-button-text"></button>
+                <button *ngIf="!editing && tableParam.rowDelete" pButton pRipple icon="pi pi-trash"
+                    class=" p-button-text" (click)="handleRowClick(rowData, true)"></button>
+                <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check"
+                    class=" p-button-text" (click)="handleRowClick(rowData)"></button>
+                <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times"
+                    class=" p-button-text" (click)="cancelEdit(rowData, ri)"></button>
+            </td>
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="rowexpansion" let-columns let-rowData>
+        <tr>
+            <td colspan="7">
+                <div class="p-3">
+                    <ng-template #dynamicInsert4></ng-template>
+                </div>
+            </td>
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="emptymessage" let-columns>
+        <tr>
+            <td class="table-cell" class="p-p-2"
+                [attr.colspan]="table.selectionMode=='single'?columns.length:columns.length+1 ">
+                No records found
+            </td>
+        </tr>
+    </ng-template>
+</p-table>
+
+<div [style.float]="'right'" class="p-mt-1">
+    <span *ngFor="let button of footerButtons">
+        <button *ngIf='!button.disabled' pButton pRipple [label]="button.title" [icon]="button.icon"
+            class="p-mr-2 p-d-inline-block" [disabled]="addedObject" (click)='handleButtonClick(button)'
+            [className]="button.class + ' p-m-1 '">
+        </button>
+        <button *ngIf='button.disabled' pButton pRipple [label]="button.title" [icon]="button.icon"
+            class="p-mr-2 p-d-inline-block" (click)='handleButtonClick(button)'
+            [disabled]='!selectedObjects || !selectedObjects.length' [className]="button.class + ' p-m-1 '">
+        </button>
+    </span>
+</div>
+
+<p-overlayPanel #op appendTo="body" [showCloseIcon]="true">
+    <p-listbox [options]="filterColumnValues" optionLabel="value" [(ngModel)]="selectedfilterColumnValues"
+        [checkbox]="true" [filter]="true" [multiple]="true" [listStyle]="{'max-height':'250px'}"
+        [style]="{'width':'22rem'}" (onChange)='applyColumnFilter()'>
+    </p-listbox>
+</p-overlayPanel>
+
+<!-- String Number Filter -->
+<!-------------------------------->
+<p-overlayPanel #stringFilter [showCloseIcon]='false'>
+    <ng-template pTemplate>
+        <div class="p-inputgroup">
+            <input #val [id]="filterCol?.filter?.filterName" (input)="searchCol($event.target.value)" pInputText
+                type="text" [ngModel]="dt.filters[filterCol?.filter?.filterName]?.value" placeholder="Search">
+
+            <p-selectButton [options]="[{ label: '*', value: 'regex-' + filterCol?.filter?.filterName }
+        , { label: '!', value: 'not-' + filterCol?.filter?.filterName }]" multiple="multiple" [(ngModel)]="searchVals"
+                optionLabel="label" optionValue="value" (click)="searchCol(val.value)"></p-selectButton>
+        </div>
+
+        <div style="float: right;" class="p-mt-2 p-mb-2">
+            <button pButton pRipple type="button" label="Close" class="p-button-text p-mr-1"
+                (click)="stringFilter.hide();"></button>
+        </div>
+    </ng-template>
+</p-overlayPanel>
+
+<!-- List Filter-->
+<p-overlayPanel #listFilter [showCloseIcon]='false'>
+    <ng-template pTemplate>
+        <div class="text-center" *ngIf='objectList == null'>
+            <p-progressSpinner></p-progressSpinner>
+        </div>
+
+        <div *ngIf='objectList != null'>
+            <p-listbox [options]="objectList" [(ngModel)]="selectedList"
+                [optionLabel]="filterCol?.filter?.listDisplayKey" [optionValue]="filterCol?.filter?.listPrimaryKey"
+                [style]="{'width':'15rem'}" [filter]="true" [checkbox]="true" [multiple]="true"
+                [listStyle]="{'max-height':'250px'}">
+            </p-listbox>
+
+            <div style="float: right;" class="p-mt-2 p-mb-2">
+                <button pButton pRipple type="button" label="Close" class="p-button-text p-mr-1"
+                    (click)="listFilter.hide();"></button>
+                <button pButton pRipple type="button" label="Apply" [disabled]='selectedList == null'
+                    (click)='listFilter.hide(); applyListFilter()'>
+                </button>
+            </div>
+        </div>
+    </ng-template>
+</p-overlayPanel>
+<!-------------------------------->
+
+<!-- Date Filter -->
+<p-overlayPanel #dateFilter [showCloseIcon]='false'>
+    <ng-template pTemplate>
+        <div class="p-field" *ngIf='filterCol?.filter?.filterType == "date-default"'>
+            <p-selectButton [options]="stateOptions" [(ngModel)]="range" optionLabel="label" optionValue="value">
+            </p-selectButton>
+        </div>
+        <div class="p-field" *ngIf='filterCol?.filter?.filterType == "date-time"'>
+            <p-selectButton [options]="stateOptions1" [(ngModel)]="range" optionLabel="label" optionValue="value">
+            </p-selectButton>
+        </div>
+
+        <div class="p-field">
+            <label for="groupNo">
+                <span *ngIf='!range'>Date</span>
+                <span *ngIf='range'>From</span>
+            </label>
+            <p-calendar [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange" dateFormat="dd/mm/yy"
+                [style]='{width: "100%"}' [(ngModel)]='dateRange[0]' [showOtherMonths]='false'></p-calendar>
+        </div>
+
+        <div class="p-field" *ngIf='range == true'>
+            <label for="groupNo">To</label>
+            <p-calendar [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange" dateFormat="dd/mm/yy"
+                [style]='{width: "100%"}' [(ngModel)]='dateRange[1]' [showOtherMonths]='false'></p-calendar>
+        </div>
+
+        <div style="float: right;" class="p-mt-2 p-mb-2">
+            <button pButton pRipple type="button" label="Close" class="p-button-text p-mr-1"
+                (click)="dateFilter.hide()"></button>
+            <button pButton pRipple type="button" label="Apply"
+                [disabled]='(range == false && dateRange[0] == null) || (range == true && (dateRange[0] == null || dateRange[1] == null))'
+                (click)='dateFilter.hide(); applyDateFilter()'>
+            </button>
+        </div>
+    </ng-template>
+</p-overlayPanel>
+<!-------------------------------->
+
+<!-- Boolean -->
+<p-overlayPanel #booleanFilter [showCloseIcon]='false'>
+    <ng-template pTemplate>
+        <div class="p-field-checkbox">
+            <p-triStateCheckbox [id]='filterCol?.filter?.filterName'
+                [ngModel]="dt.filters[filterCol?.filter?.filterName]?.value" [label]="filterCol?.title"
+                (onChange)='applyBooleanFilter($event.value)'>
+            </p-triStateCheckbox>
+
+        </div>
+
+        <div style="float: right;" class="p-mt-2 p-mb-2">
+            <button pButton pRipple type="button" label="Close" class="p-button-text p-mr-1"
+                (click)="booleanFilter.hide();"></button>
+        </div>
+    </ng-template>
+</p-overlayPanel>
+<!-------------------------------->

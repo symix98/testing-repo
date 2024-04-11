@@ -1,0 +1,366 @@
+<div style="margin-top: 100px">
+  <p-toolbar>
+    <div class="p-toolbar-group-left">
+      <input
+        type="text"
+        id="documentsNumber"
+        name="documentsNumber"
+        [(ngModel)]="documentNumber"
+        [disabled]="true"
+        style="background-color: #eeeeee"
+        class="p-inputtext"
+      />
+    </div>
+    <div class="grid grid-nogutter flex-justify-content-flex-start">
+      <!-- ... File upload buttons ... -->
+      <input
+        type="file"
+        #fileInput
+        style="display: none"
+        (change)="onFileChange($event)"
+        accept=".xlsx"
+      />
+      <button
+        class="mr-2"
+        icon="pi pi-cloud-upload"
+        pButton
+        type="button"
+        label="Import Template"
+        (click)="fileInput.click()"
+        style="background-color: #2196f3; width: fit-content"
+      ></button>
+      <button
+        class="mr-2"
+        pButton
+        type="button"
+        label="Download Template"
+        icon="pi pi-cloud-download"
+        (click)="exportDocument()"
+        [disabled]=""
+        style="background-color: #2196f3; width: fit-content"
+      ></button>
+    </div>
+  </p-toolbar>
+  <div class="stepsdemo-content" style="margin-top: 10px">
+    <p-card>
+      <!-- ... Title and Content Templates ... -->
+      <ng-template pTemplate="content">
+        <form #docForm="ngForm">
+          <div style="display: flex; flex-direction: row; justify-content: space-between; align-items: flex-start; gap: 20rem;">
+            <div class="field col-12 md:col-6">
+              <!-- Right Section -->
+              <div class="field col-12 md:col-12">
+                <label for="organizerId">Organizer</label>
+                <p-dropdown
+                  id="organizerId"
+                  name="organizerId"
+                  [(ngModel)]="documentForm.orgnizer"
+                  [options]="organizerIdRefs"
+                  optionLabel="name"
+                  placeholder="Select Organizer"
+                ></p-dropdown>
+              </div>
+
+              <div class="field col-12 md:col-12">
+                <label for="recipientId">Recipient</label>
+                <p-dropdown
+                  id="recipientId"
+                  name="recipientId"
+                  [(ngModel)]="documentForm.recipient"
+                  [options]="recipientIdRefs"
+                  optionLabel="name"
+                  placeholder="Select Recipient"
+                ></p-dropdown>
+              </div>
+
+              <div class="field col-12 md:col-12">
+                <label for="revision">Revision</label>
+                <input
+                  type="text"
+                  id="revision"
+                  name="revision"
+                  [disabled]="true"
+                  style="background-color: #eeeeee"
+                  [(ngModel)]="documentForm.revision"
+                  class="p-inputtext"
+                />
+              </div>
+
+              <div class="field col-12 md:col-12">
+                <label for="revisionDate">Revision Date</label>
+                <p-calendar
+                  id="revisionDate"
+                  name="revisionDate"
+                  [disabled]="true"
+                  [(ngModel)]="documentForm.revisionDate"
+                ></p-calendar>
+              </div>
+
+              <div class="field col-12 md:col-12">
+                <label for="version">Version</label>
+                <input
+                  type="text"
+                  id="version"
+                  name="version"
+                  [disabled]="true"
+                  style="background-color: #eeeeee"
+                  [(ngModel)]="documentForm.version"
+                  class="p-inputtext"
+                />
+              </div>
+
+              <div class="field col-12 md:col-12">
+                <label for="accptanceCodeId">Acceptance Code</label>
+                <p-dropdown
+                  id="accptanceCodeId"
+                  name="accptanceCodeId"
+                  [(ngModel)]="documentForm.accptanceCode"
+                  [options]="acceptanceCodeRefs"
+                  optionLabel="name"
+                  placeholder="Select Acceptance Code"
+                ></p-dropdown>
+              </div>
+
+              <div class="field col-12 md:col-12">
+                <label for="initiatedBy">Initiated By</label>
+                <input
+                  type="text"
+                  id="initiatedBy"
+                  name="initiatedBy"
+                  [disabled]="true"
+                  style="background-color: #eeeeee"
+                  [(ngModel)]="documentForm.initiatedBy"
+                  class="p-inputtext"
+                />
+              </div>
+
+              <div class="field col-12 md:col-12">
+                <label for="receiveDate">Receive Date</label>
+                <p-calendar
+                  id="receiveDate"
+                  name="receiveDate"
+                  [(ngModel)]="documentForm.receiveDate"
+                ></p-calendar>
+              </div>
+
+              <div class="field col-12 md:col-12">
+                <label for="replyRequired">Reply</label>
+                <div class="card flex justify-content-center">
+                  <div class="flex flex-wrap gap-3">
+                      <div class="flex align-items-center">
+                          <p-radioButton name="replyRequired" value="yes" [(ngModel)]="replyRequired" inputId="replyRequired1"></p-radioButton>
+                          <label for="replyRequired1" class="ml-2">Required</label>
+                      </div>
+                      
+                      <div class="flex align-items-center">
+                          <p-radioButton name="replyRequired" value="no" [(ngModel)]="replyRequired" inputId="replyRequired2"></p-radioButton>
+                          <label for="replyRequired2" class="ml-2">Not Required</label>
+                      </div>
+                  </div>
+              </div>
+              </div>
+
+              <div class="field col-12 md:col-12">
+                <label for="phase">Phase</label>
+                <input
+                  type="text"
+                  id="phase"
+                  name="phase"
+                  [(ngModel)]="documentForm.phase"
+                  class="p-inputtext"
+                />
+              </div>
+
+              <div class="field col-12 md:col-12">
+                <label for="replyRequiredBy">Reply Required By Date</label>
+                <p-calendar
+                  id="replyRequiredBy"
+                  name="replyRequiredBy"
+                  [(ngModel)]="documentForm.replyRequiredBy"
+                ></p-calendar>
+              </div>
+
+              <div class="field col-12 md:col-12">
+                <label for="disciplineId">Discipline</label>
+                <input
+                  id="disciplineId"
+                  name="disciplineId"
+                  [(ngModel)]="documentForm.disciplines"
+                  optionLabel="name"
+                  class="p-inputtext"
+                />
+              </div>
+
+              <div class="field col-12 md:col-12">
+                <label for="tqStatus">TQ Status</label>
+                <input
+                  type="text"
+                  id="tqStatus"
+                  name="tqStatus"
+                  [(ngModel)]="documentForm.tqStatus"
+                  class="p-inputtext"
+                />
+              </div>
+  
+              <!-- <div class="field col-12 md:col-12">
+                <label for="statusId">Status</label>
+                <p-dropdown
+                  id="statusId"
+                  name="statusId"
+                  [(ngModel)]="documentForm.status"
+                  [options]="statusesRefs"
+                  optionLabel="name"
+                  placeholder="Select Status"
+                ></p-dropdown>
+              </div> -->
+
+              <div class="field col-12 md:col-12">
+                <label for="categoriesId">Categories</label>
+                <p-dropdown
+                  id="categoriesId"
+                  name="categoriesId"
+                  [(ngModel)]="documentForm.categories"
+                  [options]="categoriesIdRefs"
+                  optionLabel="name"
+                  placeholder="Select Categories"
+                ></p-dropdown>
+              </div>
+
+              <div class="field col-12 md:col-12">
+                <label for="repliedDate">Replied Date</label>
+                <p-calendar
+                  id="repliedDate"
+                  name="repliedDate"
+                  [(ngModel)]="documentForm.repliedDate"
+                ></p-calendar>
+              </div>
+            </div>
+            <div class="field col-12 md:col-6">
+              <div class="field col-12 md:col-6">
+                <label for="title">Title</label>
+                <input
+                  type="text"
+                  id="title"
+                  name="title"
+                  [(ngModel)]="documentForm.title"
+                  class="p-inputtext"
+                />
+              </div>
+
+              <div class="field col-12 md:col-6">
+                <label for="documentsFor">Document For</label>
+                <input
+                  type="text"
+                  id="documentsFor"
+                  name="documentsFor"
+                  [(ngModel)]="documentForm.documentsFor"
+                  class="p-inputtext"
+                />
+              </div>
+
+              <div class="field col-12 md:col-6">
+                <label for="subSystemId">Sub System</label>
+                <p-dropdown
+                  id="subSystemId"
+                  name="subSystemId"
+                  [(ngModel)]="documentForm.subSystem"
+                  [options]="subSystemIdRefs"
+                  optionLabel="name"
+                  placeholder="Select Sub System"
+                ></p-dropdown>
+              </div>
+
+              <div class="field col-12 md:col-6">
+                <label for="fileType">File Type</label>
+                <input
+                  type="text"
+                  id="fileType"
+                  name="fileType"
+                  [disabled]="true"
+                  style="background-color: #eeeeee"
+                  [(ngModel)]="documentForm.fileType"
+                  class="p-inputtext"
+                />
+              </div>
+
+              <!-- <div class="field col-12 md:col-6">
+                <label for="filesTypeId">Files Type ID</label>
+                <p-dropdown
+                  id="filesTypeId"
+                  name="filesTypeId"
+                  [(ngModel)]="documentForm.filesType"
+                  [options]="filesTypeRefs"
+                  optionLabel="name"
+                  placeholder="Select Files Type"
+                ></p-dropdown>
+              </div> -->
+
+              <div class="field col-12 md:col-6">
+                <label for="classes">Classes</label>
+                <input
+                  type="text"
+                  id="classes"
+                  name="classes"
+                  [(ngModel)]="documentForm.classes"
+                  class="p-inputtext"
+                />
+              </div>
+
+              <div class="field col-12 md:col-6">
+                <label for="documentsTypeId">Documents Type</label>
+                <p-dropdown
+                  id="documentsTypeId"
+                  name="documentsTypeId"
+                  [(ngModel)]="documentForm.documentsType"
+                  [options]="documentTypeRefs"
+                  optionLabel="name"
+                  placeholder="Select Documents Type"
+                ></p-dropdown>
+              </div>
+
+              <div class="field col-12 md:col-6">
+                <label for="documentsSubTypeId">Documents Sub Type</label>
+                <p-dropdown
+                  id="documentsSubTypeId"
+                  name="documentsSubTypeId"
+                  [(ngModel)]="documentForm.documentsSubType"
+                  [options]="documentSubTypeRefs"
+                  optionLabel="name"
+                  placeholder="Select Documents Sub Type"
+                ></p-dropdown>
+              </div>
+
+              <!-- <div class="field col-12 md:col-6">
+                <label for="path">Path</label>
+                <input
+                  type="text"
+                  id="path"
+                  name="path"
+                  [disabled]="true"
+                  [(ngModel)]="documentForm.path"
+                  class="p-inputtext"
+                />
+              </div> -->
+            </div>
+          </div>
+        </form>
+      </ng-template>
+      <!-- ... Footer Template ... -->
+      <ng-template pTemplate="footer">
+        <div class="grid grid-nogutter justify-content-between">
+          <p-button
+            label="Back"
+            (onClick)="prevPage()"
+            icon="pi pi-angle-left"
+          ></p-button>
+          <p-button
+            label="Save"
+            (onClick)="closeDialog()"
+            icon="pi pi-save"
+            iconPos="right"
+          ></p-button>
+        </div>
+      </ng-template>
+    </p-card>
+  </div>
+</div>

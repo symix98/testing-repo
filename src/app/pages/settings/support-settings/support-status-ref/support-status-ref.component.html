@@ -1,0 +1,7 @@
+<p-card header="Statuses">
+    <div>
+        <button pButton icon='pi pi-plus' label="Add Status" (click)="addNewStatus()"></button>
+    </div>
+    <app-table-template *ngIf='tableParam' #tbl [tableParam]="tableParam">
+    </app-table-template>
+</p-card>

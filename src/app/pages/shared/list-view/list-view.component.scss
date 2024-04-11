@@ -1,0 +1,74 @@
+:host::ng-deep {
+    .p-card .p-card-body {
+        margin: 0.5rem !important;
+    }
+
+    i:not(.p-dropdown-clear-icon) {
+        font-size: 1.5rem;
+        color: darkblue;
+        padding-right: 0.2rem;
+    }
+
+    .filterBy {
+        position: absolute;
+        right: 1rem;
+    }
+
+    .p-chip {
+        background-color: #dee2e6;
+        color: #495057;
+        border-radius: 16px;
+        padding: 0.5rem;
+    }
+
+    .p-dialog .p-dialog-content {
+        height: 50vh !important;
+        padding: 0 !important;
+    }
+
+    .filterSortHeader {
+        padding: 0.3rem;
+        h5 {
+            margin-top: 0.5rem;
+        }
+    }
+
+    .filterSortDetails {
+        padding-bottom: 0.1rem;
+    }
+
+    .p-buttonset .p-button {
+        /* margin: 0.5rem!important;*/
+        margin: 0.2rem !important;
+        border: 1px solid black !important;
+        width: 7rem !important;
+        text-align: center;
+        border-radius: 0px;
+    }
+
+
+        .p-orderlist .p-orderlist-controls {
+            display: none !important;
+        }
+    
+        .p-orderlist-list {
+            min-height: 0 !important;
+        }
+    
+        .p-card .p-card-body {
+            padding: 0.5rem !important;
+            border-radius: 50rem !important;
+            margin-top: 0.5rem !important;
+        }
+    
+        p-orderlist .p-orderlist-list {
+            border: none !important;
+            padding: 0 !important;
+            border-bottom-right-radius: 0 !important;
+            border-bottom-left-radius: 0 !important;
+            /* position: absolute !important;
+            right: 0.1rem;
+            margin-top: 1.2rem;*/
+        }
+    
+}

@@ -1,0 +1,9 @@
+<label for='txt'>Please Add Your comments</label>
+
+<br>
+
+<textarea #txt [rows]='5' [cols]='100' pInputTextarea [(ngModel)]='msg'></textarea>
+
+<div class='grid grid-nogutter justify-content-end'>
+    <button pButton label='Reject' class='p-button-danger mr-1' (click)="Revise()" icon='pi pi-times'></button>
+</div>

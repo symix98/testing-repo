@@ -1,0 +1,27 @@
+<form *ngIf="statusForm" id="ngForm" (ngSubmit)="submitForm()" #form="ngForm">
+    <div class=" p-fluid formgrid grid">
+        
+        <div *ngIf="statusRefModel" class='col-12'>
+            <label for='status'>Select a Status:</label>
+            <p-dropdown [options]="statusRefModel" name="status" id="status" [(ngModel)]="selectedStatus" required>
+                <ng-template pTemplate="selectedItem">
+                    <div>{{selectedStatus?.status}} - {{selectedStatus?.satatusName}} </div>
+            </ng-template>
+            <ng-template let-status pTemplate="item">
+                    <div>{{status?.status}} - {{status?.satatusName}}</div>
+                
+            </ng-template>
+            </p-dropdown>
+
+        </div>
+        
+    </div>
+   
+        <div class="grid grid-nogutter justify-content-end mt-2">
+            <button *ngIf="!isDisable" [loading]="isLoading" pButton
+             [disabled]="!form.valid" icon="pi pi-check" label="Submit" 
+             type="submit"
+             style="position: absolute;bottom: 10px;"
+             ></button>
+        </div>
+</form>

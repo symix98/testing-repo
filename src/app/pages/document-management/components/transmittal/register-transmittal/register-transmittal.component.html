@@ -1,0 +1,660 @@
+<button
+  *ngIf="!editingMode"
+  pButton
+  pRipple
+  icon="pi pi-arrow-left"
+  (click)="backToTransmittalMainPage()"
+  style="margin-bottom: 1rem"
+></button>
+<p-card>
+  <p-tabView>
+    <p-tabPanel header="General">
+      <p-card>
+        <h4>{{ pageTitle }}</h4>
+        <ng-template pTemplate="content">
+          <form #docForm="ngForm">
+            <div class="grid p-fluid">
+              <div class="field col-12 md:col-6">
+                <div class="field col-12 md:col-12">
+                  <label for="projectName"
+                    >Project Name <span style="color: red">*</span></label
+                  >
+                  <input
+                    type="text"
+                    id="projectName"
+                    name="projectName"
+                    [(ngModel)]="transmittal.projectName"
+                    class="p-inputtext"
+                  />
+                </div>
+
+                <div class="field col-12 md:col-12">
+                  <label for="subject"
+                    >Subject <span style="color: red">*</span></label
+                  >
+                  <input
+                    type="text"
+                    id="subject"
+                    name="subject"
+                    [(ngModel)]="transmittal.subject"
+                    class="p-inputtext"
+                  />
+                </div>
+
+                <div class="field col-12 md:col-12">
+                  <label for="purpose"
+                    >Purpose <span style="color: red">*</span></label
+                  >
+                  <p-dropdown
+                    id="purpose"
+                    name="purpose"
+                    [(ngModel)]="transmittal.purpose"
+                    [options]="purposes"
+                    optionLabel="name"
+                    placeholder="Select Purpose"
+                  ></p-dropdown>
+                </div>
+
+                <div class="field col-12 md:col-12">
+                  <label for="type"
+                    >Type <span style="color: red">*</span></label
+                  >
+                  <p-dropdown
+                    id="type"
+                    name="type"
+                    [(ngModel)]="transmittal.type"
+                    [options]="types"
+                    optionLabel="name"
+                    placeholder="Select Type"
+                  ></p-dropdown>
+                </div>
+
+                <div class="field col-12 md:col-12">
+                  <label for="remarks">Remarks:</label>
+                  <textarea
+                    rows="5"
+                    cols="50"
+                    pInputTextarea
+                    name="remarks"
+                    [(ngModel)]="transmittal.comments"
+                  ></textarea>
+                </div>
+              </div>
+            </div>
+          </form>
+          <div *ngIf="editingMode" class="col-12 md:col-12">
+            <p-button
+              icon="pi pi-eye"
+              iconPos="right"
+              label="Preview Transmittal"
+              styleClass="p-button-outlined"
+              (onClick)="PreviewForm(transmittal.id)"
+            ></p-button>
+          </div>
+        </ng-template>
+      </p-card>
+    </p-tabPanel>
+
+    <p-tabPanel header="Recipients">
+      <p-toolbar>
+        <button
+          pButton
+          pRipple
+          label="Add Recipients"
+          icon="pi pi-plus"
+          (click)="addRecipient()"
+        ></button>
+      </p-toolbar>
+      <div class="container-fluid" *ngIf="appUsers">
+        <p-table
+          *ngIf="appUsers"
+          [value]="appUsers"
+          dataKey="{{ editingMode ? 'id' : 'userId' }}"
+          [tableStyle]="{ 'max-width': '20rem' }"
+          editMode="row"
+        >
+          <ng-template pTemplate="header">
+            <tr>
+              <th style="width: 10%">Name</th>
+              <th style="width: 10%">Email</th>
+              <th style="width: 10%">isAckRequired</th>
+              <th style="width: 10%">ackRequiredDate</th>
+              <th style="width: 10%">isRespRequired</th>
+              <th style="width: 10%">respRequiredDate</th>
+              <th style="width: 3%">Actions</th>
+            </tr>
+          </ng-template>
+          <ng-template
+            pTemplate="body"
+            let-appUser
+            let-editing="editing"
+            let-ri="rowIndex"
+          >
+            <tr [pEditableRow]="appUser">
+              <td>{{ appUser.tRecName || appUser.name }}</td>
+              <td>{{ appUser.tRecEmail || appUser.email }}</td>
+              <td>
+                <p-cellEditor>
+                  <ng-template pTemplate="input">
+                    <p-checkbox
+                      [binary]="true"
+                      inputId="isAckRequired_{{ appUser.id }}"
+                      name="isAckRequired_{{ appUser.id }}"
+                      [(ngModel)]="appUser.isAckRequired"
+                    ></p-checkbox>
+                  </ng-template>
+                  <ng-template pTemplate="output">
+                    {{ appUser.isAckRequired }}
+                  </ng-template>
+                </p-cellEditor>
+              </td>
+              <td>
+                <p-cellEditor *ngIf="appUser.isAckRequired">
+                  <ng-template pTemplate="input">
+                    <p-calendar
+                      id="ackRequiredDate"
+                      [(ngModel)]="appUser.ackRequiredDate"
+                      [showIcon]="true"
+                    ></p-calendar>
+                  </ng-template>
+                  <ng-template pTemplate="output">
+                    {{ appUser.ackRequiredDate | date }}
+                  </ng-template>
+                </p-cellEditor>
+              </td>
+              <td>
+                <p-cellEditor>
+                  <ng-template pTemplate="input">
+                    <p-checkbox
+                      [binary]="true"
+                      inputId="isRespRequired_{{ appUser.id }}"
+                      name="isRespRequired_{{ appUser.id }}"
+                      [(ngModel)]="appUser.isRespRequired"
+                    ></p-checkbox>
+                  </ng-template>
+                  <ng-template pTemplate="output">
+                    {{ appUser.isRespRequired }}
+                  </ng-template>
+                </p-cellEditor>
+              </td>
+              <td>
+                <p-cellEditor *ngIf="appUser.isRespRequired">
+                  <ng-template pTemplate="input">
+                    <p-calendar
+                      id="respRequiredDate"
+                      [(ngModel)]="appUser.respRequiredDate"
+                      [showIcon]="true"
+                    ></p-calendar>
+                  </ng-template>
+                  <ng-template pTemplate="output">
+                    {{ appUser.respRequiredDate | date }}
+                  </ng-template>
+                </p-cellEditor>
+              </td>
+
+              <td>
+                <div
+                  class="flex align-items-center justify-content-space-between gap-4"
+                >
+                  <button
+                    *ngIf="!editing"
+                    pButton
+                    pRipple
+                    type="button"
+                    pInitEditableRow
+                    icon="pi pi-pencil"
+                    (click)="onRowEditInit(appUsers)"
+                    style="width: fit-content"
+                    class="p-button-rounded p-button-text"
+                  ></button>
+                  <button
+                    *ngIf="!editing && isTransmittalDraft"
+                    pButton
+                    pRipple
+                    type="button"
+                    icon="pi pi-trash"
+                    (click)="onRowRemove(appUser)"
+                    style="width: fit-content"
+                    class="p-button-rounded p-button-text"
+                  ></button>
+                  <button
+                    *ngIf="editing"
+                    pButton
+                    pRipple
+                    type="button"
+                    pSaveEditableRow
+                    icon="pi pi-check"
+                    (click)="onRowEditSave(appUsers)"
+                    class="p-button-rounded p-button-text p-button-success mr-2"
+                  ></button>
+                  <button
+                    *ngIf="editing"
+                    pButton
+                    pRipple
+                    type="button"
+                    pCancelEditableRow
+                    icon="pi pi-times"
+                    (click)="onRowEditCancel()"
+                    class="p-button-rounded p-button-text p-button-danger"
+                  ></button>
+                </div>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+    </p-tabPanel>
+
+    <p-tabPanel header="Documents">
+      <button
+        pButton
+        pRipple
+        id="addDocumentButton"
+        label="Add Documents"
+        icon="pi pi-plus"
+        (click)="addDocuments()"
+      ></button>
+      <div class="container-fluid" *ngIf="transmittalDocuments.length > 0">
+        <p-table
+          [value]="transmittalDocuments"
+          [tableStyle]="{ 'max-width': '150rem' }"
+        >
+          <ng-template pTemplate="header">
+            <tr>
+              <th>documentsNumber</th>
+              <th>revision</th>
+              <th>version</th>
+              <th>revisionDate</th>
+              <th>title</th>
+              <th>phase</th>
+              <th>documentsFor</th>
+              <th>initiatedBy</th>
+              <th>receiveDate</th>
+              <th>disciplines</th>
+              <th>isTransmitted</th>
+              <th>recipient</th>
+              <!-- <th>confidential</th> -->
+              <!-- <th>orgnizer</th> -->
+              <th>status</th>
+              <th>Actions</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-selectedDocument>
+            <tr>
+              <td>{{ selectedDocument.documentsNumber }}</td>
+              <td>{{ selectedDocument.revision }}</td>
+              <td>{{ selectedDocument.version }}</td>
+              <td>{{ selectedDocument.revisionDate }}</td>
+              <td>{{ selectedDocument.title }}</td>
+              <td>{{ selectedDocument.phase }}</td>
+              <td>{{ selectedDocument.documentsFor }}</td>
+              <td>{{ selectedDocument.initiatedBy }}</td>
+              <td>{{ selectedDocument.receiveDate }}</td>
+              <td>{{ selectedDocument.disciplines }}</td>
+              <td>{{ selectedDocument.isTransmitted }}</td>
+              <td>{{ selectedDocument.recipient?.name }}</td>
+              <!-- <td>{{ selectedDocument.confidential }}</td> -->
+              <!-- <td>{{ selectedDocument.orgnizer?.name }}</td> -->
+              <td>{{ selectedDocument.status?.name }}</td>
+              <td>
+                <div
+                  class="flex align-items-center justify-content-space-between gap-4"
+                >
+                  <button
+                    pButton
+                    pRipple
+                    type="button"
+                    pInitEditableRow
+                    icon="pi pi-trash"
+                    (click)="onDocumentRemove(selectedDocument)"
+                    style="width: fit-content"
+                    class="p-button-rounded p-button-text"
+                  ></button>
+                </div>
+              </td>
+            </tr>
+
+            <!-- <td>{{ selectedDocument.fileType }}</td>
+                  <td>{{ selectedDocument.classes }}</td>
+                  <td>{{ selectedDocument.replyRequired }}</td>
+                  <td>{{ selectedDocument.replyRequiredBy }}</td>
+                  <td>{{ selectedDocument.repliedDate }}</td>
+                  <td>{{ selectedDocument.tqStatus }}</td>
+                  <td>{{ selectedDocument.path }}</td>
+                  <td>{{ selectedDocument.workflow }}</td>
+                  <td>{{ selectedDocument.currentStep }}</td>
+                  <td>{{ selectedDocument.ssize }}</td>
+                  <td>{{ selectedDocument.sstatus }}</td>
+                  <td>{{ selectedDocument.additionalReference }}</td>
+                  <td>{{ selectedDocument.reviewStatus }}</td>
+                  <td>{{ selectedDocument.modelReference }}</td>
+                  <td>{{ selectedDocument.createdBy }}</td>
+                  <td>{{ selectedDocument.dateModified }}</td>
+                  <td>{{ selectedDocument.relatedItems }}</td>
+                  <td>{{ selectedDocument.accessLevel }}</td>
+                  <td>{{ selectedDocument.csiSpecCode }}</td>
+                  <td>{{ selectedDocument.current }}</td>
+                  <td>{{ selectedDocument.facilityCode }}</td>
+                  <td>{{ selectedDocument.fileName }}</td>
+                  <td>{{ selectedDocument.forecastSubmToClient }}</td>
+                  <td>{{ selectedDocument.jobNumber }}</td>
+                  <td>{{ selectedDocument.lock }}</td>
+                  <td>{{ selectedDocument.lastModifiedDate }}</td>
+                  <td>{{ selectedDocument.numberOfMarkups }}</td>
+                  <td>{{ selectedDocument.activityID }}</td>
+                  <td>{{ selectedDocument.plannedSubmissionDate }}</td>
+                  <td>{{ selectedDocument.printSize }}</td>
+                  <td>{{ selectedDocument.purchaseOrder }}</td>
+                  <td>{{ selectedDocument.remarks }}</td>
+                  <td>{{ selectedDocument.reviewSource }}</td>
+                  <td>{{ selectedDocument.milestone }}</td>
+                  <td>{{ selectedDocument.projectField1 }}</td>
+                  <td>{{ selectedDocument.projectField2 }}</td>
+                  <td>{{ selectedDocument.projectField3 }}</td>
+                  <td>{{ selectedDocument.projectField4 }}</td>
+                  <td>{{ selectedDocument.projectField5 }}</td>
+                  <td>{{ selectedDocument.projectField6 }}</td>
+                  <td>{{ selectedDocument.projectField7 }}</td>
+                  <td>{{ selectedDocument.filesType }}</td>
+                  <td>{{ selectedDocument.documentsType }}</td>
+                  <td>{{ selectedDocument.documentsSubType }}</td>
+                  <td>{{ selectedDocument.discipline }}</td>
+                  <td>{{ selectedDocument.accptanceCode }}</td>
+                  <td>{{ selectedDocument.categories }}</td>
+                  <td>{{ selectedDocument.subSystem }}</td>
+                  <td>{{ selectedDocument.transmittals }}</td>
+                  <td>{{ selectedDocument.hyberLinks }}</td> -->
+          </ng-template>
+        </p-table>
+      </div>
+    </p-tabPanel>
+    <p-tabPanel header="Responses" *ngIf="inboxResponses">
+      <!-- <div class="row" *ngFor="let response of inboxResponses">
+            <div class="field">
+              <label
+                >Acknowledge: <span>{{ response?.acknolgment }}</span></label
+              >
+            </div>
+  
+            <div class="field">
+              <label
+                >Response: <span>{{ response?.response }}</span></label
+              >
+            </div>
+  
+            <div class="field">
+              <h6>Comments: </h6>
+              <textarea
+              pInputTextarea
+              style="width: 25rem; height: 8rem;"
+              id="comments"
+              name="comments"
+              [(ngModel)]="response.comments"
+            ></textarea>
+
+            </div>
+          </div> -->
+
+      <p-card id="right-card" *ngFor="let response of inboxResponses">
+        <p-accordion [multiple]="true" [activeIndex]="[0]" id="accordion">
+          <p-accordionTab
+            *ngIf="
+              response.respDate < response.respRequiredDate &&
+              response.ackDate < response.ackRequiredDate
+            "
+            header="{{ response.tRecName }}: ({{ response.tRecEmail }})"
+          >
+            <div class="response-properties">
+              <label style="text-align: center" for="revision"
+                ><span style="color: #a0a0a4; font-size: 1rem; font-weight: 600"
+                  >Acknowledge Required Date:</span
+                >
+                <span style="color: #2196f3; font-size: 1rem">
+                  {{ response.ackRequiredDate || "Unavailable" }}</span
+                ></label
+              >
+
+              <label style="text-align: center"
+                ><span style="color: #a0a0a4; font-size: 1rem; font-weight: 600"
+                  >Acknowledge Date:</span
+                >
+                <span style="color: #2196f3; font-size: 1rem">
+                  {{ response.ackDate }}</span
+                ></label
+              >
+
+              <label style="text-align: center"
+                ><span style="color: #a0a0a4; font-size: 1rem; font-weight: 600"
+                  >Response Required Date:</span
+                >
+                <span style="color: #2196f3; font-size: 1rem">
+                  {{ response.respRequiredDate }}</span
+                ></label
+              >
+
+              <label style="text-align: center"
+                ><span style="color: #a0a0a4; font-size: 1rem; font-weight: 600"
+                  >Response Date:</span
+                >
+                <span style="color: #2196f3; font-size: 1rem">
+                  {{ response.respDate }}</span
+                ></label
+              >
+            </div>
+
+            <div class="comments">
+              <label style="text-align: center"
+                ><span style="color: #a0a0a4; font-size: 1rem; font-weight: 600"
+                  >Comments:</span
+                >
+                <span style="color: #2196f3; font-size: 1rem">
+                  {{ response.comments }}</span
+                ></label
+              >
+            </div>
+          </p-accordionTab>
+
+          <p-accordionTab
+            *ngIf="
+              response.respDate > response.respRequiredDate &&
+              !(response.ackDate > response.ackRequiredDate)
+            "
+            header="{{ response.tRecName }}: ({{ response.tRecEmail }}) &#45;&#45;&#45;&gt; Delayed Response Date"
+          >
+            <div class="response-properties">
+              <label style="text-align: center" for="revision"
+                ><span style="color: #a0a0a4; font-size: 1rem; font-weight: 600"
+                  >Acknowledge Required Date:</span
+                >
+                <span style="color: #2196f3; font-size: 1rem">
+                  {{ response.ackRequiredDate || "Unavailable" }}</span
+                ></label
+              >
+
+              <label style="text-align: center"
+                ><span style="color: #a0a0a4; font-size: 1rem; font-weight: 600"
+                  >Acknowledge Date:</span
+                >
+                <span style="color: #2196f3; font-size: 1rem">
+                  {{ response.ackDate }}</span
+                ></label
+              >
+
+              <label style="text-align: center"
+                ><span style="color: #a0a0a4; font-size: 1rem; font-weight: 600"
+                  >Response Required Date:</span
+                >
+                <span style="color: #2196f3; font-size: 1rem">
+                  {{ response.respRequiredDate }}</span
+                ></label
+              >
+
+              <label style="text-align: center"
+                ><span style="color: #a0a0a4; font-size: 1rem; font-weight: 600"
+                  >Response Date:</span
+                >
+                <span style="color: #2196f3; font-size: 1rem">
+                  {{ response.respDate }}</span
+                ></label
+              >
+            </div>
+
+            <div class="comments">
+              <label style="text-align: center"
+                ><span style="color: #a0a0a4; font-size: 1rem; font-weight: 600"
+                  >Comments:</span
+                >
+                <span style="color: #2196f3; font-size: 1rem">
+                  {{ response.comments }}</span
+                ></label
+              >
+            </div>
+          </p-accordionTab>
+
+          <p-accordionTab
+            *ngIf="
+              response.ackDate > response.ackRequiredDate &&
+              !(response.respDate > response.respRequiredDate)
+            "
+            header="{{ response.tRecName }}: ({{ response.tRecEmail }}) &#45;&#45;&#45;&gt; Delayed Acknowledge Date"
+          >
+            <div class="response-properties">
+              <label style="text-align: center" for="revision"
+                ><span style="color: #a0a0a4; font-size: 1rem; font-weight: 600"
+                  >Acknowledge Required Date:</span
+                >
+                <span style="color: #2196f3; font-size: 1rem">
+                  {{ response.ackRequiredDate || "Unavailable" }}</span
+                ></label
+              >
+
+              <label style="text-align: center"
+                ><span style="color: #a0a0a4; font-size: 1rem; font-weight: 600"
+                  >Acknowledge Date:</span
+                >
+                <span style="color: #2196f3; font-size: 1rem">
+                  {{ response.ackDate }}</span
+                ></label
+              >
+
+              <label style="text-align: center"
+                ><span style="color: #a0a0a4; font-size: 1rem; font-weight: 600"
+                  >Response Required Date:</span
+                >
+                <span style="color: #2196f3; font-size: 1rem">
+                  {{ response.respRequiredDate }}</span
+                ></label
+              >
+
+              <label style="text-align: center"
+                ><span style="color: #a0a0a4; font-size: 1rem; font-weight: 600"
+                  >Response Date:</span
+                >
+                <span style="color: #2196f3; font-size: 1rem">
+                  {{ response.respDate }}</span
+                ></label
+              >
+            </div>
+
+            <div class="comments">
+              <label style="text-align: center"
+                ><span style="color: #a0a0a4; font-size: 1rem; font-weight: 600"
+                  >Comments:</span
+                >
+                <span style="color: #2196f3; font-size: 1rem">
+                  {{ response.comments }}</span
+                ></label
+              >
+            </div>
+          </p-accordionTab>
+
+          <p-accordionTab
+            *ngIf="
+              response.ackDate > response.ackRequiredDate &&
+              response.respDate > response.respRequiredDate
+            "
+            header="{{ response.tRecName }}: ({{ response.tRecEmail }}) &#45;&#45;&#45;&gt; Delayed Acknowledge and Response Date"
+          >
+            <div class="response-properties">
+              <label style="text-align: center" for="revision"
+                ><span style="color: #a0a0a4; font-size: 1rem; font-weight: 600"
+                  >Acknowledge Required Date:</span
+                >
+                <span style="color: #2196f3; font-size: 1rem">
+                  {{ response.ackRequiredDate || "Unavailable" }}</span
+                ></label
+              >
+
+              <label style="text-align: center"
+                ><span style="color: #a0a0a4; font-size: 1rem; font-weight: 600"
+                  >Acknowledge Date:</span
+                >
+                <span style="color: #2196f3; font-size: 1rem">
+                  {{ response.ackDate }}</span
+                ></label
+              >
+
+              <label style="text-align: center"
+                ><span style="color: #a0a0a4; font-size: 1rem; font-weight: 600"
+                  >Response Required Date:</span
+                >
+                <span style="color: #2196f3; font-size: 1rem">
+                  {{ response.respRequiredDate }}</span
+                ></label
+              >
+
+              <label style="text-align: center"
+                ><span style="color: #a0a0a4; font-size: 1rem; font-weight: 600"
+                  >Response Date:</span
+                >
+                <span style="color: #2196f3; font-size: 1rem">
+                  {{ response.respDate }}</span
+                ></label
+              >
+            </div>
+
+            <div class="comments">
+              <label style="text-align: center"
+                ><span style="color: #a0a0a4; font-size: 1rem; font-weight: 600"
+                  >Comments:</span
+                >
+                <span style="color: #2196f3; font-size: 1rem">
+                  {{ response.comments }}</span
+                ></label
+              >
+            </div>
+          </p-accordionTab>
+        </p-accordion>
+      </p-card>
+    </p-tabPanel>
+  </p-tabView>
+  <div id="buttons">
+    <button
+      pButton
+      pRipple
+      label="{{ editingMode ? 'Update Transmittal' : 'Issue' }}"
+      icon="pi pi-check"
+      [disabled]="
+        !transmittal.projectName ||
+        !transmittal.subject ||
+        !transmittal.purpose ||
+        !transmittal.type
+      "
+      (click)="save('issue')"
+    ></button>
+    <button
+      pButton
+      pRipple
+      class="btn btn-secondary"
+      label="{{ editingMode ? 'Update Draft' : 'Save Draft' }}"
+      icon="pi pi-save"
+      [disabled]="
+        !transmittal.projectName ||
+        !transmittal.subject ||
+        !transmittal.purpose ||
+        !transmittal.type
+      "
+      (click)="save('draft')"
+    ></button>
+  </div>
+</p-card>

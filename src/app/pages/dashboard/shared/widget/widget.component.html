@@ -1,0 +1,66 @@
+<!-- If the widget is not in edit mode, the drag/drop and remove functionalities are not available -->
+
+<div *ngIf="!isKpi && !componentInEditMode && !displayMaximizable" class="border">
+    <p-panel [header]="widgetTitle" [toggleable]="true">
+        <ng-template pTemplate="icons">
+            <button pButton class="p-panel-header-icon p-link" icon="pi pi-window-maximize" (click)="maximizeWidget()">
+            </button>
+        </ng-template>
+        <div *ngIf="!displayMaximizable">
+            <ng-container *ngTemplateOutlet="content"></ng-container>
+        </div>
+    </p-panel>
+</div>
+
+
+<!-- If the widget is in edit mode, the drag/drop and remove functionalities are available -->
+
+<div *ngIf="!isKpi && componentInEditMode && !displayMaximizable" pDraggable="color" class="border"
+    (onDragStart)="dragStart(wigdetComponentName)" (onDragEnd)="dragEnd($event)">
+    <p-panel [header]="widgetTitle" [toggleable]="true">
+        <ng-template pTemplate="icons">
+            <button *ngIf="componentInEditMode" pButton class="p-panel-header-icon p-link" icon="pi pi-times"
+                (click)="removeElement(wigdetComponentName)">
+            </button>
+            <button *ngIf="componentInEditMode" pButton class="p-panel-header-icon p-link" icon="pi pi-window-maximize"
+                (click)="maximizeWidget()">
+            </button>
+        </ng-template>
+        <div *ngIf="componentInEditMode && !displayMaximizable">
+            <ng-container *ngTemplateOutlet="content"></ng-container>
+        </div>
+
+    </p-panel>
+</div>
+
+<!-- if the maximize button is clicked, the widget will become a dialog and not a panel -->
+
+<p-dialog *ngIf="!isKpi && displayMaximizable && max" [header]="widgetTitle" [(visible)]="displayMaximizable"
+    [modal]="false" styleClass="widget-dialog" [maximizable]="false" [baseZIndex]="10000" [draggable]="false"
+    [resizable]="false" #widgetMax (onShow)="maximizeDialog($event,widgetMax)" [keepInViewport]="true">
+    <div *ngIf="displayMaximizable && max">
+        <ng-container *ngTemplateOutlet="content"></ng-container>
+    </div>
+</p-dialog>
+
+
+<div *ngIf="isKpi && !componentInEditMode" [class]="KPIClass">
+    <div *ngIf="isKpi && !componentInEditMode">
+        <ng-container *ngTemplateOutlet="content"></ng-container>
+    </div>
+</div>
+
+<div *ngIf="isKpi && componentInEditMode" pDraggable="color" class="border"
+    (onDragStart)="dragStart(wigdetComponentName)" (onDragEnd)="dragEnd($event)" [class]="KPIClass">
+    <div class="p-d-flex">
+        <i *ngIf="componentInEditMode" class="p-ml-auto pi pi-times p-button-help"
+            (click)="removeElement(wigdetComponentName)"></i>
+    </div>
+    <div *ngIf="isKpi && componentInEditMode">
+        <ng-container *ngTemplateOutlet="content"></ng-container>
+    </div>
+</div>
+
+<ng-template #content>
+    <ng-content></ng-content>
+</ng-template>

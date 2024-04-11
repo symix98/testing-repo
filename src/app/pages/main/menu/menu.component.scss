@@ -1,0 +1,29 @@
+:host ::ng-deep {
+  .p-panelmenu .p-panelmenu-header > a {
+   border: 0px;   
+  //  background: #ffffff;
+}
+  .p-panel .p-panel-content {
+      border: 0px ;
+ }
+
+ .p-menuitem-link-active{
+  background: #a6d5fa70;
+  background-color: #a6d5fa70 !important;
+  box-shadow: 0px 0px 2px 2px #d5e1ef !important;
+}
+.p-panelmenu .p-panelmenu-header > a:focus {
+  box-shadow: 0 0 0 0;
+}
+.p-panelmenu .p-panelmenu-content .p-menuitem .p-menuitem-link:focus {
+  box-shadow: 0 0 0 0;
+}
+.ng-tns-c36-1{
+  color: #7d828d;
+  background:#c1c2c757
+}
+.p-menuitem-icon{
+  font-size: 1.8rem;
+}
+}
+

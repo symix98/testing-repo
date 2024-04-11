@@ -1,0 +1,3 @@
+<button *ngIf="isCustomizeVisible" pButton pRipple [label]="customizeButtonText" icon="pi pi-pencil"
+    (click)="showPanel()"></button>
+<p-tieredMenu *ngIf="isPanelMenuVisible" [model]="panelMenuItems"></p-tieredMenu>

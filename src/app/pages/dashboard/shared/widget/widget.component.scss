@@ -1,0 +1,50 @@
+[pDraggable]:not(button) {
+    cursor: move;
+}
+.border{
+    margin:4px;
+}
+:host ::ng-deep {
+    @media screen and (min-width: 1024px) {
+        .widget-dialog{
+            height:100%!important;
+            width:100%!important;
+            margin-left:250px!important;
+            margin-top:120px!important;
+            }
+    }
+    
+    @media screen and (max-width: 1000px) {
+        .widget-dialog{
+            height:100%!important;
+            width:100%!important;
+            margin-left:0!important;
+            margin-top:120px!important;
+            }   
+        }
+    }
+    .overview-box {
+        margin:4px;
+        padding: 16px;
+        color: #ffffff;
+        border-radius: 3px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+    }
+
+    .sales{
+        background-color: #42A5F5;
+    }
+    .views {
+        background-color: #7E57C2;
+    }
+    .users {
+        background-color: #FFB300;
+    }    
+    
+.checkin {
+    background-color: #66BB6A;
+}
+
+.pi-times:before {
+cursor: pointer!important;
+}

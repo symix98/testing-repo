@@ -1,0 +1,42 @@
+.toolbar-header{
+    margin: 0px;
+    padding: 0px;
+}
+.form-group{
+    width: 60%;
+    margin-left: 10%;
+  
+}
+.input-group{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 4px;
+    margin-bottom: 4px;
+}
+.input-label{
+    width: 30%;
+    padding: 0px 10px 0px 0px;
+}
+.input-field{
+    width: 70%;
+}
+@media only screen and (max-width: 700px) {
+    .form-group{
+        width: 100%;
+        margin-left: 2px;
+    }
+}
+
+.error{
+    color: red;
+    margin-left: 30%;
+    text-align: left;
+}
+
+.loading{
+    font-size: x-large;
+    padding: 100px;
+    background-color: green;
+}

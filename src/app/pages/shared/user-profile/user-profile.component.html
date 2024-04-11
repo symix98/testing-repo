@@ -1,0 +1,102 @@
+<div *ngIf="loading">
+    <div class="p-grid" style="text-align: center;">
+        <div class="p-col-12 p-pt-4 p-pb-4">
+            <h4>Please wait... <p-progressSpinner [style]="{width: '26px', height: '26px'}"></p-progressSpinner>
+            </h4>
+        </div>
+    </div>
+</div>
+
+<!-- Logged in User Information -->
+
+<div *ngIf="!loading" class="p-d-flex p-flex-column p-mt-4">
+    <div class="p-d-flex p-flex-wrap">
+        <div style="flex:1; width: 100%;" class="p-mr-2">
+            <span class="p-float-label">
+                <input type="text" id="userName" name="userName" pInputText [(ngModel)]="user.name" disabled="true"
+                    style="width: 100%;">
+                <label for="userName">Name</label>
+            </span>
+        </div>
+
+        <div style="flex:1; width: 100%;" class="p-mr-2">
+            <span class="p-float-label">
+                <input type="text" id="userMail" name="userMail" pInputText [(ngModel)]="user.email" disabled="true"
+                    style="width: 100%;">
+                <label for="userMail">Email</label>
+            </span>
+        </div>
+
+        <div style="flex:1; width: 100%;">
+            <span class="p-float-label">
+                <input type="text" id="userRole" name="userRole" pInputText [(ngModel)]="user.role" disabled="true"
+                    style="width: 100%;">
+                <label for="userRole">Role</label>
+            </span>
+        </div>
+    </div>
+
+    <div style="width: 100%;" class="p-mt-4">
+        <span class="p-float-label">
+            <input type="text" id="userSupervisor" name="userSupervisor" pInputText [(ngModel)]="user.siteEngineerName"
+                disabled="true" style="width: 100%;">
+            <label for="userSupervisor">Supervisor</label>
+        </span>
+    </div>
+
+    <!-- Logged in User Information -->
+
+
+    <!-- Signature related section -->
+
+    <div *ngIf="attachmentExists" class="p-mt-4">
+        <button pButton type="button" label="View Signature" (click)="processRetrievedSignature()"></button>
+    </div>
+
+    <div *ngIf="showSignature" class="p-mt-2" style="text-align: center;">
+        <div style="text-align: right;">
+            <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-outlined p-button-rounded"
+                (click)="editSignature()"></button>
+        </div>
+        <img class="signature-image" src='{{ signatureImg }}' />
+    </div>
+
+    <div *ngIf="!attachmentExists || editUserSignature" class="p-mt-4">
+        <div><b>{{editUserSignature?'Edit':'Add'}} Signature</b></div>
+        <div class="p-mt-2">
+            <p-radioButton name="signatureType" value="pad" [(ngModel)]="signatureUpload" label="Signature Pad"
+                (onClick)="chooseSignatureUpload()">
+            </p-radioButton>
+            <p-radioButton name="signatureType" value="upload" class="p-ml-2" [(ngModel)]="signatureUpload"
+                label="Upload Signature" (onClick)="chooseSignatureUpload()">
+            </p-radioButton>
+        </div>
+    </div>
+
+    <div *ngIf="showSignatureBrowseSection" class="p-mt-2">
+        <p-fileUpload (onSelect)="onSelectSignatureImg($event)" [auto]="true" chooseLabel="Upload Signature"
+            accept="image/*" (onRemove)='onRemoveSignImg()'>
+        </p-fileUpload>
+        <div style="text-align: right;">
+            <button pButton type="button" label="Save Signature" icon="pi pi-save" class="p-mt-2"
+                (click)="saveSignatureImage()" [disabled]="!signatureImgToUpload"></button>
+        </div>
+    </div>
+
+    <div *ngIf="showSignaturePad" class="p-mt-4">
+        <app-signing-pad (signatureEmitted)="processSignature($event)">
+        </app-signing-pad>
+    </div>
+
+    <!-- Signature related section -->
+</div>
+
+<!--Confirmation Dialog-->
+<p-confirmDialog #cd key="saveUploadedSignature" [baseZIndex]="10000">
+    <ng-template pTemplate="footer">
+        <button type="button" pButton icon="pi pi-check" label="Confirm" (click)="cd.accept()"></button>
+        <button type="button" pButton icon="pi pi-times" label="Cancel" class="p-button-outlined"
+            (click)="cd.reject()"></button>
+    </ng-template>
+</p-confirmDialog>
+<!--Confirmation Dialog-->

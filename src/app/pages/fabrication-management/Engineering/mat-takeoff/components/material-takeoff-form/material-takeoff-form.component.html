@@ -1,0 +1,185 @@
+<form (ngSubmit)="submitForm()" #form="ngForm">
+    <div class="card p-fluid formgrid grid">
+        
+        <div class='field pt-3 col-12 md-2 w-2'>
+            <label for='isono'>isono:</label>
+            <input type='text' id='isono' name='isono' [(ngModel)]='mtoForm.isono' pInputText />
+        </div>
+        <div class='field pt-3 col-12 md-2 w-2'>
+            <label for='type'>type:</label>
+            <input type='text' id='type' name='type' [(ngModel)]='mtoForm.type' pInputText />
+        </div>
+        <div class='field pt-3 col-12 md-2 w-2'>
+            <label for='material'>material:</label>
+            <input type='text' id='material' name='material' [(ngModel)]='mtoForm.material' pInputText />
+        </div>
+
+        <div class='field pt-3 col-12 md-2 w-2'>
+            <label for='source'>source:</label>
+            <input type='text' id='source' name='source' [(ngModel)]='mtoForm.source' pInputText />
+        </div>
+        <div class='field pt-3 col-12 md-2 w-2'>
+            <label for='matcode'>matcode:</label>
+            <input type='text' id='matcode' name='matcode' [(ngModel)]='mtoForm.matcode' pInputText />
+        </div>
+        <div class='field pt-3 col-12 md-2 w-2'>
+            <label for='matsubcode'>matsubcode:</label>
+            <input type='text' id='matsubcode' name='matsubcode' [(ngModel)]='mtoForm.matsubcode' pInputText />
+        </div>
+        <div class='field pt-3 col-12 md-2 w-2'>
+            <label for='part'>part:</label>
+            <input type='text' id='part' name='part' [(ngModel)]='mtoForm.part' pInputText />
+        </div>
+        <div class='field pt-3 col-12 md-2 w-2'>
+            <label for='scope'>scope:</label>
+            <input type='text' id='scope' name='scope' [(ngModel)]='mtoForm.scope' pInputText />
+        </div>
+        <div class='field pt-3 col-12 md-2 w-2'>
+            <label for='qty'>qty:</label>
+            <input type='text' id='qty' name='qty' [(ngModel)]='mtoForm.qty' pInputText />
+        </div>
+        <div class='field pt-3 col-12 md-2 w-2'>
+            <label for='length'>length:</label>
+            <input type='text' id='length' name='length' [(ngModel)]='mtoForm.length' pInputText />
+        </div>
+        <div class='field pt-3 col-12 md-2 w-2'>
+            <label for='width'>width:</label>
+            <input type='text' id='width' name='width' [(ngModel)]='mtoForm.width' pInputText />
+        </div>
+        <div class='field pt-3 col-12 md-2 w-2'>
+            <label for='remarks1'>remarks1:</label>
+            <input type='text' id='remarks1' name='remarks1' [(ngModel)]='mtoForm.remarks1' pInputText />
+        </div>
+        <div class='field pt-3 col-12 md-2 w-2'>
+            <label for='remarks2'>remarks2:</label>
+            <input type='text' id='remarks2' name='remarks2' [(ngModel)]='mtoForm.remarks2' pInputText />
+        </div>
+        <div class='field pt-3 col-12 md-2 w-2'>
+            <label for='supcode'>supcode:</label>
+            <input type='text' id='supcode' name='supcode' [(ngModel)]='mtoForm.supcode' pInputText />
+        </div>
+        <div class='field pt-3 col-12 md-2 w-2'>
+            <label for='bscode'>bscode:</label>
+            <input type='text' id='bscode' name='bscode' [(ngModel)]='mtoForm.bscode' pInputText />
+        </div>
+        <div class='field pt-3 col-12 md-2 w-2'>
+            <label for='tag'>tag:</label>
+            <input type='text' id='tag' name='tag' [(ngModel)]='mtoForm.tag' pInputText />
+        </div>
+        <div class='field pt-3 col-12 md-2 w-2'>
+            <label for='remark'>remark:</label>
+            <input type='text' id='remark' name='remark' [(ngModel)]='mtoForm.remark' pInputText />
+        </div>
+        <div class='field pt-3 col-12 md-2 w-2'>
+            <label for='itemno'>itemno:</label>
+            <input type='text' id='itemno' name='itemno' [(ngModel)]='mtoForm.itemno' pInputText />
+        </div>
+        <div class='field pt-3 col-12 md-2 w-2'>
+            <label for='mark'>mark:</label>
+            <input type='text' id='mark' name='mark' [(ngModel)]='mtoForm.mark' pInputText />
+        </div>
+        <div class='field pt-3 col-12 md-2 w-2'>
+            <label for='matflag'>matflag:</label>
+            <input type='text' id='matflag' name='matflag' [(ngModel)]='mtoForm.matflag' pInputText />
+        </div>
+        <div class='field pt-3 col-12 md-2 w-2'>
+            <label for='oldmatcode'>oldmatcode:</label>
+            <input type='text' id='oldmatcode' name='oldmatcode' [(ngModel)]='mtoForm.oldmatcode' pInputText />
+        </div>
+        <div class='field pt-3 col-12 md-2 w-2'>
+            <label for='oldmtpart1'>oldmtpart1:</label>
+            <input type='text' id='oldmtpart1' name='oldmtpart1' [(ngModel)]='mtoForm.oldmtpart1' pInputText />
+        </div>
+        <div class='field pt-3 col-12 md-2 w-2'>
+            <label for='oldmtpart2'>oldmtpart2:</label>
+            <input type='text' id='oldmtpart2' name='oldmtpart2' [(ngModel)]='mtoForm.oldmtpart2' pInputText />
+        </div>
+        <div class='field pt-3 col-12 md-2 w-2'>
+            <label for='oldmtpart3'>oldmtpart3:</label>
+            <input type='text' id='oldmtpart3' name='oldmtpart3' [(ngModel)]='mtoForm.oldmtpart3' pInputText />
+        </div>
+        <div class='field pt-3 col-12 md-2 w-2'>
+            <label for='newcode'>newcode:</label>
+            <input type='text' id='newcode' name='newcode' [(ngModel)]='mtoForm.newcode' pInputText />
+        </div>
+        <div class='field pt-3 col-12 md-2 w-2'>
+            <label for='oldcode'>oldcode:</label>
+            <input type='text' id='oldcode' name='oldcode' [(ngModel)]='mtoForm.oldcode' pInputText />
+        </div>
+        <div class='field pt-3 col-12 md-2 w-2'>
+            <label for='ccc'>ccc:</label>
+            <input type='text' id='ccc' name='ccc' [(ngModel)]='mtoForm.ccc' pInputText />
+        </div>
+        <div class='field pt-3 col-12 md-2 w-2'>
+            <label for='sc'>sc:</label>
+            <input type='text' id='sc' name='sc' [(ngModel)]='mtoForm.sc' pInputText />
+        </div>
+        <div class='field pt-3 col-12 md-2 w-2'>
+            <label for='pipe'>pipe:</label>
+            <input type='text' id='pipe' name='pipe' [(ngModel)]='mtoForm.pipe' pInputText />
+        </div>
+        <div class='field pt-3 col-12 md-2 w-2'>
+            <label for='piptype'>piptype:</label>
+            <input type='text' id='piptype' name='piptype' [(ngModel)]='mtoForm.piptype' pInputText />
+        </div>
+        <div class='field pt-3 col-12 md-2 w-2'>
+            <label for='fab'>fab:</label>
+            <input type='text' id='fab' name='fab' [(ngModel)]='mtoForm.fab' pInputText />
+        </div>
+        <div class='field pt-3 col-12 md-2 w-2'>
+            <label for='category'>category:</label>
+            <input type='text' id='category' name='category' [(ngModel)]='mtoForm.category' pInputText />
+        </div>
+        <div class='field pt-3 col-12 md-2 w-2'>
+            <label for='scScope'>scScope:</label>
+            <input type='text' id='scScope' name='scScope' [(ngModel)]='mtoForm.scScope' pInputText />
+        </div>
+        <div class='field pt-3 col-12 md-2 w-2'>
+            <label for='weldedSup'>weldedSup:</label>
+            <input type='text' id='weldedSup' name='weldedSup' [(ngModel)]='mtoForm.weldedSup' pInputText />
+        </div>
+        <div class='field pt-3 col-12 md-2 w-2'>
+            <label for='shopWeld'>shopWeld:</label>
+            <input type='text' id='shopWeld' name='shopWeld' [(ngModel)]='mtoForm.shopWeld' pInputText />
+        </div>
+        <div class='field pt-3 col-12 md-2 w-2'>
+            <label for='padClamp'>padClamp:</label>
+            <input type='text' id='padClamp' name='padClamp' [(ngModel)]='mtoForm.padClamp' pInputText />
+        </div>
+        <div class='field pt-3 col-12 md-2 w-2'>
+            <label for='runPsize'>runPsize:</label>
+            <input type='text' id='runPsize' name='runPsize' [(ngModel)]='mtoForm.runPsize' pInputText />
+        </div>
+        <div class='field pt-3 col-12 md-2 w-2'>
+            <label for='padclmpthk'>padclmpthk:</label>
+            <input type='text' id='padclmpthk' name='padclmpthk' [(ngModel)]='mtoForm.padclmpthk' pInputText />
+        </div>
+        <div class='field pt-3 col-12 md-2 w-2'>
+            <label for='ribPltflg'>ribPltflg:</label>
+            <input type='text' id='ribPltflg' name='ribPltflg' [(ngModel)]='mtoForm.ribPltflg' pInputText />
+        </div>
+        <div class='field pt-3 col-12 md-2 w-2'>
+            <label for='paintflag'>paintflag:</label>
+            <input type='text' id='paintflag' name='paintflag' [(ngModel)]='mtoForm.paintflag' pInputText />
+        </div>
+
+        <!-- <div class='field pt-3 col-12 md-2 w-2'>
+                            <label for='createdBy'>createdBy:</label>
+                            <input type='text' id='createdBy' name='createdBy' [(ngModel)]='mtoForm.createdBy' pInputText />
+                        </div>
+            <div class='field pt-3 col-12 md-2 w-2'>
+                            <label for='creationDate'>creationDate:</label>
+                            <input type='text' id='creationDate' name='creationDate' [(ngModel)]='mtoForm.creationDate' pInputText />
+                        </div>
+            <div class='field pt-3 col-12 md-2 w-2'>
+                            <label for='modifiedDate'>modifiedDate:</label>
+                            <input type='text' id='modifiedDate' name='modifiedDate' [(ngModel)]='mtoForm.modifiedDate' pInputText />
+                        </div> -->
+
+    </div>
+    <div class="grid grid-nogutter justify-content-end">
+        <button [loading]="isLoading" pButton style="position: fixed;bottom: 10px;" [disabled]="!form.valid"
+            label="Submit" type="submit"></button>
+    </div>
+
+</form>

@@ -1,0 +1,44 @@
+<form (ngSubmit)="submitForm()" #form="ngForm">
+    <div class="p-fluid grid">
+        <div class="col-12">
+            <label for="type">Type:</label>
+            <input type="text" id="type" name="type" [(ngModel)]="model.type" pInputText required />
+          </div>
+        
+          <div class="col-12">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" [(ngModel)]="model.name" pInputText required/>
+          </div>
+        
+          <div class="col-12">
+            <label for="ref">Reference:</label>
+            <input type="text" id="ref" name="ref" [(ngModel)]="model.ref" pInputText />
+          </div>
+        
+          <div class="col-12">
+            <label for="picture">Picture:</label>
+        
+            <p-fileUpload *ngIf="!model.picture"
+            name="picture[]" 
+            (uploadHandler)="onUpload($event)" 
+            mode="basic" 
+            customUpload="true" 
+            accept="image/*" 
+            maxFileSize="3000000"
+            chooseLabel="Upload New Image"
+            auto="true"
+            ></p-fileUpload>
+
+            <p-image *ngIf="model.picture" [preview]="true" [src]="'data:' + model.pictureContentType + ';base64,' + model.picture" alt="" height="150" width="250" [imageStyle]="{'object-fit': 'contain'}">
+            </p-image>
+            <button *ngIf="model.picture" pButton icon="pi pi-trash" (click)="removeImage()"></button>
+            </div>
+          
+
+    </div>
+    <div class="grid grid-nogutter justify-content-end">
+        <button [loading]="isLoading" pButton style="position: fixed;bottom: 10px;" [disabled]="!form.valid || !model.picture" label="Submit" type="submit"></button>
+    </div>
+    
+  </form>
+  

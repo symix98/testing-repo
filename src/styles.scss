@@ -1,0 +1,174 @@
+//-----------------------------------------
+// Prime NG
+@import "~primeng/resources/primeng.min.css";
+@import "~primeflex/primeflex.scss";
+@import "~primeicons/primeicons.css";
+//-----------------------------------------
+
+@import "../node_modules/prismjs/themes/prism-coy.css";
+@import "../node_modules/@fullcalendar/daygrid/main.min.css";
+@import "../node_modules/@fullcalendar/timegrid/main.min.css";
+@import "assets/styles/t_table_compact.css";
+
+div.sticky {
+    position: -webkit-sticky;
+    position: sticky;
+    bottom: 0;
+}
+
+.full-width {
+    width: 100% !important;
+}
+
+.loader-screen{
+    background-color: #f2f2f2 !important;
+}
+.heart {
+	font-size: 150px;
+	color: #e00;
+	animation: bounce-in 1s infinite alternate;
+	transform-origin: center;
+}
+@keyframes bounce-in {
+    0% {
+      opacity: 0;
+      transform: scale(.3);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.05);
+    }
+    70% { transform: scale(.9); }
+    100% { transform: scale(1); }
+  }
+
+/* Heart beat animation */
+@keyframes beat{
+	to { transform: scale(1.1); }
+}
+
+:root {
+    --success-color: rgb(88, 150, 48);
+    --danger-color: darkred;
+    --pending-color: darkgray;
+    --medium-color: rgb(184, 95, 11);
+    --low-color: rgb(218, 167, 39);
+}
+
+.header-detail {
+    color: #495057;
+}
+
+.collapsible-button {
+    height: 2rem !important;
+    width: 2rem !important;
+    box-shadow: none !important;
+}
+
+.collapsible-title {
+    font-size: large;
+}
+
+div.sticky {
+    position: -webkit-sticky;
+    position: sticky;
+    bottom: 0;
+}
+
+.sticky-header {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 60px;
+    z-index: 10;
+}
+
+tr.p-selectable-row.p-highlight {
+    background-color: #EFF6FF !important;
+    color: inherit !important;
+}
+
+.p-highlight .p-checkbox .p-checkbox-box {
+    border-color: var(--primary-color) !important;
+}
+
+.no-padding-dialog-content .p-dialog-content {
+    padding-bottom: 0px !important;
+}
+
+.scrolly-container {
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.scrolly-container::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+.scrolly-container::-webkit-scrollbar {
+    width: 3px;
+    background-color: transparent;
+}
+
+.scrolly-container::-webkit-scrollbar-thumb {
+    background-color: var(--primary-color);
+    border-radius: 2px;
+}
+
+.custom-table-row {
+    height: 2.5rem;
+    min-height: 2.5rem;
+}
+
+.success-color {
+    color: var(--success-color);
+}
+
+.low-color {
+    color: var(--low-color);
+}
+
+.medium-color {
+    color: var(--medium-color);
+}
+
+.danger-color {
+    color: var(--danger-color);
+}
+
+.loading-indicator {
+    position: fixed;
+    z-index: 999;
+    height: 2em;
+    width: 2em;
+    overflow: show;
+    margin: auto;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+
+.view-button {
+    width: 172px;
+}
+
+@supports (backdrop-filter: blur()) {
+    div.sticky {
+        backdrop-filter: brightness(150%) saturate(150%) blur(1rem);
+    }
+
+    .sticky-header {
+        backdrop-filter: brightness(150%) saturate(150%) blur(1rem);
+    }
+}
+
+@supports not (backdrop-filter: blur()) {
+    div.sticky {
+        background: white;
+    }
+
+    .sticky-header {
+        background: white;
+    }
+}
+

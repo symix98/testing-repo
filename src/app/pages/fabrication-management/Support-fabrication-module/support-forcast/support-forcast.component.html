@@ -1,0 +1,24 @@
+
+<p-card header="Forecasted Supports">
+    <label for="">Select  (Start Planned Date) : </label> 
+    <div class="p-fluid grid">
+        <div class="field col-6 md:col-4">
+            <label for="startDate">From</label>
+            <p-calendar [(ngModel)]="startDate" [showIcon]="true" inputId="startDate"></p-calendar>
+        </div>
+        <div class="field col-6 md:col-4">
+            <label for="finishDate">To</label>
+            <p-calendar [(ngModel)]="finishDate" [showIcon]="true" inputId="finishDate"></p-calendar>
+        </div>
+        <div class="field-checkbox field col-6 md:col-2 mt-3">
+            <p-checkbox name="group1" [(ngModel)]="withDrs" [binary]="true" inputId="binary"></p-checkbox>
+            <label class="mt-2" for="binary">Need DRS</label>
+        </div>
+        <div class="md:col-2 mt-4">
+
+            <button pButton icon="pi pi-search" (click)="onSearch()"></button>
+        </div>
+    </div>
+    <app-table-template *ngIf='tableParam' #tbl [tableParam]="tableParam">
+    </app-table-template>
+</p-card>

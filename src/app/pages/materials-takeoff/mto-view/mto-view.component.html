@@ -1,0 +1,126 @@
+<p-toolbar styleClass="p-mb-3">
+    <div class="p-toolbar-group-left">
+        <button pButton icon="pi pi-chevron-left" (click)="moveBack()" label="Back"></button>
+    </div>
+</p-toolbar>
+<br>
+
+<div class="surface-section px-2 py-2 ">
+    <div class="font-medium text-3xl text-900 mb-3">MTO - Details</div>
+
+    <div class="p-fluid p-formgrid grid shadow-2 p-3 col-12 lg:col-12  md:col-12"
+        style="border-radius: 6px; background-color: white;">
+
+        <div class="field col-12 md:col-4">
+            <li class="flex align-items-center py-2 surface-border flex-wrap">
+                <div class="text-500 w-6 md:w-2 font-medium">Name</div>
+                <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">
+                    <input id="name" type="text" pInputText autocomplete="off" autofocus />
+                </div>
+                <div class="w-1 md:w-1 flex justify-content-end">
+                    <button pButton pRipple icon="pi pi-pencil" class="p-button-text"></button>
+                </div>
+            </li>
+
+            <li class="flex align-items-center py-2 surface-border flex-wrap">
+                <div class="text-500 w-6 md:w-2 font-medium">Type</div>
+                <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">
+                    <input id="type" type="text" pInputText autocomplete="off" autofocus />
+                </div>
+                <div class="w-1 md:w-1 flex justify-content-end">
+                    <button pButton pRipple icon="pi pi-pencil" class="p-button-text"></button>
+                </div>
+            </li>
+
+            <li class="flex align-items-center py-2 surface-border flex-wrap">
+                <div class="text-500 w-6 md:w-2 font-medium">Material</div>
+                <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">
+                    <input id="material" type="text" pInputText autocomplete="off" autofocus />
+                </div>
+                <div class="w-1 md:w-1 flex justify-content-end">
+                    <button pButton pRipple icon="pi pi-pencil" class="p-button-text"></button>
+                </div>
+            </li>
+        </div>
+
+        <div class="field col-12 md:col-4">
+            <li class="flex align-items-center py-2 surface-border flex-wrap">
+                <div class="text-500 w-6 md:w-2 font-medium">Field4</div>
+                <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">
+                    <input id="Field4" type="text" pInputText autocomplete="off" autofocus />
+                </div>
+                <div class="w-1 md:w-1 flex justify-content-end">
+                    <button pButton pRipple icon="pi pi-pencil" class="p-button-text"></button>
+                </div>
+            </li>
+
+            <li class="flex align-items-center py-2 surface-border flex-wrap">
+                <div class="text-500 w-6 md:w-2 font-medium">Field5</div>
+                <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">
+                    <input id="type" type="text" pInputText autocomplete="off" autofocus />
+                </div>
+                <div class="w-1 md:w-1 flex justify-content-end">
+                    <button pButton pRipple icon="pi pi-pencil" class="p-button-text"></button>
+                </div>
+            </li>
+
+            <li class="flex align-items-center py-2 surface-border flex-wrap">
+                <div class="text-500 w-6 md:w-2 font-medium">Field6</div>
+                <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">
+                    <input id="material" type="text" pInputText autocomplete="off" autofocus />
+                </div>
+                <div class="w-1 md:w-1 flex justify-content-end">
+                    <button pButton pRipple icon="pi pi-pencil" class="p-button-text"></button>
+                </div>
+            </li>
+
+        </div>
+
+        <div class="col-12 lg:col-4">
+
+
+            <div class="p-3 h-full">
+
+                <div class="shadow-2 p-3 flex flex-column surface-card" style="border-radius: 6px">
+                    <div class="overflow-hidden">
+                        <!-- <img src="assets/images/LGPH-M.png" alt="Image" class="md:ml-auto block md:h-full"
+                        style="clip-path: polygon(8% 0, 100% 0%, 100% 100%, 0 100%)"> -->
+
+                        <p-image src="assets/images/LGPH-M.png" alt="Image" width="100%" height="50%"
+                            [preview]="true"></p-image>
+                    </div>
+
+                    <div class="w-1 md:w-1 flex justify-content-end">
+                        <button pButton pRipple icon="pi pi-pencil" class="p-button-text"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr>
+        <div class="field col-12 md:col-12 border-top-1" style="color: lightslategray;">
+            <div class="font-medium text-3xl text-900 mb-3">Support Items</div>
+
+            <p-table [loading]="isLoading" [value]="supportItemList" [columns]="supportItemListCols" [rowHover]="true"
+                [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                [rows]="20" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50,100]"
+                [globalFilterFields]="['name', 'code', 'description']" dataKey="id" responsiveLayout="scroll">
+                <ng-template pTemplate="header" let-columns>
+                    <tr>
+                        <th *ngFor="let col of columns">
+                            {{col.header}}
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex">
+                    <tr>
+                        <td *ngFor="let col of columns">
+                            {{rowData[col.field]}}
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+
+    </div>
+</div>

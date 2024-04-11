@@ -1,0 +1,78 @@
+<div *ngIf="this.templateId == 'new'" class="p-fluid grid card">
+    <p-toolbar styleClass='p-mb-3 col md:col-12'>
+        <div class='p-toolbar-group-left'>
+            <button pButton icon='pi pi-chevron-left' label='back' (click)='back()'></button>
+        </div>
+    </p-toolbar>
+</div>
+
+<div *ngIf='WorkflowTemplateData' class='p-fluid grid card'>
+    <div class='field flex-container'>
+        <div  class='col-4' style='padding: 10px'>
+            <label><b>Sequence Id</b></label>
+            <input type='text' pInputText (change)='edited($event)' [disabled]='true' [(ngModel)]='WorkflowTemplateData.sequence' />
+        </div>
+        <div class='col-4' style='padding: 10px'>
+            <label><b>Form Type</b></label>
+            <input type='text' pInputText (change)='edited($event)' [disabled]='isFormFieldEnable' [(ngModel)]='WorkflowTemplateData.formType' />
+        </div>
+        <div class='col-4' style='padding: 10px'>
+            <label><b>Step Name</b></label>
+            <input type='text' pInputText (change)='edited($event)' [disabled]='isInputDisabled' [(ngModel)]='WorkflowTemplateData.stepName' />
+        </div>
+    </div>
+    <div class='field flex-container'>
+        <div class='col md:col-12'>
+            <label><b>Description</b></label>
+            <div class='p-inputgroup'>
+                <textarea [rows]='2' [cols]='30' pInputTextarea (change)='edited($event)' [disabled]='isInputDisabled' [(ngModel)]='WorkflowTemplateData.actionDescription'></textarea>
+            </div>
+        </div>
+    </div>
+    <div class='field flex-container'>
+        <div class='col-4' style='padding: 10px'>
+            <label for='Value'><b>Role</b></label>
+            <p-dropdown [options]='rolesList' [disabled]='isInputDisabled' [showClear]='true' #Value [(ngModel)]='WorkflowTemplateData.roles'
+            (onChange)='onRoleChange($event)' placeholder='Select Role'></p-dropdown>
+        </div>
+        <div class='col-4' style='padding: 10px'>
+            <label><b>Initial Status</b></label>
+            <input type='text' pInputText (change)='edited($event)' [disabled]='isInputDisabled' [(ngModel)]='WorkflowTemplateData.initialStatus' />
+        </div>
+        <div class='col-4' style='padding: 10px'>
+            <label><b>Success Status</b></label>
+            <input type='text' pInputText (change)='edited($event)' [disabled]='isInputDisabled' [(ngModel)]='WorkflowTemplateData.successStatus' />
+        </div>
+    </div>
+    <div class='field flex-container'>
+        <div class='col-4' style='padding: 10px'>
+            <label for='Value'><b>Active</b></label>
+            <p-dropdown [options]='actValues' [disabled]='isInputDisabled' [showClear]='true' #Value [(ngModel)]='WorkflowTemplateData.enabled'
+            (onChange)='onActiveChange($event)' placeholder='Select Value'></p-dropdown>
+        </div>
+        <div class='col-4' style='padding: 10px'>
+            <label for='Value'><b>Sign Off Rule</b></label>
+            <p-dropdown [options]='signOffValues' [disabled]='isInputDisabled' [showClear]='true' #Value [(ngModel)]='WorkflowTemplateData.signOffRule'
+            (onChange)='onSignOffChange($event)' placeholder='Select Value'></p-dropdown>
+        </div>
+        <div class='col-4' style='padding: 10px'>
+            <label for='Value'><b>Multiple Action User</b></label>
+            <p-dropdown [options]='mActValues' [disabled]='isInputDisabled' [showClear]='true' #Value [(ngModel)]='WorkflowTemplateData.multipleActionUsers'
+            (onChange)='onMultiActChange($event)' placeholder='Select Value'></p-dropdown>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="this.templateId == 'new' || this.step == null" class="flex flex-wrap md:justify-content-between justify-content-center">
+    <div class="flex align-items-center justify-content-center"></div>
+    <div class="flex align-items-center justify-content-center">
+        <button pButton icon='pi pi-save' label='Save' [disabled]='isDisabled' (click)='saveWorkFlowStep()'></button>
+    </div>
+</div>
+
+<div *ngIf="this.type && this.step && WorkflowTemplateData" class="flex flex-wrap md:justify-content-between justify-content-center">
+    <div class="flex align-items-center justify-content-center"></div>
+    <div class="flex align-items-center justify-content-center">
+        <button pButton icon='pi pi-save' label='Update' [disabled]='isDisabled' (click)='saveWorkFlowStep()'></button>
+    </div>
+</div>

@@ -1,0 +1,10 @@
+<div class="grid grid-nogutter justify-content-center">
+    <div class="mr-3">
+        <button pButton icon="pi pi-save" label="Download Template" (click)="downloadTemp()"></button>
+    </div>
+    <div>
+        <p-fileUpload *ngIf="!isUploading" #fubauto mode="basic" name="demo[]" accept=".csv" [customUpload]="true" (uploadHandler)="onUpload($event)"
+        [auto]="true" chooseLabel="Import Users"></p-fileUpload>
+    </div>
+</div>
+

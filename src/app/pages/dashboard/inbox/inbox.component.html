@@ -1,0 +1,75 @@
+<!-- <p-panel header="Inbox" [toggleable]="false"> -->
+    <div *ngIf="inboxLoaded && !noData">
+        <div class="p-grid" style="align-items:flex-end;">
+            <div class="p-col-12 p-xl-6">
+                <input type="text" style="width:100%;" pInputText [(ngModel)]="inboxFilter"
+                    placeholder="Filter By Title, Message, Assigned By..." (ngModelChange)="filter($event)"
+                    class="searchBox">
+            </div>
+            <div class="p-col-12 p-xl-6">
+                <!-- Grouping -->
+                <div *ngIf='originalInbox && originalInbox?.length != 0'>
+                    <span class="p-buttonset p-ml-1">
+                        <button pButton pRipple label="Group By" class="p-button-outlined p-button-secondary"
+                            disabled></button>
+                        <button pButton pRipple label="Requester" class="p-button-secondary" (click)='group(1)'
+                            [ngStyle]="{ opacity: (grouped && groupedBy == 2) ? '1' : '0.7'}"></button>
+                        <button pButton pRipple label="Unread/Read" class="p-button-secondary" (click)='group(2)'
+                            [ngStyle]="{ opacity: (grouped && groupedBy == 3) ? '1' : '0.7'}"></button>
+                            <button pButton pRipple label="Date" class="p-button-secondary" (click)='group(3)'
+                            [ngStyle]="{ opacity: (grouped && groupedBy == 4) ? '1' : '0.7'}"></button>
+                    </span>
+                </div>
+                <!-- End Of Grouping -->
+            </div>
+        </div>
+
+
+        <div class="p-pt-4" *ngIf='presented'>
+            <div class="p-grid" *ngIf='!grouped'>
+                <div class="p-col-12" *ngFor="let item of presented">
+                    <app-inbox-item [inboxItem]="item"></app-inbox-item>
+                </div>
+            </div>
+
+            <div class="p-grid " *ngIf='grouped'>
+                <div class="p-col-12 p-p-0" *ngFor='let c of presented; let i = index;'>
+                    <div>
+                        <button pButton pRipple type="button"
+                            [icon]='(c.active == true) ? "pi pi-chevron-down" : "pi pi-chevron-right"'
+                            class="p-button-rounded p-button-text p-pb-0 collapsible-button"
+                            (click)='toggleCollapse(i)'></button>
+
+                        <span class="collapsible-title">
+                            <b>{{c.groupBy}} </b> <small style="color: #555555">({{c.elements.length}})</small>
+                        </span>
+
+                        <app-custom-collapse [collapsed]='c.active'>
+                            <div class="p-grid p-pt-3 p-pl-1 p-pr-1">
+                                <div class="p-col-12" *ngFor='let item of c.elements'>
+                                    <app-inbox-item [inboxItem]="item"></app-inbox-item>
+                                </div>
+                            </div>
+                        </app-custom-collapse>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <div class="p-grid" style="text-align: center;" *ngIf='loading'>
+        <div class="p-col-12 p-pt-4 p-pb-4">
+            <h4>Please wait... <p-progressSpinner [style]="{width: '26px', height: '26px'}"></p-progressSpinner>
+            </h4>
+        </div>
+    </div>
+
+
+    <div *ngIf="inboxLoaded && noData">
+        No tasks assigned found
+    </div>
+<!-- </p-panel> -->

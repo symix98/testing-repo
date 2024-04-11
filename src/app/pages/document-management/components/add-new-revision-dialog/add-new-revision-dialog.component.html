@@ -1,0 +1,21 @@
+<div class="grid p-fluid mb-2" >
+
+    <div class="col-12">
+        <label for="">Document Number</label>
+        <input type="text" pInputText [(ngModel)]="uploadedDocument.documentsNumber"/>
+    </div>
+    <div class="col-12">
+        <label for="">Document Revision</label>
+        <input type="text" pInputText [(ngModel)]="uploadedDocument.revision"/>
+    </div>
+</div>
+
+<p-fileUpload accept=".pdf" *ngIf="!isUploading" name="myfile[]" [customUpload]="true" multiple="multiple"
+    (uploadHandler)="onUpload($event)">
+    <ng-template pTemplate="content">
+        <ul *ngIf="uploadedFiles.length">
+            <li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>
+        </ul>
+    </ng-template>
+</p-fileUpload>
+<p-progressBar *ngIf="isUploading" mode="indeterminate" [style]="{'height': '6px'}"></p-progressBar>

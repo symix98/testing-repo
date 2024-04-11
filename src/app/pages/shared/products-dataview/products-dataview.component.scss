@@ -1,0 +1,104 @@
+.mainheader {
+    background: #6cb2eb;
+    color: #fff;
+    padding-left: 5px;
+    padding-top: 5px;
+    height: 30px;
+    margin: 0 auto;
+    border-radius: 0.3rem;
+    box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.02), 0px 0px 2px rgba(0, 0, 0, 0.05), 0px 1px 4px rgba(0, 0, 0, 0.08);
+}
+
+h2 {
+    font-family: "cabin", sans-serif;
+    font-size: 1rem;
+    font-weight: bold;
+    align-items: center;
+}
+
+.product-image{
+    // box-shadow: 0 3px 6px #00000029, 0 3px 6px #0000003b;
+    margin: 2rem 0;
+}
+
+.product-list-item {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    width: 100%;
+}
+
+.product-list-detail {
+    flex: 1 1 0;
+}
+
+.product-list-action {
+    display: flex;
+    flex-direction: column;
+}
+
+.product-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.product-description {
+    margin: 0 0 1rem;
+}
+
+.product-category {
+    font-weight: 600;
+    vertical-align: middle;
+}
+
+.product-supplier {
+    font-weight: 300;
+    vertical-align: middle;
+}
+
+.product-grid-item {
+    margin: 0.5em;
+    border: 1px solid #dfe7ef;
+}
+
+.product-grid-item-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.product-grid-item-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.product-grid-item-content {
+    text-align: center;
+}
+
+.card {
+    background: #ffff;
+    padding: 2rem;
+    border-radius: 10px;
+    margin-bottom: 2rem;
+}
+
+.product-category-icon {
+    vertical-align: middle;
+    margin-right: 0.5rem;
+}
+
+.spinner {
+    margin-left: auto;
+    margin-right: auto;
+    color: steelblue;
+  }
+
+// img {
+//     box-shadow: 0 3px 6px #00000029, 0 3px 6px #0000003b;
+//     margin: 1rem 0;
+// }

@@ -1,0 +1,227 @@
+
+<div class="card p-fluid grid">
+    <div class="lg:col-9 col-12">
+        <form *ngIf="mtoForm" (ngSubmit)="submitForm()" #form="ngForm">
+            <div class=" p-fluid formgrid grid">
+                <div class="col-12">
+                    <button pButton  class='w-1' icon="pi pi-pencil" label="Edit" (click)="onEdit()"></button>
+                </div>
+                <div class="col-12 mt-2">
+                    <h3>Support Details</h3>
+                </div>
+                                
+                <div class='field pt-3 col-12 md-2 w-2'>
+                    <label for='isono'>Support Id:</label>
+                    <input type='text' id='isono' name='isono' [(ngModel)]='mtoForm.isono' pInputText [disabled]="isDisable" required />
+                </div>
+                <div class='field pt-3 col-12 md-2 w-2'>
+                    <label for='type'>Type:</label>
+                    <input type='text' id='type' name='type' [(ngModel)]='mtoForm.type' pInputText [disabled]="isDisable" required  />
+                </div>
+                <div class='field pt-3 col-12 md-2 w-2'>
+                    <label for='material'>Material:</label>
+                    <input type='text' id='material' name='material' [(ngModel)]='mtoForm.material' pInputText [disabled]="isDisable" required />
+                </div>
+        
+                <div class='field pt-3 col-12 md-2 w-2'>
+                    <label for='source'>Source:</label>
+                    <input type='text' id='source' name='source' [(ngModel)]='mtoForm.source' pInputText [disabled]="isDisable" required />
+                </div>
+        
+                <div class='field pt-3 col-12 md-2 w-2'>
+                    <label for='category'>category:</label>
+                    <input type='text' id='category' name='category' [(ngModel)]='mtoForm.category' pInputText [disabled]="isDisable" required />
+                </div>
+        
+                <div class='field pt-3 col-12 md-2 w-2'>
+                    <label for='supcode'>Code:</label>
+                    <input type='text' id='supcode' name='supcode' [(ngModel)]='mtoForm.supcode' pInputText [disabled]="isDisable" required />
+                </div>
+            </div>
+        <app-custom-collapse [collapsed]='show'>
+            <div class=" p-fluid formgrid grid">
+                <div class='field pt-3 col-12 md-2 w-2'>
+                    <label for='matflag'>Depend on Material :</label>
+                    <input type='text' id='matflag' name='matflag' [(ngModel)]='mtoForm.matflag' pInputText [disabled]="isDisable" required />
+                </div>
+        
+                <div class='field pt-3 col-12 md-2 w-2'>
+                    <label for='padClamp'>Pad/Clamp:</label>
+                    <input type='text' id='padClamp' name='padClamp' [(ngModel)]='mtoForm.padClamp' pInputText [disabled]="isDisable" required />
+                </div>
+                <div class='field pt-3 col-12 md-2 w-2'>
+                    <label for='runPsize'>Run Size:</label>
+                    <input type='text' id='runPsize' name='runPsize' [(ngModel)]='mtoForm.runPsize' pInputText [disabled]="isDisable" required />
+                </div>
+                <div class='field pt-3 col-12 md-2 w-2'>
+                    <label for='padclmpthk'>Pad/Clamp Thickness :</label>
+                    <input type='text' id='padclmpthk' name='padclmpthk' [(ngModel)]='mtoForm.padclmpthk' pInputText [disabled]="isDisable" required />
+                </div>
+                <div class='field pt-3 col-12 md-2 w-2'>
+                    <label for='paintflag'>Paint:</label>
+                    <input type='text' id='paintflag' name='paintflag' [(ngModel)]='mtoForm.paintflag' pInputText [disabled]="isDisable" required />
+                </div>
+                <!-- <div class='field pt-3 col-12 md-2 w-2'>
+                    <label for='ccc'>ccc:</label>
+                    <input type='text' id='ccc' name='ccc' [(ngModel)]='mtoForm.ccc' pInputText [disabled]="isDisable" required />
+                </div>
+                <div class='field pt-3 col-12 md-2 w-2'>
+                    <label for='sc'>sc:</label>
+                    <input type='text' id='sc' name='sc' [(ngModel)]='mtoForm.sc' pInputText [disabled]="isDisable" required />
+                </div>
+                <div class='field pt-3 col-12 md-2 w-2'>
+                    <label for='pipe'>pipe:</label>
+                    <input type='text' id='pipe' name='pipe' [(ngModel)]='mtoForm.pipe' pInputText [disabled]="isDisable" required />
+                </div>
+                <div class='field pt-3 col-12 md-2 w-2'>
+                    <label for='piptype'>piptype:</label>
+                    <input type='text' id='piptype' name='piptype' [(ngModel)]='mtoForm.piptype' pInputText [disabled]="isDisable" required />
+                </div>
+                <div class='field pt-3 col-12 md-2 w-2'>
+                    <label for='fab'>fab:</label>
+                    <input type='text' id='fab' name='fab' [(ngModel)]='mtoForm.fab' pInputText [disabled]="isDisable" required />
+                </div> -->
+        
+                <div class='field pt-3 col-12 md-2 w-2'>
+                    <label for='scScope'>Scope:</label>
+                    <input type='text' id='scScope' name='scScope' [(ngModel)]='mtoForm.scScope' pInputText [disabled]="isDisable" required />
+                </div>
+                <div class='field pt-3 col-12 md-2 w-2'>
+                    <label for='weldedSup'>welded ?:</label>
+                    <input type='text' id='weldedSup' name='weldedSup' [(ngModel)]='mtoForm.weldedSup' pInputText [disabled]="isDisable" required />
+                </div>
+                <div class='field pt-3 col-12 md-2 w-2'>
+                    <label for='shopWeld'>Weld Type :</label>
+                    <input type='text' id='shopWeld' name='shopWeld' [(ngModel)]='mtoForm.shopWeld' pInputText [disabled]="isDisable" required />
+                </div>
+        
+                <!-- <div class='field pt-3 col-12 md-2 w-2'>
+                    <label for='ribPltflg'>ribPltflg:</label>
+                    <input type='text' id='ribPltflg' name='ribPltflg' [(ngModel)]='mtoForm.ribPltflg' pInputText [disabled]="isDisable" required />
+                </div> -->
+                <div class='field pt-3 col-12'>
+                    <label for='remark'>remark:</label>
+                    <textarea pInputText [disabled]="isDisable" requiredarea type='text' [rows]="5" [cols]="30" id='remark' name='remark'
+                        [(ngModel)]='mtoForm.remark' pInputText [disabled]="isDisable" required>
+                    </textarea>
+                </div>
+                <!-- <div class='field pt-3 col-12 md-2 w-2'>
+                    <label for='matcode'>matcode:</label>
+                    <input type='text' id='matcode' name='matcode' [(ngModel)]='mtoForm.matcode' pInputText [disabled]="isDisable" required />
+                </div>
+                <div class='field pt-3 col-12 md-2 w-2'>
+                    <label for='matsubcode'>matsubcode:</label>
+                    <input type='text' id='matsubcode' name='matsubcode' [(ngModel)]='mtoForm.matsubcode' pInputText [disabled]="isDisable" required />
+                </div>
+                <div class='field pt-3 col-12 md-2 w-2'>
+                    <label for='part'>part:</label>
+                    <input type='text' id='part' name='part' [(ngModel)]='mtoForm.part' pInputText [disabled]="isDisable" required />
+                </div>
+                <div class='field pt-3 col-12 md-2 w-2'>
+                    <label for='scope'>scope:</label>
+                    <input type='text' id='scope' name='scope' [(ngModel)]='mtoForm.scope' pInputText [disabled]="isDisable" required />
+                </div>
+                <div class='field pt-3 col-12 md-2 w-2'>
+                    <label for='qty'>qty:</label>
+                    <input type='text' id='qty' name='qty' [(ngModel)]='mtoForm.qty' pInputText [disabled]="isDisable" required />
+                </div>
+                <div class='field pt-3 col-12 md-2 w-2'>
+                    <label for='length'>length:</label>
+                    <input type='text' id='length' name='length' [(ngModel)]='mtoForm.length' pInputText [disabled]="isDisable" required />
+                </div>
+                <div class='field pt-3 col-12 md-2 w-2'>
+                    <label for='width'>width:</label>
+                    <input type='text' id='width' name='width' [(ngModel)]='mtoForm.width' pInputText [disabled]="isDisable" required />
+                </div>
+                <div class='field pt-3 col-12 md-2 w-2'>
+                    <label for='remarks1'>remarks1:</label>
+                    <input type='text' id='remarks1' name='remarks1' [(ngModel)]='mtoForm.remarks1' pInputText [disabled]="isDisable" required />
+                </div>
+                <div class='field pt-3 col-12 md-2 w-2'>
+                    <label for='remarks2'>remarks2:</label>
+                    <input type='text' id='remarks2' name='remarks2' [(ngModel)]='mtoForm.remarks2' pInputText [disabled]="isDisable" required />
+                </div> 
+                
+                <div class='field pt-3 col-12 md-2 w-2'>
+                    <label for='bscode'>bscode:</label>
+                    <input type='text' id='bscode' name='bscode' [(ngModel)]='mtoForm.bscode' pInputText [disabled]="isDisable" required />
+                </div>
+                <div class='field pt-3 col-12 md-2 w-2'>
+                    <label for='tag'>tag:</label>
+                    <input type='text' id='tag' name='tag' [(ngModel)]='mtoForm.tag' pInputText [disabled]="isDisable" required />
+                </div>
+                
+                <div class='field pt-3 col-12 md-2 w-2'>
+                    <label for='itemno'>itemno:</label>
+                    <input type='text' id='itemno' name='itemno' [(ngModel)]='mtoForm.itemno' pInputText [disabled]="isDisable" required />
+                </div>
+                <div class='field pt-3 col-12 md-2 w-2'>
+                    <label for='mark'>mark:</label>
+                    <input type='text' id='mark' name='mark' [(ngModel)]='mtoForm.mark' pInputText [disabled]="isDisable" required />
+                </div>
+                
+                <div class='field pt-3 col-12 md-2 w-2'>
+                    <label for='oldmatcode'>oldmatcode:</label>
+                    <input type='text' id='oldmatcode' name='oldmatcode' [(ngModel)]='mtoForm.oldmatcode' pInputText [disabled]="isDisable" required />
+                </div>
+                <div class='field pt-3 col-12 md-2 w-2'>
+                    <label for='oldmtpart1'>oldmtpart1:</label>
+                    <input type='text' id='oldmtpart1' name='oldmtpart1' [(ngModel)]='mtoForm.oldmtpart1' pInputText [disabled]="isDisable" required />
+                </div>
+                <div class='field pt-3 col-12 md-2 w-2'>
+                    <label for='oldmtpart2'>oldmtpart2:</label>
+                    <input type='text' id='oldmtpart2' name='oldmtpart2' [(ngModel)]='mtoForm.oldmtpart2' pInputText [disabled]="isDisable" required />
+                </div>
+                <div class='field pt-3 col-12 md-2 w-2'>
+                    <label for='oldmtpart3'>oldmtpart3:</label>
+                    <input type='text' id='oldmtpart3' name='oldmtpart3' [(ngModel)]='mtoForm.oldmtpart3' pInputText [disabled]="isDisable" required />
+                </div>
+                <div class='field pt-3 col-12 md-2 w-2'>
+                    <label for='newcode'>newcode:</label>
+                    <input type='text' id='newcode' name='newcode' [(ngModel)]='mtoForm.newcode' pInputText [disabled]="isDisable" required />
+                </div>
+                <div class='field pt-3 col-12 md-2 w-2'>
+                    <label for='oldcode'>oldcode:</label>
+                    <input type='text' id='oldcode' name='oldcode' [(ngModel)]='mtoForm.oldcode' pInputText [disabled]="isDisable" required />
+                </div>-->
+                <!-- <div class='field pt-3 col-12 md-2 w-2'>
+                                    <label for='createdBy'>createdBy:</label>
+                                    <input type='text' id='createdBy' name='createdBy' [(ngModel)]='mtoForm.createdBy' pInputText [disabled]="isDisable" required />
+                                </div>
+                    <div class='field pt-3 col-12 md-2 w-2'>
+                                    <label for='creationDate'>creationDate:</label>
+                                    <input type='text' id='creationDate' name='creationDate' [(ngModel)]='mtoForm.creationDate' pInputText [disabled]="isDisable" required />
+                                </div>
+                    <div class='field pt-3 col-12 md-2 w-2'>
+                                    <label for='modifiedDate'>modifiedDate:</label>
+                                    <input type='text' id='modifiedDate' name='modifiedDate' [(ngModel)]='mtoForm.modifiedDate' pInputText [disabled]="isDisable" required />
+                                </div> -->
+                <div class="grid grid-nogutter justify-content-end">
+                    <button *ngIf="!isDisable" [loading]="isLoading" pButton [disabled]="!form.valid" label="Submit" type="submit"></button>
+                </div>
+            </div>
+            </app-custom-collapse>
+            
+            
+            <div>
+                <a class="grid grid-nogutter justify-content-end" style="cursor: pointer;" (click)="show=!show;  image.h = show? '250' : '150' ; image.w =  show? '350' : '200' ">{{ show ? 'Show less': 'Show More' }} <i
+                        class="{{ show ? 'pi pi-angle-double-up ':'pi pi-angle-double-down'}}"></i></a>
+            </div>
+        
+        </form>
+    </div>
+
+    <div class=" p-2 card lg:col-3 col-12">
+        <h5>preview Image</h5>
+        <p-image  *ngIf="picture" [src]="'data:' + picture.pictureContentType + ';base64,' + picture.picture"
+        onerror="this.attributes.src.value='../../../../assets/images/product.jpg';"
+        [width]="image.w" [height]="image.h" alt=""
+        class="m-2 flex" [preview]="true" [imageStyle]="{'object-fit': 'contain'}"> </p-image>
+    </div>
+</div>
+<p-tabView [(activeIndex)]="activeIndex">
+    <p-tabPanel leftIcon="pi pi-list"  header="Items">
+
+        <app-mat-takeoff-list *ngIf="mtoForm" [input]="mtoForm"></app-mat-takeoff-list>
+    </p-tabPanel>
+</p-tabView>

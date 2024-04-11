@@ -1,0 +1,85 @@
+<div *ngIf='!this.config.data.properties.workflow'>
+    <label><b>Please initite the Work Flow.</b></label>
+</div>
+
+<div *ngIf='this.config.data.properties.workflow'>
+    <div *ngIf="label == 'Next Status'">
+        <div *ngIf='this.isRoleIdVisible'>
+            <p-card header="Please Add Your Comments" [subheader]="'The Next Status will be ' + nextStep">
+                <div class="p-grid p-fluid">
+                    <div class="field p-col-12">
+                        <label for="Users">Assign Users: </label>
+                        <p-autoComplete [(ngModel)]="selectedUsers" [suggestions]="filteredUsers" (completeMethod)="filterUsers($event)" field="name" [multiple]="true">
+                        </p-autoComplete>
+                    </div>
+                </div>
+                <textarea #txt style="width: 100%" [rows]="3" [cols]="100" pInputTextarea (change)='edited($event)'
+                    [(ngModel)]="msg"></textarea>
+                <div class="grid grid-nogutter justify-content-end" *ngIf="label == 'Next Status'">
+                    <button pButton label="submit" icon="pi pi-check" [disabled]='isDisabled' (click)="onApprove()"></button>
+                </div>
+            </p-card>
+        </div>
+        <div *ngIf='!this.isRoleIdVisible'>
+            <p-card header="Please Add Your Comments" [subheader]="'The Next Status will be ' + nextStep">
+                <div>
+                    <label>* The Particular User is not allowed to perform this action. So, please ask the concerned user to whom the document is assigned.</label>
+                </div>
+            </p-card>
+        </div>
+    </div>
+</div>
+
+<div *ngIf='this.config.data.properties.workflow'>
+    <div *ngIf="label == 'Previous Status'">
+        <div *ngIf='this.isRoleIdVisible'>
+            <p-card header="Please Add Your Comments" [subheader]="'The Previous Status will be ' + prevStep">
+                <div class="p-grid p-fluid">
+                    <div class="field p-col-12">
+                        <label for="Users">Assign Users: </label>
+                        <p-autoComplete [(ngModel)]="selectedUsers" [suggestions]="filteredUsers" (completeMethod)="filterUsers($event)" field="name" [multiple]="true">
+                        </p-autoComplete>
+                    </div>
+                </div>
+                <textarea #txt style="width: 100%;" [rows]="3" [cols]="100" pInputTextarea (change)='edited($event)' [(ngModel)]="msg"></textarea>
+                <div class="grid grid-nogutter justify-content-end" *ngIf="label == 'Previous Status'">
+                    <button pButton label="submit" icon="pi pi-check" [disabled]='isDisabled' (click)="onRevise()"></button>
+                </div>
+            </p-card>
+        </div>
+        <div *ngIf='!this.isRoleIdVisible'>
+            <p-card header="Please Add Your Comments" [subheader]="'The Next Status will be ' + nextStep">
+                <div>
+                    <label>* The Particular User is not allowed to perform this action. So, please ask the concerned user to whom the document is assigned.</label>
+                </div>
+            </p-card>
+        </div>
+    </div>
+</div>
+
+<div *ngIf='this.config.data.properties.workflow'>
+    <div *ngIf="label == 'Set Final Status'">
+        <div *ngIf='this.isRoleIdVisible'>>
+            <p-card header="Please Add Your Comments" [subheader]="'The Final Status will be ' + finalStep">
+                <div class="p-grid p-fluid">
+                    <div class="field p-col-12">
+                        <label for="Users">Assign Users: </label>
+                        <p-autoComplete [(ngModel)]="selectedUsers" [suggestions]="filteredUsers" (completeMethod)="filterUsers($event)" field="name" [multiple]="true">
+                        </p-autoComplete>
+                    </div>
+                </div>
+                <textarea #txt style="width: 100%;" [rows]="3" [cols]="100" pInputTextarea (change)='edited($event)' [(ngModel)]="msg"></textarea>
+                <div class="grid grid-nogutter justify-content-end" *ngIf="label == 'Set Final Status'">
+                    <button pButton label="submit" icon="pi pi-check" [disabled]='isDisabled' (click)="onFinal()"></button>
+                </div>
+            </p-card>
+        </div>
+        <div *ngIf='!this.isRoleIdVisible'>
+            <p-card header="Please Add Your Comments" [subheader]="'The Next Status will be ' + nextStep">
+                <div>
+                    <label>* The Particular User is not allowed to perform this action. So, please ask the concerned user to whom the document is assigned.</label>
+                </div>
+            </p-card>
+        </div>
+    </div>
+</div>

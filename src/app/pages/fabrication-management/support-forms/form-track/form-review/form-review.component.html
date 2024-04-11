@@ -1,0 +1,20 @@
+<div class="p-fluid grid">
+    <div class="col-12">
+        <app-form-timeline *ngIf="detailsData" [formId]="dataid" [data]="detailsData"></app-form-timeline>
+    </div>
+    <div class="col-12">
+        <app-rsf-form *ngIf="formType == 'RSF'" [id]="dataid"></app-rsf-form>
+    </div>
+    <div class='mt-2'>
+        <div class='flex' *ngIf="isFabUser && !isApprove">
+            <p-button label='Approve' class='p-button-success mr-2' icon='pi pi-check' (click)='onApprove()' [disabled]='false'></p-button>
+            <p-button label='Reject' class='p-button-danger mr-2' icon='pi pi-times' (click)='onRevise()' [disabled]='false'></p-button>
+        </div>
+    </div>
+    <div class='mt-2'>
+        <div class='flex' *ngIf="isSubContractor && !isApprove">
+            <p-button label='Accept' class='p-button-success mr-2' icon='pi pi-check' (click)='onAccept()' [disabled]='false'></p-button>
+            <p-button label='Reject' class='p-button-danger mr-2' icon='pi pi-times' [disabled]='false'></p-button>
+        </div>
+    </div>
+</div>

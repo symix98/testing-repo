@@ -1,0 +1,34 @@
+<div (window:resize)="resizeCanvas()" class="signature-container">
+    <signature-pad [options]="signaturePadOptions" (onBeginEvent)="drawStart()" (onEndEvent)="drawComplete()">
+    </signature-pad>
+</div>
+
+<div style="text-align: right;">
+    <button pButton pRipple type="button" label="Clear" icon="pi pi-times" iconPos="left"
+        class="p-button-outlined p-button-secondary p-mr-2" (click)="clearSignatureData()"></button>
+    <button pButton type="button" label="Preview Signature" icon="pi pi-eye" (click)="previewSignature()"></button>
+</div>
+
+<div *ngIf="showPreview" class="p-mt-2">
+    <div class="p-d-flex p-flex-wrap p-jc-between p-ai-center">
+        <div style="font-size: 1.5rem;">
+            Preview
+        </div>
+        <div class="p-ml-1"><button pButton type="button" label="Save Signature" icon="pi pi-save" [disabled]="disabled"
+                (click)="saveSignature()"></button></div>
+    </div>
+
+    <div *ngIf="signatureImg" style="text-align: center;">
+        <img class="signature-image" src='{{ signatureImg }}' />
+    </div>
+</div>
+
+<!--Confirmation Dialog-->
+<p-confirmDialog #cd key="saveSignatureDialog" [baseZIndex]="10000">
+    <ng-template pTemplate="footer">
+        <button type="button" pButton icon="pi pi-check" label="Confirm" (click)="cd.accept()"></button>
+        <button type="button" pButton icon="pi pi-times" label="Cancel" class="p-button-outlined"
+            (click)="cd.reject()"></button>
+    </ng-template>
+</p-confirmDialog>
+<!--Confirmation Dialog-->

@@ -1,0 +1,40 @@
+<h5>Document Register</h5>
+<!-- <div class="p-fluid grid card">
+    <div class="p-2 col-3 card">
+    </div>
+    <div class="p-2 col-9 card">
+    </div>
+</div> -->
+
+<div class="card">
+    <div class="p-fluid p-formgrid grid">
+        <div class="field col-12 md:col-2 filters">
+            <p-splitter [style]="{'height': '800px', 'width': '100%'}" layout="horizontal">
+                <ng-template pTemplate>
+                    <div style="width: 100%;">
+                        <app-user-filter (onFilterSelect)="onFilterSelect($event)" ></app-user-filter>
+                    
+                    </div>
+                </ng-template>
+            </p-splitter>
+        </div>
+        <div class="field col-12 md:col-10">
+            <!-- <p-splitter layout="vertical"> -->
+                <!-- <ng-template pTemplate> -->
+                    <div class="field col-12 md:col-12 card" style="padding: 20px;">
+                        <app-filter-property [data]="filterQuery" (onSearchClicked)="onSearchClicked($event)"></app-filter-property>
+                    </div>
+                <!-- </ng-template> -->
+
+                <!-- <ng-template pTemplate> -->
+                    <div class="field col-12 md:col-12 card" style="padding: 20px;">
+                        <h6>Documents List</h6>
+                        <app-filter-result [data]="searchData"></app-filter-result>
+                    </div>
+                <!-- </ng-template> -->
+            <!-- </p-splitter> -->
+        </div>
+    </div>
+</div>
+
+

@@ -1,0 +1,20 @@
+<p-card class="timeline">
+  <div class="p-d-flex p-flex-wrap p-ai-center" style="padding: 0px 2px 2px 2px;">
+    <div class="iconDesign">
+      <i class="{{statusClass}}" pTooltip="{{workflowProcess.status}}" tooltipPosition="bottom"></i>
+    </div>
+    <div>
+      <h5>{{workflowProcess.formType}}<span><i class="pi pi-link linkStyle"
+            (click)="openForm(workflowProcess)"></i></span>
+      </h5>
+    </div>
+    <div class="p-ml-auto">
+      <div>
+        <span>{{dateString}}</span>
+      </div>
+    </div>
+  </div>
+  <div class="p-d-flex p-flex-wrap p-flex-column" style="padding: 2px; margin-left:0.8rem;">
+    {{workflowProcess.description}}
+  </div>
+</p-card>

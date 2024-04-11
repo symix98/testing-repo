@@ -1,0 +1,338 @@
+<div style="margin-top: 100px">
+  <p-toolbar>
+    <div class="p-toolbar-group-left">
+      <!-- <input type="text" id="documentsNumber" name="documentsNumber" 
+                [disabled]="true" style="background-color: #eeeeee" class="p-inputtext" />
+                 -->
+    </div>
+    <div class="grid grid-nogutter flex-justify-content-flex-start">
+      <!-- ... File upload buttons ... -->
+      <input
+        type="file"
+        #fileInput
+        style="display: none"
+        (change)="onFileChange($event)"
+        accept=".xlsx"
+      />
+      <button
+        class="mr-2"
+        icon="pi pi-cloud-upload"
+        pButton
+        type="button"
+        label="Import Template"
+        (click)="fileInput.click()"
+        style="background-color: #2196f3; width: fit-content"
+      ></button>
+      <button
+        class="mr-2"
+        pButton
+        type="button"
+        label="Download Template"
+        icon="pi pi-cloud-download"
+        (click)="exportDocument()"
+        [disabled]=""
+        style="background-color: #2196f3; width: fit-content"
+      ></button>
+    </div>
+  </p-toolbar>
+
+  <div class="card" style="margin-top: 20px">
+    <div class="scrollcard" style="margin-top: 10px">
+      <!-- <p-table
+        *ngIf="documentForm"
+        [value]="documentForm"
+        dataKey="userId"
+        [tableStyle]="{ 'max-width': '20rem' }"
+        editMode="row"
+      >
+        <ng-template pTemplate="header">
+          <tr>
+            <ng-container *ngFor="let col of docPropertyCols">
+              <th [style]="{width: '15rem'}">{{ col.header }}</th>
+            </ng-container>
+            <th [style]="{width: '15rem'}">Actions</th>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-doc let-ri="rowIndex">
+          <tr [pEditableRow]="documentForm[ri]">
+            <ng-container *ngFor="let col of docPropertyCols">
+              <td>
+                <p-cellEditor>
+                  <ng-template pTemplate="input">
+                    <ng-container [ngSwitch]="col.type">
+                      <input
+                        *ngSwitchCase="'text'"
+                        [style]="{width: '15rem'}"
+                        pInputText
+                        type="text"
+                        [(ngModel)]="documentForm[ri][col.field]"
+                      />
+                      <p-inputNumber
+                        *ngSwitchCase="'number'"
+                        [style]="{width: '15rem'}"
+                        inputId="minmaxfraction"
+                        mode="decimal"
+                        [minFractionDigits]="2"
+                        [maxFractionDigits]="5"
+                        [(ngModel)]="documentForm[ri][col.field]"
+                      >
+                      </p-inputNumber>
+                      <p-calendar
+                        *ngSwitchCase="'date'"
+                        [style]="{width: '15rem'}"
+                        [(ngModel)]="documentForm[ri][col.field]"
+                      ></p-calendar>
+                      <p-dropdown
+                        *ngSwitchCase="'dropdown'"
+                        [style]="{width: '15rem'}"
+                        [options]="selectOptionsArrayforEditDocument(col.field)"
+                        [(ngModel)]="documentForm[ri][col.field]"
+                        optionLabel="name"
+                        placeholder="Select Option"
+                      ></p-dropdown>
+                      <p-checkbox
+                        *ngSwitchCase="'checkbox'"
+                        [style]="{width: '15rem'}"
+                        [binary]="true"
+                        [(ngModel)]="documentForm[ri][col.field]"
+                      ></p-checkbox>
+                      <input
+                        *ngSwitchDefault
+                        [style]="{width: '15rem'}"
+                        pInputText
+                        type="text"
+                        [(ngModel)]="documentForm[ri][col.field]"
+                      />
+                    </ng-container>
+                  </ng-template>
+                  <ng-template *ngIf="col.type !== 'dropdown' " pTemplate="output">
+                    {{ documentForm[ri][col.field] }}
+                  </ng-template>
+                  <ng-template *ngIf="col.type === 'dropdown' " pTemplate="output">
+                    {{ documentForm[ri][col.field]?.name }}
+                  </ng-template>
+                </p-cellEditor>
+              </td>
+            </ng-container>
+            <td>
+              <div class="flex align-items-center justify-content-center gap-2">
+                <button
+                  pButton
+                  pRipple
+                  type="button"
+                  pInitEditableRow
+                  icon="pi pi-pencil"
+                  (click)="onRowEditInit()"
+                  class="p-button-rounded p-button-text"
+                ></button>
+                <button
+                  *ngIf="editingTable"
+                  pButton
+                  pRipple
+                  type="button"
+                  pSaveEditableRow
+                  icon="pi pi-check"
+                  (click)="onRowEditSave()"
+                  class="p-button-rounded p-button-text p-button-success mr-2"
+                ></button>
+                <button
+                  *ngIf="editingTable"
+                  pButton
+                  pRipple
+                  type="button"
+                  pCancelEditableRow
+                  icon="pi pi-times"
+                  (click)="onRowEditCancel()"
+                  class="p-button-rounded p-button-text p-button-danger"
+                ></button>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table> -->
+      <p-table
+        [value]="documentForm"
+        styleClass="p-datatable-sm"
+        [columns]="docPropertyCols"
+        [scrollable]="true"
+        scrollHeight="470px"
+        responsiveLayout="scroll"
+        dataKey="documentsNumber"
+        editMode="row"
+      >
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <th
+              style="width: 12rem; text-align: center"
+              *ngFor="let col of columns"
+            >
+              {{ col.header }}
+            </th>
+
+            <th
+              alignFrozen="right"
+              pFrozenColumn
+              [frozen]="true"
+              style="width: 10rem; text-align: center"
+            >
+              Action
+            </th>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-doc let-ri="rowIndex">
+          <tr [pEditableRow]="documentForm[ri]">
+            <ng-container *ngFor="let col of docPropertyCols">
+              <td>
+                <p-cellEditor>
+                  <ng-template pTemplate="input">
+                    <ng-container [ngSwitch]="col.type">
+                      <input
+                        *ngSwitchCase="'text'"
+                        [style]="{ width: '10rem', textAlign: 'center' }"
+                        pInputText
+                        type="text"
+                        [(ngModel)]="documentForm[ri][col.field]"
+                      />
+
+                      <p-inputNumber
+                        *ngSwitchCase="'number'"
+                        [style]="{ width: '10rem', textAlign: 'center' }"
+                        inputId="minmaxfraction"
+                        mode="decimal"
+                        [minFractionDigits]="2"
+                        [maxFractionDigits]="5"
+                        [(ngModel)]="documentForm[ri][col.field]"
+                      >
+                      </p-inputNumber>
+
+                      <p-calendar
+                        *ngSwitchCase="'date'"
+                        [style]="{ width: '10rem', textAlign: 'center' }"
+                        [(ngModel)]="documentForm[ri][col.field]"
+                      ></p-calendar>
+
+                      <p-dropdown
+                        *ngSwitchCase="'dropdown'"
+                        [style]="{ width: '10rem', textAlign: 'center' }"
+                        [options]="selectOptionsArrayforEditDocument(col.field)"
+                        [(ngModel)]="documentForm[ri][col.field]"
+                        placeholder="Select Option"
+                        optionLabel="name"
+                      ></p-dropdown>
+
+                      <p-checkbox
+                        *ngSwitchCase="'checkbox'"
+                        [style]="{ width: '10rem', textAlign: 'center' }"
+                        [binary]="true"
+                        [(ngModel)]="documentForm[ri][col.field]"
+                      ></p-checkbox>
+
+                      <input
+                        *ngSwitchDefault
+                        [style]="{ width: '10rem', textAlign: 'center' }"
+                        pInputText
+                        type="text"
+                        [(ngModel)]="documentForm[ri][col.field]"
+                      />
+                    </ng-container>
+                  </ng-template>
+
+                  <ng-template
+                    *ngIf="col.type !== 'dropdown'"
+                    pTemplate="output"
+                  >
+                    {{ documentForm[ri][col.field] }}
+                  </ng-template>
+
+                  <ng-template
+                    *ngIf="col.type === 'dropdown'"
+                    pTemplate="output"
+                  >
+                    {{ documentForm[ri][col.field]?.name }}
+                  </ng-template>
+                </p-cellEditor>
+              </td>
+            </ng-container>
+
+            <td
+              alignFrozen="right"
+              pFrozenColumn
+              [frozen]="true"
+              style="text-align: center"
+            >
+              <div class="flex align-items-center justify-content-center gap-2">
+                <!-- <button pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil" (click)="onRowEditInit()"
+
+                class="p-button-rounded p-button-text"></button> -->
+
+                <button
+                *ngIf="!editingTable"
+                  class="p-button-sm"
+                  pButton
+                  pInitEditableRow
+                  pRipple
+                  icon="pi pi-pencil"
+                  class="p-button-rounded p-button-success mr-2"
+                  (click)="onRowEditInit()"
+                  pTooltip="Edit"
+                ></button>
+
+                <button
+                  *ngIf="!editingTable"
+                  class="p-button-sm"
+                  pButton
+                  pRipple
+                  icon="pi pi-trash"
+                  class="p-button-rounded p-button-warning"
+                  (click)="deleteDocument(documentForm[ri])"
+                  pTooltip="Delete"
+                ></button>
+
+                <button
+                  *ngIf="editingTable"
+                  pButton
+                  pRipple
+                  type="button"
+                  pSaveEditableRow
+                  icon="pi pi-check"
+                  (click)="onRowEditSave()"
+                  class="p-button-rounded p-button-text p-button-success mr-2"
+                ></button>
+
+                <button
+                  *ngIf="editingTable"
+                  pButton
+                  pRipple
+                  type="button"
+                  pCancelEditableRow
+                  icon="pi pi-times"
+                  (click)="onRowEditCancel()"
+                  class="p-button-rounded p-button-text p-button-danger"
+                ></button>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+
+    <div
+      class="grid grid-nogutter justify-content-between"
+      style="margin-top: 20px"
+    >
+      <p-button
+        label="Back"
+        (onClick)="prevPage()"
+        icon="pi pi-angle-left"
+      ></p-button>
+      <p-button
+        label="Save"
+        (onClick)="closeDialog()"
+        icon="pi pi-save"
+        iconPos="right"
+      ></p-button>
+    </div>
+  </div>
+</div>
