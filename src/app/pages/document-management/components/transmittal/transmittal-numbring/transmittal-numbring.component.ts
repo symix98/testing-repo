@@ -81,9 +81,19 @@ export class TransmittalNumbringComponent implements OnInit, AfterViewChecked {
     }
   }
 
-  save() {
+    // this.apiService.put(ApiURL.transmittals + '/' + this.transmittal.id, transmittalObject).subscribe({
+    //   next: (response) => {
+    //   },
+    //   error: (err) => {
+    //     this.utilitiesService.notifyError(err.error.details);
+    //   },
+    //   complete: () => {
+    //     this.saveTransmittal()
+    //   }
+    // });
+
+  saveTransmittal() {
     const transmittalObject = {
-      id: this.transmittal.id,
       projectName: this.transmittal.projectName,
       transmittalNo: this.transmittalNumbering,
       subject: this.transmittal.subject,
@@ -94,24 +104,7 @@ export class TransmittalNumbringComponent implements OnInit, AfterViewChecked {
       status: this.transmittal.status,
       type: this.transmittal.type['name'],
     };
-    this.apiService.put(ApiURL.transmittals + '/' + this.transmittal.id, transmittalObject).subscribe({
-      next: (response) => {
-      },
-      error: (err) => {
-        this.utilitiesService.notifyError(err.error.details);
-      },
-      complete: () => {
-        this.saveTransmittal()
-      }
-    });
-  }
-
-  saveTransmittal() {
     if (this.editingMode === 'fullData') {
-
-    } else if (this.editingMode === 'documentsOnly') {
-
-    } else {
       const transmittalObject = {
         projectName: this.transmittal.projectName,
         transmittalNo: this.transmittalNumbering,
@@ -122,7 +115,39 @@ export class TransmittalNumbringComponent implements OnInit, AfterViewChecked {
         ceatedBy: this.currentUser.name,
         status: this.transmittal.status,
         type: this.transmittal.type['name'],
+        documents: this.selectedDocuments,
+        transmittalRecipients: this.recipients,
       };
+      this.apiService.post(ApiURL.transmittals, transmittalObject).subscribe(
+        (res) => {
+          this.onClickEmailAction(res, this.recipients);
+        },
+        (err) => {
+          this.utilitiesService.notifyError(err.error.details);
+        }
+      );
+    } else if (this.editingMode === 'documentsOnly') {
+      const transmittalObject = {
+        projectName: this.transmittal.projectName,
+        transmittalNo: this.transmittalNumbering,
+        subject: this.transmittal.subject,
+        purpose: this.transmittal.purpose['name'],
+        comments: this.transmittal.comments,
+        creationDate: new Date(),
+        ceatedBy: this.currentUser.name,
+        status: this.transmittal.status,
+        type: this.transmittal.type['name'],
+        documents: this.selectedDocuments,
+      };
+      this.apiService.post(ApiURL.transmittals, transmittalObject).subscribe(
+        (res) => {
+          this.onClickEmailAction(res, this.recipients);
+        },
+        (err) => {
+          this.utilitiesService.notifyError(err.error.details);
+        }
+      );
+    } else {
       this.apiService.post(ApiURL.transmittals, transmittalObject).subscribe(
         (res) => {
           this.onClickEmailAction(res, this.recipients);
