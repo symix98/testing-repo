@@ -51,7 +51,6 @@ export class TransmittalNumbringComponent implements OnInit, AfterViewChecked {
     console.log(this.recipients);
     console.log(this.selectedDocuments);
     console.log(this.editingMode);
-
     this.generateDocumentNo();
   }
 
@@ -81,16 +80,16 @@ export class TransmittalNumbringComponent implements OnInit, AfterViewChecked {
     }
   }
 
-    // this.apiService.put(ApiURL.transmittals + '/' + this.transmittal.id, transmittalObject).subscribe({
-    //   next: (response) => {
-    //   },
-    //   error: (err) => {
-    //     this.utilitiesService.notifyError(err.error.details);
-    //   },
-    //   complete: () => {
-    //     this.saveTransmittal()
-    //   }
-    // });
+  // this.apiService.put(ApiURL.transmittals + '/' + this.transmittal.id, transmittalObject).subscribe({
+  //   next: (response) => {
+  //   },
+  //   error: (err) => {
+  //     this.utilitiesService.notifyError(err.error.details);
+  //   },
+  //   complete: () => {
+  //     this.saveTransmittal()
+  //   }
+  // });
 
   saveTransmittal() {
     const transmittalObject = {
@@ -116,16 +115,17 @@ export class TransmittalNumbringComponent implements OnInit, AfterViewChecked {
         status: this.transmittal.status,
         type: this.transmittal.type['name'],
         documents: this.selectedDocuments,
-        transmittalRecipients: this.recipients,
       };
-      this.apiService.post(ApiURL.transmittals, transmittalObject).subscribe(
-        (res) => {
-          this.onClickEmailAction(res, this.recipients);
+      this.apiService.post(ApiURL.transmittals, transmittalObject).subscribe({
+        next: (res) => {
+          this.addTransmittalRecipient(res);
         },
-        (err) => {
+        complete: () => {
+        },
+        error(err) {
           this.utilitiesService.notifyError(err.error.details);
-        }
-      );
+        },
+      });
     } else if (this.editingMode === 'documentsOnly') {
       const transmittalObject = {
         projectName: this.transmittal.projectName,
@@ -142,6 +142,7 @@ export class TransmittalNumbringComponent implements OnInit, AfterViewChecked {
       this.apiService.post(ApiURL.transmittals, transmittalObject).subscribe(
         (res) => {
           this.onClickEmailAction(res, this.recipients);
+          this.showMessageAndClose();
         },
         (err) => {
           this.utilitiesService.notifyError(err.error.details);
@@ -150,6 +151,7 @@ export class TransmittalNumbringComponent implements OnInit, AfterViewChecked {
     } else {
       this.apiService.post(ApiURL.transmittals, transmittalObject).subscribe(
         (res) => {
+          this.addTransmittalRecipient(res);
           this.onClickEmailAction(res, this.recipients);
         },
         (err) => {
@@ -159,80 +161,36 @@ export class TransmittalNumbringComponent implements OnInit, AfterViewChecked {
     }
   }
 
-  saveTransmittalDocuments(transmittal) {
-    transmittal.documents = this.selectedDocuments;
-    this.apiService
-      .put(ApiURL.transmittals + '/' + transmittal.id, transmittal)
-      .subscribe(
-        (res) => {
-          if (this.recipients) {
-            this.saveTransmittalRecipients(transmittal);
-          } else {
-            this.showMessageAndClose();
-          }
-        },
-        (err) => {
-          this.utilitiesService.notifyError(err.error.details);
-        }
-      );
-  }
-
-  saveTransmittalRecipients(transmittal) {
+  addTransmittalRecipient(transmittal) {
     let id = transmittal.id;
     let transmittalRecipients: any[] = [];
-    if (!this.editingMode) {
-      for (let i = 0; i < this.recipients.length; i++) {
-        if (this.recipients[i].userId) {
-          let dateAckRequiredDate = new Date(
-            this.recipients[i].ackRequiredDate
-          );
-          let dateRespRequiredDate = new Date(
-            this.recipients[i].respRequiredDate
-          );
-          dateAckRequiredDate.setHours(dateAckRequiredDate.getHours() + 3);
-          dateRespRequiredDate.setHours(dateRespRequiredDate.getHours() + 3);
-          transmittalRecipients.push({
-            tRecName: this.recipients[i].name,
-            tRecEmail: this.recipients[i].email,
-            recComp: null,
-            recTitle: null,
-            isAckRequired: this.recipients[i].isAckRequired,
-            isRespRequired: this.recipients[i].isRespRequired,
-            acknolgment: null,
-            response: null,
-            ackDate: null,
-            respDate: null,
-            ackRequiredDate: dateAckRequiredDate,
-            respRequiredDate: dateRespRequiredDate,
-            comments: null,
-            transmittal: { id },
-          });
-        }
-      }
-      this.sendRequestSequentially(transmittalRecipients, 0);
-      this.sendInboxRequest(transmittal);
-    } else {
-      this.recipients.forEach((user) => {
-        if (user.id) {
-          let dateAckRequiredDate = new Date(user.ackRequiredDate);
-          let dateRespRequiredDate = new Date(user.respRequiredDate);
-          dateAckRequiredDate.setHours(dateAckRequiredDate.getHours() + 3);
-          dateRespRequiredDate.setHours(dateRespRequiredDate.getHours() + 3);
-          user.ackRequiredDate = dateAckRequiredDate;
-          user.respRequiredDate = dateRespRequiredDate;
-          this.apiService
-            .put(ApiURL.transmittal_recipients + '/' + user.id, user)
-            .subscribe(
-              (res) => {
-                this.showMessageAndClose();
-              },
-              (err) => {
-                this.utilitiesService.notifyError(
-                  'Could not perform operation'
-                );
-              }
-            );
-        } else {
+    for (let i = 0; i < this.recipients.length; i++) {
+      if (this.recipients[i].userId) {
+        let dateAckRequiredDate = new Date(this.recipients[i].ackRequiredDate);
+        let dateRespRequiredDate = new Date(
+          this.recipients[i].respRequiredDate
+        );
+        dateAckRequiredDate.setHours(dateAckRequiredDate.getHours() + 3);
+        dateRespRequiredDate.setHours(dateRespRequiredDate.getHours() + 3);
+
+        transmittalRecipients.push({
+          tRecName: this.recipients[i].name,
+          tRecEmail: this.recipients[i].email,
+          recComp: null,
+          recTitle: null,
+          isAckRequired: this.recipients[i].isAckRequired,
+          isRespRequired: this.recipients[i].isRespRequired,
+          acknolgment: null,
+          response: null,
+          ackDate: null,
+          respDate: null,
+          ackRequiredDate: dateAckRequiredDate,
+          respRequiredDate: dateRespRequiredDate,
+          comments: null,
+          transmittal: { id },
+        });
+      } else {
+        this.recipients.forEach((user) => {
           transmittalRecipients.push({
             tRecName: user.name,
             tRecEmail: user.email,
@@ -249,22 +207,23 @@ export class TransmittalNumbringComponent implements OnInit, AfterViewChecked {
             comments: null,
             transmittal: { id },
           });
-        }
-      });
-      this.sendRequestSequentially(transmittalRecipients, 0);
-      this.sendInboxRequest(transmittal);
+        })
+          }
     }
+    this.sendRequestSequentially(transmittalRecipients, 0, transmittal);
   }
 
-  sendRequestSequentially(transmittalRecipients: any[], index: number) {
+  async sendRequestSequentially(transmittalRecipients: any[], index: number, transmittal) {
     if (index >= transmittalRecipients.length) {
+      await this.sendInboxRequest(transmittal);
+      await this.onClickEmailAction(transmittal, transmittalRecipients);
       this.showMessageAndClose();
       return;
     }
     const recipient = transmittalRecipients[index];
     this.apiService.post(ApiURL.transmittal_recipients, recipient).subscribe(
       (res) => {
-        this.sendRequestSequentially(transmittalRecipients, index + 1);
+        this.sendRequestSequentially(transmittalRecipients, index + 1, transmittal);
       },
       (err) => {
         this.utilitiesService.notifyError('Could not perform operation');
@@ -358,7 +317,7 @@ export class TransmittalNumbringComponent implements OnInit, AfterViewChecked {
       subject: transmittal.subject,
       comments: transmittal.comments,
     };
-    this.apiService.post('transmittals/transmital-email', obj).subscribe(
+    await this.apiService.post('transmittals/transmital-email', obj).subscribe(
       (res) => {
         this.utilitiesService.notifySuccess('Email Sent Successfully');
       },
