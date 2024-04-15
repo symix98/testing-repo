@@ -1,7 +1,9 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
-import { ConfirmationService, MessageService } from 'primeng/api';
-import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Employee } from 'src/app/core/models/employee.model';
+import {
+  DialogService,
+  DynamicDialogConfig,
+  DynamicDialogRef,
+} from 'primeng/dynamicdialog';
 import { Transaction } from 'src/app/core/models/transaction.model';
 import { AddTransactionComponent } from './add-transaction/add-transaction.component';
 import { Subscription } from 'rxjs';
@@ -43,41 +45,54 @@ export class TransactionComponent implements OnInit, OnDestroy {
       { label: 'OUTOFSTOCK', value: 'outofstock' },
     ];
     // get all transactions
-    this.subscription.add(this.apiService.get(ApiURL.transaction).subscribe(
-      (res) => {
-        console.log(res);
-        this.transactions = res;      
-      },
-      (err) => {
-        this.utilitiesService.notifyError('Could not perform operation!');
-      }
-    ));
+    this.getTransactions();
+  }
+
+  getTransactions() {
+    this.transactions = null;
+    this.subscription.add(
+      this.apiService.get(ApiURL.transaction).subscribe(
+        (res) => {
+          console.log(res);
+          this.transactions = res;
+        },
+        (err) => {
+          this.utilitiesService.notifyError('Could not perform operation!');
+        }
+      )
+    );
   }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
 
-  deleteSelectedTransactions() {
-
-  }
+  deleteSelectedTransactions() {}
 
   editTransaction(transaction: Transaction) {}
 
   deleteTransaction(transaction: Transaction) {
-  this.utilitiesService.confirmDialog("Are you sure you want to delete this data?").then((confirm) => {
-    if(confirm) {
-    this.subscription.add(this.apiService.delete(ApiURL.transaction + "/" + transaction.id).subscribe(
-      (res) => {
-        this.utilitiesService.notifySuccess('Transaction Deleted');
-        this.ngOnInit();
-      },
-      (err) => {
-        this.utilitiesService.notifyError('Could not perform operation!');
-      }
-    ));
-  }
-});
+    this.utilitiesService
+      .confirmDialog('Are you sure you want to delete this data?')
+      .then((confirm) => {
+        if (confirm) {
+          this.subscription.add(
+            this.apiService
+              .delete(ApiURL.transaction + '/' + transaction.id)
+              .subscribe(
+                (res) => {
+                  this.utilitiesService.notifySuccess('Transaction Deleted');
+                  this.ngOnInit();
+                },
+                (err) => {
+                  this.utilitiesService.notifyError(
+                    'Could not perform operation!'
+                  );
+                }
+              )
+          );
+        }
+      });
   }
 
   hideDialog() {}
@@ -94,7 +109,8 @@ export class TransactionComponent implements OnInit, OnDestroy {
       })
       .onClose.subscribe((res) => {
         if (res) {
-          console.log(res);          
+          console.log(res);
+          this.transactions.push(res);
         }
       });
   }

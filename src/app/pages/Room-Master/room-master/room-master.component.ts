@@ -7,60 +7,37 @@ import { CustomerService } from 'src/app/core/services/fakedata-customers';
   selector: 'app-room-master',
   templateUrl: './room-master.component.html',
   styleUrls: ['./room-master.component.scss'],
-  providers:[ProductService, CustomerService]
+  providers: [ProductService, CustomerService],
 })
 export class RoomMasterComponent implements OnInit {
-  
-    employees: Employee[];
-    selectedEmployees!: Employee[] | null;
+  employees: Employee[];
+  selectedEmployees!: Employee[] | null;
 
   constructor() {}
 
-  ngOnInit() {
-      
-  }
+  ngOnInit() {}
 
-  openNewEmployee() {
+  openNewEmployee() {}
 
-  }
+  openEditEmployee(employee: Employee) {}
 
-  openEditEmployee(employee: Employee) {
+  deleteEmployee(employee: Employee) {}
 
-  }
-
-  deleteEmployee(employee: Employee) {
-
-  }
-
-  deleteSelectedProducts() {
-
-  }
+  deleteSelectedProducts() {}
 
   getSeverity(status: string) {
     switch (status) {
-        case 'INSTOCK':
-            return 'success';
-        case 'LOWSTOCK':
-            return 'warning';
-        case 'OUTOFSTOCK':
-            return 'danger';
+      case 'INSTOCK':
+        return 'success';
+      case 'LOWSTOCK':
+        return 'warning';
+      case 'OUTOFSTOCK':
+        return 'danger';
     }
-}
+  }
 
+  //expanded table
+  calculateCustomerTotal(customerName: any) {}
 
-
-
-
-
-
-
-//expanded table
-calculateCustomerTotal(customerName: any) {
-
-}
-
-getCustomerSeverity(customerStatus: any) {
-
-}
-
+  getCustomerSeverity(customerStatus: any) {}
 }

@@ -1,5 +1,10 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
-import { ConfirmationService } from 'primeng/api';
+import {
+  AfterContentChecked,
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ApiURL } from 'src/app/core/miscellaneous/api.template';
 import { Transaction } from 'src/app/core/models/transaction.model';
@@ -12,7 +17,9 @@ import { Subscription } from 'rxjs';
   templateUrl: './add-transaction.component.html',
   styleUrls: ['./add-transaction.component.scss'],
 })
-export class AddTransactionComponent implements OnInit, OnDestroy {
+export class AddTransactionComponent
+  implements OnInit, OnDestroy, AfterContentChecked
+{
   transactionDialog: boolean = false;
 
   transactions: Transaction = new Transaction();
@@ -43,16 +50,22 @@ export class AddTransactionComponent implements OnInit, OnDestroy {
     // getGuestStatuses()
   }
 
+  ngAfterContentChecked() {
+    this.cdr.detectChanges();
+  }
+
   saveTransaction() {
-    this.subscription.add(this.apiService.post(ApiURL.transaction, this.transactions).subscribe(
-      (res) => {
-        console.log(res);
-      },
-      (err) => {
-        this.utilitiesService.notifyError(err.error.title);
-        throw new Error('Could not perform operation!');
-      }
-    ));
+    this.subscription.add(
+      this.apiService.post(ApiURL.transaction, this.transactions).subscribe(
+        (res) => {
+          this.ref.close(res);
+        },
+        (err) => {
+          this.utilitiesService.notifyError(err.error.title);
+          throw new Error('Could not perform operation!');
+        }
+      )
+    );
   }
 
   getSeverity(status: string) {

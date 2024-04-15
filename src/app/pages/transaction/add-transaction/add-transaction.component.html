@@ -26,21 +26,25 @@
     </div>
 
     <div class="col-5">
-        <label for="badgeNo">Badge Number</label>
-        <input
-          type="text"
-          pInputText
-          id="badgeNo"
-          name="badgeNo"
-          [(ngModel)]="transactions.badgeNo"
-          required
-          autofocus
-        />
+      <label for="badgeNo">Badge Number</label>
+      <input
+        type="text"
+        pInputText
+        id="badgeNo"
+        name="badgeNo"
+        [(ngModel)]="transactions.badgeNo"
+        required
+        autofocus
+      />
     </div>
 
     <div class="col-5">
       <label for="roomId">Select Man Days</label>
-      <p-inputNumber [showButtons]="true" inputId="manDays" [(ngModel)]="transactions.manDays">
+      <p-inputNumber
+        [showButtons]="true"
+        inputId="manDays"
+        [(ngModel)]="transactions.manDays"
+      >
       </p-inputNumber>
     </div>
 
@@ -56,46 +60,44 @@
       ></p-dropdown>
     </div>
 
-    
     <div class="col-6">
-        <label for="checkInDate">Check-In Date</label>
-        <p-calendar
-          name="checkInDate"
-          [(ngModel)]="transactions.checkInDate"
-          [showIcon]="true"
-          [readonlyInput]="true"
-        ></p-calendar>
-    </div>
-
-
-    <div class="col-6">
-        <label for="checkoutDate">Check-Out Date</label>
-        <p-calendar
-          name="checkOutDate"
-          [(ngModel)]="transactions.checkOutDate"
-          [showIcon]="true"
-          [readonlyInput]="true"
-        ></p-calendar>
-    </div>
-    
-    <div class="col-6">
-        <label for="LeaveStartDt">Leave Start Date</label>
-        <p-calendar
-          name="LeaveStartDt"
-          [(ngModel)]="transactions.leaveStartDt"
-          [showIcon]="true"
-          [readonlyInput]="true"
-        ></p-calendar>
+      <label for="checkInDate">Check-In Date</label>
+      <p-calendar
+        name="checkInDate"
+        [(ngModel)]="transactions.checkInDate"
+        [showIcon]="true"
+        [readonlyInput]="true"
+      ></p-calendar>
     </div>
 
     <div class="col-6">
-        <label for="LeaveEndDt">Leave End Date</label>
-        <p-calendar
-          name="LeaveEndDt"
-          [(ngModel)]="transactions.leaveEndDt"
-          [showIcon]="true"
-          [readonlyInput]="true"
-        ></p-calendar>
+      <label for="checkoutDate">Check-Out Date</label>
+      <p-calendar
+        name="checkOutDate"
+        [(ngModel)]="transactions.checkOutDate"
+        [showIcon]="true"
+        [readonlyInput]="true"
+      ></p-calendar>
+    </div>
+
+    <div class="col-6">
+      <label for="LeaveStartDt">Leave Start Date</label>
+      <p-calendar
+        name="LeaveStartDt"
+        [(ngModel)]="transactions.leaveStartDt"
+        [showIcon]="true"
+        [readonlyInput]="true"
+      ></p-calendar>
+    </div>
+
+    <div class="col-6">
+      <label for="LeaveEndDt">Leave End Date</label>
+      <p-calendar
+        name="LeaveEndDt"
+        [(ngModel)]="transactions.leaveEndDt"
+        [showIcon]="true"
+        [readonlyInput]="true"
+      ></p-calendar>
     </div>
 
     <div class="col-12">
@@ -112,11 +114,11 @@
     </div>
   </div>
 
-    <button
-      pButton
-      pRipple
-      label="Save"
-      icon="pi pi-check"
-      (click)="saveTransaction()"
-    ></button>
+  <button
+    pButton
+    pRipple
+    label="Save"
+    icon="pi pi-check"
+    (click)="saveTransaction()"
+  ></button>
 </form>

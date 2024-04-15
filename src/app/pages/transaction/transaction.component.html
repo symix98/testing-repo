@@ -1,72 +1,138 @@
 <div class="card">
-    <p-toast></p-toast>
-    <p-toolbar styleClass="mb-4 gap-2">
-        <ng-template pTemplate="left">
-            <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNewTransaction()"></button>
-            <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedTransactions()" [disabled]="!selectedTransactions || !selectedTransactions.length"></button>
-        </ng-template>
+  <p-toast></p-toast>
+  <p-toolbar styleClass="mb-4 gap-2">
+    <ng-template pTemplate="left">
+      <button
+        pButton
+        pRipple
+        label="New"
+        icon="pi pi-plus"
+        class="p-button-success mr-2"
+        (click)="openNewTransaction()"
+      ></button>
+      <button
+        pButton
+        pRipple
+        label="Delete"
+        icon="pi pi-trash"
+        class="p-button-danger"
+        (click)="deleteSelectedTransactions()"
+        [disabled]="!selectedTransactions || !selectedTransactions.length"
+      ></button>
+    </ng-template>
 
-        <ng-template pTemplate="right">
-            <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Import" class="mr-2 inline-block"></p-fileUpload>
-            <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help"></button>
-        </ng-template>
-    </p-toolbar>
+    <ng-template pTemplate="right">
+      <p-fileUpload
+        mode="basic"
+        accept="image/*"
+        [maxFileSize]="1000000"
+        label="Import"
+        chooseLabel="Import"
+        class="mr-2 inline-block"
+      ></p-fileUpload>
+      <button
+        pButton
+        pRipple
+        label="Export"
+        icon="pi pi-upload"
+        class="p-button-help"
+      ></button>
+    </ng-template>
+  </p-toolbar>
 
-    <p-table
-        #dt
-        [value]="transactions"
-        [rows]="10"
-        [paginator]="true"
-        [globalFilterFields]="['name', 'country.name', 'representative.name', 'status']"
-        [tableStyle]="{ 'max-width': '100vw' }"
-        [(selection)]="selectedTransactions"
-        [rowHover]="true"
-        dataKey="id"
-        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-        [showCurrentPageReport]="true"
-    >
-        <ng-template pTemplate="caption">
-            <div class="flex align-items-center justify-content-between">
-                <h5 class="m-0">Manage Transactions</h5>
-                <span class="p-input-icon-left">
-                    <i class="pi pi-search"></i>
-                    <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Search..." />
-                </span>
-            </div>
-        </ng-template>
-        <ng-template pTemplate="header">
-            <tr>
-                <th style="min-width:15%">
-                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-                </th>
-                <th pSortableColumn="transactionNo" style="min-width:20%">Transaction No<p-sortIcon field="transactionNo"></p-sortIcon></th>
-                <th pSortableColumn="checkInDate" style="min-width:20%">Checkin Date<p-sortIcon field="checkInDate"></p-sortIcon></th>
-                <th pSortableColumn="roomId" style="min-width:10%">Room Id<p-sortIcon field="roomId"></p-sortIcon></th>
-                <th pSortableColumn="badgeNo" style="min-width:10%">Badge No<p-sortIcon field="badgeNo"></p-sortIcon></th>
-                <th pSortableColumn="guestStatus" style="min-width:10%">Status <p-sortIcon field="guestStatus"></p-sortIcon></th>
-                <th style="min-width:15%">Acions</th>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-transaction>
-            <tr>
-                <td>
-                    <p-tableCheckbox [value]="transactions"></p-tableCheckbox>
-                </td>
-                <td>{{ transaction.transactionNo }}</td>
-                <td>{{ transaction.checkInDate }}</td>
-                <td>{{ transaction.roomId }}</td>
-                <td>{{ transaction.badgeNo }}</td>
-                <td>
-                    <p-tag [value]="transaction.guestStatus" [severity]="getSeverity(transaction.guestStatus)"></p-tag>
-                </td>
-                <td>
-                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editTransaction(transaction)"></button>
-                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteTransaction(transaction)"></button>
-                </td>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="summary">
-            <div class="flex align-items-center justify-content-between">In total there are {{ transactions ? transactions.length : 0 }} transactions.</div>
-        </ng-template>
-    </p-table>
+  <p-table
+    #dt
+    [value]="transactions"
+    [rows]="10"
+    [paginator]="true"
+    [globalFilterFields]="[
+      'name',
+      'country.name',
+      'representative.name',
+      'status'
+    ]"
+    [tableStyle]="{ 'max-width': '100vw' }"
+    [(selection)]="selectedTransactions"
+    [rowHover]="true"
+    dataKey="id"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    [showCurrentPageReport]="true"
+  >
+    <ng-template pTemplate="caption">
+      <div class="flex align-items-center justify-content-between">
+        <h5 class="m-0">Manage Transactions</h5>
+        <span class="p-input-icon-left">
+          <i class="pi pi-search"></i>
+          <input
+            pInputText
+            type="text"
+            (input)="dt.filterGlobal($event.target.value, 'contains')"
+            placeholder="Search..."
+          />
+        </span>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th style="min-width: 15%">
+          <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+        </th>
+        <th pSortableColumn="transactionNo" style="min-width: 20%">
+          Transaction No<p-sortIcon field="transactionNo"></p-sortIcon>
+        </th>
+        <th pSortableColumn="checkInDate" style="min-width: 20%">
+          Checkin Date<p-sortIcon field="checkInDate"></p-sortIcon>
+        </th>
+        <th pSortableColumn="roomId" style="min-width: 10%">
+          Room Id<p-sortIcon field="roomId"></p-sortIcon>
+        </th>
+        <th pSortableColumn="badgeNo" style="min-width: 10%">
+          Badge No<p-sortIcon field="badgeNo"></p-sortIcon>
+        </th>
+        <th pSortableColumn="guestStatus" style="min-width: 10%">
+          Status <p-sortIcon field="guestStatus"></p-sortIcon>
+        </th>
+        <th style="min-width: 15%">Acions</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-transaction>
+      <tr>
+        <td>
+          <p-tableCheckbox [value]="transactions"></p-tableCheckbox>
+        </td>
+        <td>{{ transaction.transactionNo }}</td>
+        <td>{{ transaction.checkInDate }}</td>
+        <td>{{ transaction.roomId }}</td>
+        <td>{{ transaction.badgeNo }}</td>
+        <td>
+          <p-tag
+            [value]="transaction.guestStatus"
+            [severity]="getSeverity(transaction.guestStatus)"
+          ></p-tag>
+        </td>
+        <td>
+          <button
+            pButton
+            pRipple
+            icon="pi pi-pencil"
+            class="p-button-rounded p-button-success mr-2"
+            (click)="editTransaction(transaction)"
+          ></button>
+          <button
+            pButton
+            pRipple
+            icon="pi pi-trash"
+            class="p-button-rounded p-button-warning"
+            (click)="deleteTransaction(transaction)"
+          ></button>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="summary">
+      <div class="flex align-items-center justify-content-between">
+        In total there are
+        {{ transactions ? transactions.length : 0 }} transactions.
+      </div>
+    </ng-template>
+  </p-table>
 </div>
