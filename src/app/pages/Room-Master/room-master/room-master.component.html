@@ -154,7 +154,11 @@
   </p-table>
 </div>
 
-<p-toolbar styleClass="mb-4 gap-2">
+
+
+<div class="card">
+  <p-toast></p-toast>
+  <p-toolbar styleClass="mb-4 gap-2">
     <ng-template pTemplate="left">
       <button
         pButton
@@ -193,8 +197,6 @@
       ></button>
     </ng-template>
   </p-toolbar>
-
-<div class="card">
   <p-table
     [value]="employees"
     sortField="representative.name"

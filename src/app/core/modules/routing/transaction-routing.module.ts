@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { RoomMasterComponent } from 'src/app/pages/Room-Master/room-master/room-master.component';
+import { TransactionComponent } from 'src/app/pages/transaction/transaction.component';
 
 const routes: Routes = [
-  { path: '', component: RoomMasterComponent },
+  { path: '', component: TransactionComponent },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class RoomMasterRoutingModule { }
+export class TransactionRoutingModule { }

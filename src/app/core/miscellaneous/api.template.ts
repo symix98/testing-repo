@@ -72,4 +72,16 @@ export enum ApiURL {
   folder_properties = 'folder-properties',
   transmital_email = 'transmital-email',
   jasper_save ='jasper/save/',
+  
+
+
+  // CMS
+  accomodation = 'accomodation',
+  employee = 'employee',
+  camp = 'camp',
+  company = 'camp',
+  job_title = 'job-title',
+  project = 'project',
+  inactive_reason = 'inactive-reason',
+  transaction = 'transaction',
 }

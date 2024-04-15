@@ -33,7 +33,7 @@ import { EditRoomComponent } from './pages/Room-Master/edit-room/edit-room.compo
     imports: [
         BrowserModule,
         BrowserAnimationsModule,
-        
+
         HttpClientModule,
         SharedModule,
         MainModule,

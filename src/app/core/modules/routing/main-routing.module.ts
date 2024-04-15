@@ -22,6 +22,7 @@ const routes: Routes = [
       { path: '', loadChildren: () => import("../../../pages/dashboard/dashboard.module").then(m => m.DashboardModule) },
       { path: 'documents', loadChildren: () => import("../../../pages/document-management/document-management.module").then(m => m.DocumentManagementModule) },
       { path: 'room-master', loadChildren: () => import("../../../pages/Room-Master/room-master/room-master.module").then(m => m.RoomMasterModule) },
+      { path: 'transactions', loadChildren: () => import("../../../pages/transaction/transaction.module").then(m => m.TransactionModule) },
       { path: 'document-filter', component: DocumentFilterComponent}, 
       { path: 'dashboard', loadChildren: () => import("../../../pages/dashboard/dashboard.module").then(m => m.DashboardModule) },
       { path: 'fab-init', loadChildren: () => import("../../../pages/fabricate/fabricate.module").then(m => m.FabricateModule) },
