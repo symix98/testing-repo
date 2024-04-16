@@ -1,220 +1,159 @@
-<p-card>
-  <h4>Edit Employee</h4>
-  <ng-template pTemplate="content">
-    <img
-      [src]="
-        'https://primefaces.org/cdn/primeng/images/demo/product/' +
-        employee.image
-      "
-      [alt]="employee.image"
-      class="block m-auto pb-3"
-      *ngIf="employee.image"
-    />
-    <div class="field">
-      <label for="name">Name</label>
+<div class="card">
+  <div class="grid p-fluid mb-2">
+
+    <div class="col-5">
+      <label for="availableFrom">Available From</label>
+      <p-calendar
+        name="availableFrom"
+        [(ngModel)]="rooms.availableFrom"
+        [showIcon]="true"
+        [readonlyInput]="true"
+        [required]="true"
+      ></p-calendar>
+    </div>
+
+    <div class="col-5">
+      <label for="roomAllocation">Room Allocation</label>
+      <p-dropdown
+        [options]="roomAllocations"
+        [(ngModel)]="rooms.roomAllocation"
+        name="roomAllocation"
+        optionLabel="name"
+        placeholder="Select Room Allocation"
+        [required]="true"
+      ></p-dropdown>
+    </div>
+
+    <div class="col-2">
+      <label for="block">Block</label>
       <input
         type="text"
         pInputText
-        id="name"
-        [(ngModel)]="employee.EmployeeName"
+        id="block"
+        name="block"
+        [(ngModel)]="rooms.block"
         required
-        autofocus
       />
-      <!-- <small class="p-error" *ngIf="submitted && !employee.name"
-        >Name is required.</small
-      > -->
     </div>
-    <div class="field">
-      <label for="description">Nationality</label>
+
+    <div class="col-5">
+      <label for="floor">Floor</label>
+      <input
+        type="text"
+        pInputText
+        id="floor"
+        name="floor"
+        [(ngModel)]="rooms.floor"
+        required
+      />
+    </div>
+
+    <div class="col-5">
+      <label for="bedCount">Bed Count</label>
+      <p-inputNumber
+        [showButtons]="true"
+        inputId="bedCount"
+        [(ngModel)]="rooms.bedCount"
+        [required]="true"
+        [min]="1"
+        [max]="8"
+        placeholder="8 beds max"
+      >
+      </p-inputNumber>
+    </div>
+
+    <div class="col-2">
+      <label for="floor">Room Number</label>
+      <p-inputNumber
+        [showButtons]="true"
+        inputId="roomNo"
+        [(ngModel)]="rooms.roomNo"
+        [required]="true"
+      >
+      </p-inputNumber>
+    </div>
+
+    <div class="col-5">
+      <label for="campId">Camp</label>
+      <p-dropdown
+        [options]="campIds"
+        [(ngModel)]="rooms.campId"
+        name="campId"
+        optionLabel="name"
+        placeholder="Select Camp"
+        [required]="true"
+      ></p-dropdown>
+    </div>
+
+    <div class="col-5">
+      <label for="roomCategory">Room Category</label>
+      <p-dropdown
+        [options]="roomCategories"
+        [(ngModel)]="rooms.roomCategory"
+        name="roomCategory"
+        optionLabel="name"
+        placeholder="Select Room Category"
+        [required]="true"
+      ></p-dropdown>
+    </div>
+
+    <div class="col-2">
+      <label for="roomStatus">Room Status</label>
+      <p-dropdown
+        [options]="roomStatuses"
+        [(ngModel)]="rooms.roomStatus"
+        name="roomStatus"
+        optionLabel="name"
+        placeholder="Select Room Status"
+        [required]="true"
+      ></p-dropdown>
+    </div>
+
+    <div class="col-6">
+      <label for="cateringId">Catering</label>
+      <p-dropdown
+        [options]="cateringIds"
+        [(ngModel)]="rooms.cateringId"
+        name="cateringId"
+        optionLabel="name"
+        placeholder="Select Catering"
+        [required]="true"
+      ></p-dropdown>
+    </div>
+
+    <div class="col-6">
+      <label for="rateId">Room Rate</label>
+      <p-dropdown
+        [options]="roomsRateIds"
+        [(ngModel)]="rooms.rateId"
+        name="rateId"
+        optionLabel="name"
+        placeholder="Select Room Rate"
+        [required]="true"
+      ></p-dropdown>
+    </div>
+
+    <div class="col-12">
+      <label for="description">Description</label>
       <textarea
         id="description"
+        name="description"
         pInputTextarea
-        [(ngModel)]="employee.Nationality"
+        [(ngModel)]="rooms.description"
         required
         rows="3"
         cols="20"
       ></textarea>
     </div>
 
-    <div class="field">
-      <label for="inventoryStatus">Inventory Status</label>
-      <p-dropdown
-        [(ngModel)]="employee.Category"
-        inputId="inventoryStatus"
-        [options]="categories"
-      >
-        <!-- <ng-template pTemplate="selectedItem">
-          <p-tag
-            [value]="employee.inventoryStatus.toUpperCase()"
-            [severity]="getSeverity(employee.inventoryStatus.toUpperCase())"
-          ></p-tag>
-        </ng-template> -->
-        <!-- <ng-template let-option pTemplate="item">
-          <p-tag
-            [value]="option.label"
-            [severity]="getSeverity(option.label)"
-          ></p-tag>
-        </ng-template> -->
-      </p-dropdown>
-    </div>
-
-    <div class="field">
-      <label class="mb-3">Meal Type</label>
-      <div class="formgrid grid">
-        <div class="field-radiobutton col-6">
-          <p-radioButton
-            id="mealTypeVeg"
-            name="mealTypeVeg"
-            value="vegan"
-            [(ngModel)]="employee.MealType"
-          ></p-radioButton>
-          <label for="mealTypeVeg">Vegan</label>
-        </div>
-        <div class="field-radiobutton col-6">
-          <p-radioButton
-            id="mealTypeNonVeg"
-            name="category"
-            value="non vegan"
-            [(ngModel)]="employee.MealType"
-          ></p-radioButton>
-          <label for="mealTypeNonVeg">Non Vegan</label>
-        </div>
-      </div>
-    </div>
-
-    <div class="formgrid grid">
-      <div class="field col">
-        <label for="MobileNo">Mobile</label>
-        <p-inputNumber
-          id="MobileNo"
-          [(ngModel)]="employee.MobileNo"
-          locale="en-US"
-        ></p-inputNumber>
-      </div>
-      <div class="field col">
-        <label for="PassportNo">Passport</label>
-        <p-inputNumber
-          id="PassportNo"
-          [(ngModel)]="employee.PassportNo"
-        ></p-inputNumber>
-      </div>
-    </div>
-  </ng-template>
-
-  <ng-template pTemplate="footer">
-    <button
-      pButton
-      pRipple
-      label="Cancel"
-      icon="pi pi-times"
-      class="p-button-text"
-      (click)="closeEditEmployee()"
-    ></button>
-    <button
-      pButton
-      pRipple
-      label="Save"
-      icon="pi pi-check"
-      class="p-button-text"
-      (click)="saveEmployee()"
-    ></button>
-  </ng-template>
-</p-card>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- <p-card>
-  <h4>{{ pageTitle }}</h4>
-  <ng-template pTemplate="content">
-    <form #docForm="ngForm">
-      <div class="grid p-fluid">
-        <div class="field col-12 md:col-6">
-          <div class="field col-12 md:col-12">
-            <label for="projectName"
-              >Project Name <span style="color: red">*</span></label
-            >
-            <input
-              type="text"
-              id="projectName"
-              name="projectName"
-              [(ngModel)]="transmittal.projectName"
-              class="p-inputtext"
-            />
-          </div>
-
-          <div class="field col-12 md:col-12">
-            <label for="subject"
-              >Subject <span style="color: red">*</span></label
-            >
-            <input
-              type="text"
-              id="subject"
-              name="subject"
-              [(ngModel)]="transmittal.subject"
-              class="p-inputtext"
-            />
-          </div>
-
-          <div class="field col-12 md:col-12">
-            <label for="purpose"
-              >Purpose <span style="color: red">*</span></label
-            >
-            <p-dropdown
-              id="purpose"
-              name="purpose"
-              [(ngModel)]="transmittal.purpose"
-              [options]="purposes"
-              optionLabel="name"
-              placeholder="Select Purpose"
-            ></p-dropdown>
-          </div>
-
-          <div class="field col-12 md:col-12">
-            <label for="type">Type <span style="color: red">*</span></label>
-            <p-dropdown
-              id="type"
-              name="type"
-              [(ngModel)]="transmittal.type"
-              [options]="types"
-              optionLabel="name"
-              placeholder="Select Type"
-            ></p-dropdown>
-          </div>
-
-          <div class="field col-12 md:col-12">
-            <label for="remarks">Remarks:</label>
-            <textarea
-              rows="5"
-              cols="50"
-              pInputTextarea
-              name="remarks"
-              [(ngModel)]="transmittal.comments"
-            ></textarea>
-          </div>
-        </div>
-      </div>
-    </form>
-    <div *ngIf="editingMode" class="col-12 md:col-12">
-      <p-button
-        icon="pi pi-eye"
-        iconPos="right"
-        label="Preview Transmittal"
-        styleClass="p-button-outlined"
-        (onClick)="PreviewForm(transmittal.id)"
-      ></p-button>
-    </div>
-  </ng-template>
-</p-card> -->
+  </div>
+  <button
+    type="submit"
+    style="margin-top: 9rem"
+    pButton
+    pRipple
+    label="Save"
+    (click)="save()"
+    icon="pi pi-check"
+  ></button>
+</div>

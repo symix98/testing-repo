@@ -8,7 +8,7 @@
         label="New"
         icon="pi pi-plus"
         class="p-button-primary mr-2"
-        (click)="openNewEmployee()"
+        (click)="openNewRoom()"
       ></button>
       <button
         pButton
@@ -16,8 +16,8 @@
         label="Delete"
         icon="pi pi-trash"
         class="p-button-danger"
-        (click)="deleteSelectedProducts()"
-        [disabled]="!selectedEmployees || !selectedEmployees.length"
+        (click)="deleteSelectedRooms()"
+        [disabled]="!selectedRooms || !selectedRooms.length"
       ></button>
     </ng-template>
 
@@ -42,7 +42,7 @@
 
   <p-table
     #dt
-    [value]="employees"
+    [value]="rooms"
     [rows]="10"
     [paginator]="true"
     [globalFilterFields]="[
@@ -52,7 +52,7 @@
       'status'
     ]"
     [tableStyle]="{ width: 'auto' }"
-    [(selection)]="selectedEmployees"
+    [(selection)]="selectedRooms"
     [rowHover]="true"
     dataKey="id"
     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
@@ -60,7 +60,7 @@
   >
     <ng-template pTemplate="caption">
       <div class="flex align-items-center justify-content-between">
-        <h5 class="m-0">Manage Products</h5>
+        <h5 class="m-0">Manage Rooms</h5>
         <span class="p-input-icon-left">
           <i class="pi pi-search"></i>
           <input
@@ -77,55 +77,64 @@
         <th style="width: 4rem">
           <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
         </th>
-        <th pSortableColumn="name" style="min-width: 15rem">
-          Name <p-sortIcon field="name"></p-sortIcon>
+        <th pSortableColumn="roomNo" style="min-width: 15rem">
+          Room Number <p-sortIcon field="roomNo"></p-sortIcon>
         </th>
-        <th>Image</th>
-        <th pSortableColumn="price">
-          MobileNo <p-sortIcon field="price"></p-sortIcon>
+        <th pSortableColumn="campId">
+          Camp <p-sortIcon field="campId"></p-sortIcon>
         </th>
-        <th pSortableColumn="category" style="min-width: 10rem">
-          Category <p-sortIcon field="category"></p-sortIcon>
+        <th pSortableColumn="block" style="min-width: 10rem">
+          Block <p-sortIcon field="block"></p-sortIcon>
         </th>
-        <th pSortableColumn="email">
-          Email <p-sortIcon field="email"></p-sortIcon>
+        <th pSortableColumn="floor">
+          Floor <p-sortIcon field="floor"></p-sortIcon>
         </th>
-        <th pSortableColumn="qid" style="min-width: 10rem">
-          Qid <p-sortIcon field="qid"></p-sortIcon>
+        <th pSortableColumn="roomCategory" style="min-width: 10rem">
+          Category <p-sortIcon field="roomCategory"></p-sortIcon>
         </th>
-        <th></th>
+        <th pSortableColumn="bedCount" style="min-width: 10rem">
+          Bed Count <p-sortIcon field="bedCount"></p-sortIcon>
+        </th>
+        <th pSortableColumn="rateId" style="min-width: 10rem">
+          Rate <p-sortIcon field="rateId"></p-sortIcon>
+        </th>
+        <th pSortableColumn="roomAllocation" style="min-width: 10rem">
+          Allocation <p-sortIcon field="roomAllocation"></p-sortIcon>
+        </th>
+        <th pSortableColumn="cateringId" style="min-width: 10rem">
+          Catering <p-sortIcon field="cateringId"></p-sortIcon>
+        </th>
+        <th pSortableColumn="availableFrom" style="min-width: 10rem">
+          Available From <p-sortIcon field="availableFrom"></p-sortIcon>
+        </th>
+        <th pSortableColumn="description" style="min-width: 10rem">
+          Description <p-sortIcon field="description"></p-sortIcon>
+        </th>
+        <th pSortableColumn="roomStatus" style="min-width: 10rem">
+          Status <p-sortIcon field="roomStatus"></p-sortIcon>
+        </th>
       </tr>
     </ng-template>
-    <ng-template pTemplate="body" let-employee>
+    <ng-template pTemplate="body" let-room>
       <tr>
         <td>
-          <p-tableCheckbox [value]="employee"></p-tableCheckbox>
+          <p-tableCheckbox [value]="room"></p-tableCheckbox>
         </td>
-        <td>{{ employee.name }}</td>
-        <td>
-          <img
-            [src]="
-              'https://primefaces.org/cdn/primeng/images/demo/product/' +
-              employee.image
-            "
-            [alt]="employee.name"
-            width="50"
-            class="shadow-4"
-          />
-        </td>
-        <td>{{ employee.MobileNo }}</td>
-        <td>{{ employee.category }}</td>
-        <td>
-          <p-rating
-            [ngModel]="employee.rating"
-            [readonly]="false"
-            [cancel]="false"
-          ></p-rating>
-        </td>
+        <td>{{ room.roomNo}}</td>
+        <td>{{ room.campId }}</td>
+        <td>{{ room.block }}</td>
+        <td>{{ room.floor }}</td>
+        <td>{{ room.roomCategory }}</td>
+        <td>{{ room.bedCount }}</td>
+        <td>{{ room.rateId }}</td>
+        <td>{{ room.roomAllocation }}</td>
+        <td>{{ room.cateringId }}</td>
+        <td>{{ room.availableFrom }}</td>
+        <td>{{ room.description }}</td>
         <td>
           <p-tag
-            [value]="employee.inventoryStatus"
-            [severity]="getSeverity(employee.inventoryStatus)"
+            [value]="room.roomStatus"
+            [severity]="getSeverity(room.roomStatus)"
           ></p-tag>
         </td>
         <td>
@@ -134,27 +143,27 @@
             pRipple
             icon="pi pi-pencil"
             class="p-button-rounded p-button-success mr-2"
-            (click)="openEditEmployee(employee)"
+            (click)="openEditRoom(room)"
           ></button>
           <button
             pButton
             pRipple
             icon="pi pi-trash"
             class="p-button-rounded p-button-warning"
-            (click)="deleteEmployee(employee)"
+            (click)="deleteRoom(room.id)"
           ></button>
         </td>
       </tr>
     </ng-template>
     <ng-template pTemplate="summary">
       <div class="flex align-items-center justify-content-between">
-        In total there are {{ employees ? employees.length : 0 }} products.
+        In total there are {{ rooms ? rooms.length : 0 }} rooms.
       </div>
     </ng-template>
   </p-table>
 </div>
 
-<div class="card">
+<!-- <div class="card">
   <p-toast></p-toast>
   <p-toolbar styleClass="mb-4 gap-2">
     <ng-template pTemplate="left">
@@ -204,13 +213,47 @@
     groupRowsBy="representative.name"
     [tableStyle]="{ width: 'auto' }"
   >
+  <ng-template pTemplate="caption">
+    <div class="flex align-items-center justify-content-between">
+      <h5 class="m-0">Manage Employees</h5>
+      <span class="p-input-icon-left">
+        <i class="pi pi-search"></i>
+        <input
+          pInputText
+          type="text"
+          (input)="dt.filterGlobal($event.target.value, 'contains')"
+          placeholder="Search..."
+        />
+      </span>
+    </div>
+  </ng-template>
     <ng-template pTemplate="header">
       <tr>
-        <th style="width: 20%">Name</th>
-        <th style="width: 20%">Country</th>
-        <th style="width: 20%">Company</th>
-        <th style="width: 20%">Status</th>
-        <th style="width: 20%">Date</th>
+        <th style="width: 4%">Name</th>
+        <th style="width: 4%">Country</th>
+        <th style="width: 4%">Religion</th>
+        <th style="width: 4%">Badge Number</th>
+        <th style="width: 4%">Project</th>
+        <th style="width: 4%">Meal Type</th>
+        <th style="width: 4%">Work Location</th>
+        <th style="width: 4%">Milk Card</th>
+        <th style="width: 4%">Qid</th>
+        <th style="width: 4%">Email</th>
+        <th style="width: 4%">Employee Active</th>
+        <th style="width: 4%">Inactive Reason</th>
+        <th style="width: 4%">Meal Category</th>
+        <th style="width: 4%">Mess Entitlment</th>
+        <th style="width: 4%">isCCC</th>
+        <th style="width: 4%">Band</th>
+        <th style="width: 4%">Eqv Band</th>
+        <th style="width: 4%">Contract Base</th>
+        <th style="width: 4%">Category</th>
+        <th style="width: 4%">Nationality</th>
+        <th style="width: 4%">Department</th>
+        <th style="width: 4%">Job Title</th>
+        <th style="width: 4%">Company</th>
+        <th style="width: 4%">Status</th>
+        <th style="width: 4%">Date</th>
       </tr>
     </ng-template>
     <ng-template
@@ -265,16 +308,10 @@
         <td>
           {{ customer.company }}
         </td>
-        <!-- <td>
-          <p-tag
-            [value]="customer.status"
-            [severity]="getCustomerSeverity(customer.status)"
-          ></p-tag>
-        </td> -->
         <td>
           {{ customer.date }}
         </td>
       </tr>
     </ng-template>
   </p-table>
-</div>
+</div> -->

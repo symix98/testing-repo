@@ -76,7 +76,7 @@ export enum ApiURL {
 
 
   // CMS
-  accomodation = 'accomodation',
+  rooms = 'rooms',
   employee = 'employee',
   camp = 'camp',
   company = 'camp',
@@ -84,4 +84,7 @@ export enum ApiURL {
   project = 'project',
   inactive_reason = 'inactive-reason',
   transaction = 'transaction',
+  roomStatuses = 'room-statuses',
+  catering = 'catering',
+  rooms_rate = 'rooms-rate',
 }

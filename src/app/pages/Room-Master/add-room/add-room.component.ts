@@ -1,216 +1,181 @@
-import { Component, OnInit } from '@angular/core';
-import { MessageService, ConfirmationService } from 'primeng/api';
-import { ProductService } from 'src/app/core/services/fake-data';
-import { CustomerService } from 'src/app/core/services/fakedata-customers';
+import {
+  AfterContentChecked,
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { Subscription } from 'rxjs';
+import { ApiURL } from 'src/app/core/miscellaneous/api.template';
+import { Room } from 'src/app/core/models/room.model';
+import { Transaction } from 'src/app/core/models/transaction.model';
+import { ApiService } from 'src/app/core/services/api.service';
 import { UtilitiesService } from 'src/app/core/services/utilities.service';
-
-interface Product {
-  id?: string;
-  code?: string;
-  name?: string;
-  description?: string;
-  price?: number;
-  quantity?: number;
-  inventoryStatus?: string;
-  category?: string;
-  image?: string;
-  rating?: number;
-}
-
-
-interface Country {
-    name?: string;
-    code?: string;
-}
-
-interface Representative {
-    name?: string;
-    image?: string;
-}
-
-interface Customer {
-    id?: number;
-    name?: string;
-    country?: Country;
-    company?: string;
-    date?: string | Date;
-    status?: string;
-    activity?: number;
-    representative?: Representative;
-    verified?: boolean;
-    balance?: number;
-}
 
 @Component({
   selector: 'app-add-room',
   templateUrl: './add-room.component.html',
-  styleUrls: ['./add-room.component.scss']
+  styleUrls: ['./add-room.component.scss'],
 })
-export class AddRoomComponent implements OnInit {
+export class AddRoomComponent
+  implements OnInit, OnDestroy, AfterContentChecked, AfterViewInit
+{
+  rooms: Room = new Room();
+  selectedRooms!: Transaction[] | null;
 
-  
-  productDialog: boolean = false;
+  roomStatuses!: any[];
+  campIds!: any[];
+  cateringIds!: any[];
+  roomsRateIds!: any[];
+  availableRooms!: any[];
+  roomAllocations: any = [
+    { id: 'ar', name: 'Arab' },
+    { id: 'in', name: 'India' },
+    { id: 'pk', name: 'Pakistan' },
+  ];
+  roomCategories: any = [
+    { id: 'sr', name: 'Senior' },
+    { id: 'jr', name: 'Junior' },
+    { id: 'wk', name: 'Worker' },
+  ];
 
-  products!: Product[];
+  subscription = new Subscription();
 
-  product!: Product;
+  constructor(
+    public config: DynamicDialogConfig,
+    private apiService: ApiService,
+    private utilitiesService: UtilitiesService,
+    private ref: DynamicDialogRef,
+    private cdr: ChangeDetectorRef
+  ) {}
 
-  selectedProducts!: Product[] | null;
-
-  submitted: boolean = false;
-
-  statuses!: any[];
-
-  customers!: Customer[];
-
-
-  constructor(private productService: ProductService, private customerService: CustomerService, private messageService: MessageService, private confirmationService: ConfirmationService, private utilitiesService: UtilitiesService,) {}
-
-  ngOnInit() {
-      this.productService.getProducts().then((data) => (this.products = data));
-
-      this.statuses = [
-          { label: 'INSTOCK', value: 'instock' },
-          { label: 'LOWSTOCK', value: 'lowstock' },
-          { label: 'OUTOFSTOCK', value: 'outofstock' }
-      ];
-
-      this.customerService.getCustomersMedium().then((data) => {
-        this.customers = data;
-    });
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
-  openNew() {
-      this.product = {};
-      this.submitted = false;
-      this.productDialog = true;
+  ngOnInit() {}
+
+  ngAfterViewInit(): void {
+    this.getRefTablesData();
+}
+
+  ngAfterContentChecked() {
+    this.cdr.detectChanges();
   }
 
-  deleteSelectedProducts() {
-      this.confirmationService.confirm({
-          message: 'Are you sure you want to delete the selected products?',
-          header: 'Confirm',
-          icon: 'pi pi-exclamation-triangle',
-          accept: () => {
-              this.products = this.products.filter((val) => !this.selectedProducts?.includes(val));
-              this.selectedProducts = null;
-              this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Products Deleted', life: 3000 });
+  getRefTablesData() {
+    this.subscription.add(
+      this.apiService.get(ApiURL.roomStatuses).subscribe({
+        next: (res) => {
+          this.roomStatuses = res;
+        },
+        complete: () => {
+          this.getCamps();
+        },
+        error: (err) => {
+          this.utilitiesService.notifyError("Could not perform operation!");
+        //   throw new Error('Could not perform operation!');
+        },
+      })
+    );
+  }
+
+  getCamps() {
+    this.subscription.add(
+        this.apiService.get(ApiURL.camp).subscribe({
+          next: (res) => {
+            this.campIds = res;
+          },
+          complete: () => {
+            this.getCaterings();
+          },
+          error: (err) => {
+            this.utilitiesService.notifyError("Could not perform operation!");
+            throw new Error('Could not perform operation!');
+          },
+        })
+      );
+  }
+
+  getCaterings() {
+    this.subscription.add(
+        this.apiService.get(ApiURL.catering).subscribe({
+          next: (res) => {
+            this.cateringIds = res;
+          },
+          complete: () => {
+            this.getRoomRates();
+          },
+          error: (err) => {
+            this.utilitiesService.notifyError("Could not perform operation!");
+            throw new Error('Could not perform operation!');
+          },
+        })
+      );
+  }
+
+  getRoomRates() {
+    this.subscription.add(
+        this.apiService.get(ApiURL.rooms_rate).subscribe({
+          next: (res) => {
+            this.roomsRateIds = res;
+          },
+          complete: () => {
+            this.getRoomRates();
+          },
+          error: (err) => {
+            this.utilitiesService.notifyError("Could not perform operation!");
+            throw new Error('Could not perform operation!');
+          },
+        })
+      );
+  }
+
+  save() {
+    if (this.hasEmptyFields()) {
+      this.subscription.add(
+        this.apiService.post(ApiURL.rooms, this.rooms).subscribe(
+          (res) => {
+            this.ref.close(res);
+          },
+          (err) => {
+            this.utilitiesService.notifyError("Could not perform operation!");
+            throw new Error('Could not perform operation!');
           }
-      });
+        )
+      );
+    } else {
+      console.log(this.rooms);
+      this.utilitiesService.notifyWarning('Please fill all fields');
+    }
   }
 
-  editProduct(product: Product) {
-      this.product = { ...product };
-      this.productDialog = true;
-  }
-
-  deleteProduct(product: Product) {
-      this.confirmationService.confirm({
-          message: 'Are you sure you want to delete ' + product.name + '?',
-          header: 'Confirm',
-          icon: 'pi pi-exclamation-triangle',
-          accept: () => {
-              this.products = this.products.filter((val) => val.id !== product.id);
-              this.product = {};
-              this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000 });
-          }
-      });
-  }
-
-  hideDialog() {
-      this.productDialog = false;
-      this.submitted = false;
-  }
-
-  saveProduct() {
-      this.submitted = true;
-
-      if (this.product.name?.trim()) {
-          if (this.product.id) {
-              this.products[this.findIndexById(this.product.id)] = this.product;
-              this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000 });
-          } else {
-              this.product.id = this.createId();
-              this.product.image = 'product-placeholder.svg';
-              this.products.push(this.product);
-              this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Created', life: 3000 });
-          }
-
-          this.products = [...this.products];
-          this.productDialog = false;
-          this.product = {};
+  hasEmptyFields(): boolean {
+    let roomsToCheck = { ...this.rooms };
+    delete roomsToCheck.description;
+    delete roomsToCheck.availableFrom;
+    for (const key of Object.keys(roomsToCheck)) {
+      if (
+        roomsToCheck[key] === null ||
+        roomsToCheck[key] < 0 ||
+        roomsToCheck[key] === ''
+      ) {
+        return true;
       }
-  }
-
-  findIndexById(id: string): number {
-      let index = -1;
-      for (let i = 0; i < this.products.length; i++) {
-          if (this.products[i].id === id) {
-              index = i;
-              break;
-          }
-      }
-
-      return index;
-  }
-
-  createId(): string {
-      let id = '';
-      var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-      for (var i = 0; i < 5; i++) {
-          id += chars.charAt(Math.floor(Math.random() * chars.length));
-      }
-      return id;
+    }
+    return false;
   }
 
   getSeverity(status: string) {
-      switch (status) {
-          case 'INSTOCK':
-              return 'success';
-          case 'LOWSTOCK':
-              return 'warning';
-          case 'OUTOFSTOCK':
-              return 'danger';
-      }
-  }
-
-
-
-
-
-
-
-  // extendable table code
-  calculateCustomerTotal(name: string) {
-    let total = 0;
-
-    if (this.customers) {
-        for (let customer of this.customers) {
-            if (customer.representative?.name === name) {
-                total++;
-            }
-        }
-    }
-
-    return total;
-}
-
-getCustomerSeverity(status: string) {
     switch (status) {
-        case 'unqualified':
-            return 'danger';
-
-        case 'qualified':
-            return 'success';
-
-        case 'new':
-            return 'info';
-
-        case 'negotiation':
-            return 'warning';
-
-        case 'renewal':
-            return null;
+      case 'INSTOCK':
+        return 'success';
+      case 'LOWSTOCK':
+        return 'warning';
+      case 'OUTOFSTOCK':
+        return 'danger';
     }
-}
+  }
 }

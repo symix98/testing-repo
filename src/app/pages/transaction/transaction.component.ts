@@ -34,8 +34,6 @@ export class TransactionComponent implements OnInit, OnDestroy {
     public config: DynamicDialogConfig,
     private apiService: ApiService,
     private utilitiesService: UtilitiesService,
-    private ref: DynamicDialogRef,
-    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
@@ -95,15 +93,11 @@ export class TransactionComponent implements OnInit, OnDestroy {
       });
   }
 
-  hideDialog() {}
-
-  saveProduct() {}
-
   openNewTransaction() {
     this.dialogService
       .open(AddTransactionComponent, {
         header: 'Add Transaction',
-        height: '70vh',
+        height: '65vh',
         width: '50%',
         modal: true,
       })
@@ -111,6 +105,7 @@ export class TransactionComponent implements OnInit, OnDestroy {
         if (res) {
           console.log(res);
           this.transactions.push(res);
+          this.utilitiesService.notifySuccess('Transaction Added');
         }
       });
   }

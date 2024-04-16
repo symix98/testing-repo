@@ -4,17 +4,16 @@ import { RoomMasterRoutingModule } from '../../../core/modules/routing/room-mast
 import { RoomMasterComponent } from './room-master.component';
 import { SharedModule } from 'src/app/core/modules/shared.module';
 import { DocumentFormWizzardModule } from '../../document-form-wizzard/document-form-wizzard.module';
-
+import { AddRoomComponent } from '../add-room/add-room.component';
+import { EditRoomComponent } from '../edit-room/edit-room.component';
 
 @NgModule({
-  declarations: [
-    RoomMasterComponent
-  ],
+  declarations: [RoomMasterComponent, AddRoomComponent, EditRoomComponent],
   imports: [
     CommonModule,
     RoomMasterRoutingModule,
     SharedModule,
-    DocumentFormWizzardModule
-  ]
+    DocumentFormWizzardModule,
+  ],
 })
-export class RoomMasterModule { }
+export class RoomMasterModule {}

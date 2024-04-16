@@ -47,6 +47,10 @@ export class UtilitiesService {
   notifyInfo(message: String): void {
     this.messageService.add({ severity: 'info', summary: 'Info', detail: "" + message });
   }
+
+  notifyWarning(message: String): void {
+    this.messageService.add({ severity: 'warn', summary: 'Warning', detail: "" + message });
+  }
   
   confirmDialog(message: string): Promise<boolean> {
     return new Promise((resolve, reject) => {

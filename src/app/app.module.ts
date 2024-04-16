@@ -50,8 +50,6 @@ import { EditRoomComponent } from './pages/Room-Master/edit-room/edit-room.compo
         TableIconComponent,
         TableRowMenuComponent,
         CommentComponent,
-        AddRoomComponent,
-        EditRoomComponent,
     ],
     providers: [
         { provide: APP_INITIALIZER, useFactory: initializeKeycloak, multi: true, deps: [KeycloakService] }

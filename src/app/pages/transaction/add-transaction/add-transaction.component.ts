@@ -20,7 +20,6 @@ import { Subscription } from 'rxjs';
 export class AddTransactionComponent
   implements OnInit, OnDestroy, AfterContentChecked
 {
-  transactionDialog: boolean = false;
 
   transactions: Transaction = new Transaction();
 
@@ -55,17 +54,33 @@ export class AddTransactionComponent
   }
 
   saveTransaction() {
-    this.subscription.add(
-      this.apiService.post(ApiURL.transaction, this.transactions).subscribe(
-        (res) => {
-          this.ref.close(res);
-        },
-        (err) => {
-          this.utilitiesService.notifyError(err.error.title);
-          throw new Error('Could not perform operation!');
-        }
-      )
-    );
+    if(!this.hasEmptyFields) {
+      this.subscription.add(
+        this.apiService.post(ApiURL.transaction, this.transactions).subscribe(
+          (res) => {
+            this.ref.close(res);
+          },
+          (err) => {
+            this.utilitiesService.notifyError(err.error.title);
+            throw new Error('Could not perform operation!');
+          }
+        )
+      );
+    } else {
+      this.utilitiesService.notifyWarning('Please fill all fields');
+    }
+    
+  }
+
+  hasEmptyFields(): boolean {
+    // const letterOfCreditDetailFormToCheck = { ...this.letterOfCreditDetailForm };
+    // delete letterOfCreditDetailFormToCheck.grossValue;
+    for (const key of Object.keys(this.transactions)) {
+      if (this.transactions[key] === null || this.transactions[key] < 0 || this.transactions[key] === "") {
+        return true;
+      }
+    }
+    return false;
   }
 
   getSeverity(status: string) {

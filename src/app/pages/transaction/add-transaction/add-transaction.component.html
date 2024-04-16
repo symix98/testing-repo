@@ -1,124 +1,128 @@
-<form #transactionForm="ngForm">
-  <div class="grid p-fluid mb-2">
-    <div class="col-8">
-      <label for="transactionNo">Transaction Number</label>
-      <input
-        type="text"
-        pInputText
-        id="transactionNo"
-        name="transactionNo"
-        [(ngModel)]="transactions.transactionNo"
-        required
-        autofocus
-      />
-    </div>
+<div class="card">
+  <form #transactionForm="ngForm">
+    <div class="grid p-fluid mb-2">
+      <div class="col-8">
+        <label for="transactionNo">Transaction Number</label>
+        <input
+          type="text"
+          pInputText
+          id="transactionNo"
+          name="transactionNo"
+          [(ngModel)]="transactions.transactionNo"
+          required
+          autofocus
+        />
+      </div>
 
-    <div class="col-4">
-      <label for="guestStatus">Select Guest Status</label>
-      <p-dropdown
-        [options]="guestStatuses"
-        [(ngModel)]="transactions.guestStatus"
-        name="guestStatus"
-        optionLabel="name"
-        placeholder="Select Guest Status"
-        [required]="true"
-      ></p-dropdown>
-    </div>
+      <div class="col-4">
+        <label for="guestStatus">Select Guest Status</label>
+        <p-dropdown
+          [options]="guestStatuses"
+          [(ngModel)]="transactions.guestStatus"
+          name="guestStatus"
+          optionLabel="name"
+          placeholder="Select Guest Status"
+          [required]="true"
+        ></p-dropdown>
+      </div>
 
-    <div class="col-5">
-      <label for="badgeNo">Badge Number</label>
-      <input
-        type="text"
-        pInputText
-        id="badgeNo"
-        name="badgeNo"
-        [(ngModel)]="transactions.badgeNo"
-        required
-        autofocus
-      />
-    </div>
+      <div class="col-5">
+        <label for="badgeNo">Badge Number</label>
+        <input
+          type="text"
+          pInputText
+          id="badgeNo"
+          name="badgeNo"
+          [(ngModel)]="transactions.badgeNo"
+          required
+          autofocus
+        />
+      </div>
 
-    <div class="col-5">
-      <label for="roomId">Select Man Days</label>
-      <p-inputNumber
-        [showButtons]="true"
-        inputId="manDays"
-        [(ngModel)]="transactions.manDays"
-      >
-      </p-inputNumber>
-    </div>
+      <div class="col-5">
+        <label for="roomId">Man Days</label>
+        <p-inputNumber
+          [showButtons]="true"
+          inputId="manDays"
+          [(ngModel)]="transactions.manDays"
+        >
+        </p-inputNumber>
+      </div>
 
-    <div class="col-2">
-      <label for="description">Select a Room</label>
-      <p-dropdown
-        [options]="availableRooms"
-        [(ngModel)]="transactions.roomId"
-        name="guestStatus"
-        optionLabel="name"
-        placeholder="Select a Room"
-        [required]="true"
-      ></p-dropdown>
-    </div>
+      <div class="col-2">
+        <label for="description">Select a Room</label>
+        <p-dropdown
+          [options]="availableRooms"
+          [(ngModel)]="transactions.roomId"
+          name="guestStatus"
+          optionLabel="name"
+          placeholder="Select a Room"
+          [required]="true"
+        ></p-dropdown>
+      </div>
 
-    <div class="col-6">
-      <label for="checkInDate">Check-In Date</label>
-      <p-calendar
-        name="checkInDate"
-        [(ngModel)]="transactions.checkInDate"
-        [showIcon]="true"
-        [readonlyInput]="true"
-      ></p-calendar>
-    </div>
+      <div class="col-6">
+        <label for="checkInDate">Check-In Date</label>
+        <p-calendar
+          name="checkInDate"
+          [(ngModel)]="transactions.checkInDate"
+          [showIcon]="true"
+          [readonlyInput]="true"
+        ></p-calendar>
+      </div>
 
-    <div class="col-6">
-      <label for="checkoutDate">Check-Out Date</label>
-      <p-calendar
-        name="checkOutDate"
-        [(ngModel)]="transactions.checkOutDate"
-        [showIcon]="true"
-        [readonlyInput]="true"
-      ></p-calendar>
-    </div>
+      <div class="col-6">
+        <label for="checkoutDate">Check-Out Date</label>
+        <p-calendar
+          name="checkOutDate"
+          [(ngModel)]="transactions.checkOutDate"
+          [showIcon]="true"
+          [readonlyInput]="true"
+        ></p-calendar>
+      </div>
 
-    <div class="col-6">
-      <label for="LeaveStartDt">Leave Start Date</label>
-      <p-calendar
-        name="LeaveStartDt"
-        [(ngModel)]="transactions.leaveStartDt"
-        [showIcon]="true"
-        [readonlyInput]="true"
-      ></p-calendar>
-    </div>
+      <div class="col-6">
+        <label for="LeaveStartDt">Leave Start Date</label>
+        <p-calendar
+          name="LeaveStartDt"
+          [(ngModel)]="transactions.leaveStartDt"
+          [showIcon]="true"
+          [readonlyInput]="true"
+        ></p-calendar>
+      </div>
 
-    <div class="col-6">
-      <label for="LeaveEndDt">Leave End Date</label>
-      <p-calendar
-        name="LeaveEndDt"
-        [(ngModel)]="transactions.leaveEndDt"
-        [showIcon]="true"
-        [readonlyInput]="true"
-      ></p-calendar>
-    </div>
+      <div class="col-6">
+        <label for="LeaveEndDt">Leave End Date</label>
+        <p-calendar
+          name="LeaveEndDt"
+          [(ngModel)]="transactions.leaveEndDt"
+          [showIcon]="true"
+          [readonlyInput]="true"
+        ></p-calendar>
+      </div>
 
-    <div class="col-12">
-      <label for="remarks">Remarks</label>
-      <textarea
-        id="remarks"
-        name="remarks"
-        pInputTextarea
-        [(ngModel)]="transactions.remarks"
-        required
-        rows="3"
-        cols="20"
-      ></textarea>
+      <div class="col-12">
+        <label for="remarks">Remarks</label>
+        <textarea
+          id="remarks"
+          name="remarks"
+          pInputTextarea
+          [(ngModel)]="transactions.remarks"
+          required
+          rows="3"
+          cols="20"
+        ></textarea>
+      </div>
     </div>
-  </div>
+  </form>
+ 
+</div>
 
-  <button
-    pButton
-    pRipple
-    label="Save"
-    icon="pi pi-check"
-    (click)="saveTransaction()"
-  ></button>
-</form>
+<button
+style="margin-top: 5rem;"
+pButton
+pRipple
+label="Save"
+icon="pi pi-check"
+(click)="saveTransaction()"
+></button>
